@@ -1,2 +1,2 @@
-# spring-boot-starter-pac4j
-pac4j
+# spring-boot-starter-casclient
+casclient starter for spring boot

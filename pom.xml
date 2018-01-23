@@ -11,13 +11,13 @@
 	</parent>
 	
 	<groupId>com.github.vindell</groupId>
-	<artifactId>spring-boot-starter-casclient</artifactId>
+	<artifactId>spring-boot-starter-pac4j</artifactId>
 	<version>1.5.9-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>spring-boot-starter-casclient</name>
-	<url>https://github.com/vindell/spring-boot-starter-casclient</url>
-	<description>Starter for casclient</description>
+	<url>https://github.com/vindell/spring-boot-starter-pac4j</url>
+	<description>Starter for pac4j</description>
 
 	<licenses>
 		<license>
@@ -32,7 +32,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-		<cas-client.version>3.5.0</cas-client.version>
+		<spring-webmvc-pac4j.version>2.2.0</spring-webmvc-pac4j.version>
+        <pac4j.version>2.2.1</pac4j.version>
 	</properties>
 
 	<dependencies>
@@ -83,61 +84,82 @@
 			<artifactId>spring-boot-autoconfigure</artifactId>
 		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/org.jasig.cas.client/cas-client-core -->
+		<!-- https://mvnrepository.com/artifact/org.pac4j -->
 		<dependency>
-		    <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-core</artifactId>
-		    <version>${cas-client.version}</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.jasig.cas.client/cas-client-support-saml -->
-		<dependency>
-		    <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-support-saml</artifactId>
-		    <version>${cas-client.version}</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.jasig.cas.client/cas-client-support-distributed-memcached -->
-		<dependency>
-		    <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-support-distributed-memcached</artifactId>
-		    <version>${cas-client.version}</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.jasig.cas.client/cas-client-support-distributed-ehcache -->
-		<dependency>
-		    <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-support-distributed-ehcache</artifactId>
-		    <version>${cas-client.version}</version>
-		</dependency>
-		<!-- 
-		<dependency>
-		    <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-integration-jboss</artifactId>
-		    <version>${cas-client.version}</version>
-		</dependency> 
-		<dependency>
-		    <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-integration-jetty</artifactId>
-		   <version>${cas-client.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-integration-tomcat-v6</artifactId>
-		    <version>${cas-client.version}</version>
-		</dependency> 
-		<dependency>
-		    <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-integration-tomcat-v7</artifactId>
-		    <version>${cas-client.version}</version>
-		</dependency>
-		 <dependency>
-		    <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-integration-tomcat-v8</artifactId>
-		    <version>${cas-client.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-integration-tomcat-v85</artifactId>
-		    <version>${cas-client.version}</version>
-		</dependency> -->
+            <groupId>org.pac4j</groupId>
+            <artifactId>spring-webmvc-pac4j</artifactId>
+            <version>${spring-webmvc-pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-core</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-oauth</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-openid</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-cas</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-saml</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-gae</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-oidc</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-http</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-ldap</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-jwt</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-sql</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-mongo</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-kerberos</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-couch</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
 
 	</dependencies>
 

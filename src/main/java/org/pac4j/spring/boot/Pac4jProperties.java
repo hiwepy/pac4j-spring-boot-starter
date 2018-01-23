@@ -13,13 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.apereo.cas.spring.boot;
+package org.pac4j.spring.boot;
 
 import org.jasig.cas.client.Protocol;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(CasclientProperties.PREFIX)
-public class CasclientProperties {
+@ConfigurationProperties(Pac4jProperties.PREFIX)
+public class Pac4jProperties {
 
 	public static final String PREFIX = "cas";
 

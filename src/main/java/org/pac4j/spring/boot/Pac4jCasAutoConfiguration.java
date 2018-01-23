@@ -1,4 +1,4 @@
-package org.apereo.cas.spring.boot;
+package org.pac4j.spring.boot;
 
 import org.jasig.cas.client.Protocol;
 import org.jasig.cas.client.authentication.AuthenticationFilter;
@@ -21,9 +21,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(prefix = CasclientProperties.PREFIX, value = "enabled", havingValue = "true")
-@EnableConfigurationProperties({ CasclientProperties.class })
-public class CasAutoConfiguration {
+@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
+@EnableConfigurationProperties({ Pac4jProperties.class })
+public class Pac4jCasAutoConfiguration {
 	
 	/**
 	1、首先定义CasConfiguration(loginUrl,prefixUrl),loginUrl为完整的cas登录地址,比如client项目的https://passport.sqzryang.com/login?service=https://client.sqzryang.com,prefixUrl则为cas路径前缀,根据cas的版本号拼接请求地址,用于验证sts是否正确并且返回登录成功后的信息。
@@ -79,7 +79,7 @@ public class CasAutoConfiguration {
 	 */
 	@Bean("singleSignOutHttpSessionListener")
 	@ConditionalOnMissingBean(name = "singleSignOutHttpSessionListener")
-    public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> singleSignOutHttpSessionListener(CasclientProperties properties) {  
+    public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> singleSignOutHttpSessionListener(Pac4jProperties properties) {  
     	ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> listener = new ServletListenerRegistrationBean<SingleSignOutHttpSessionListener>();
         listener.setEnabled(properties.isEnabled());  
         listener.setListener(new SingleSignOutHttpSessionListener());  
@@ -92,7 +92,7 @@ public class CasAutoConfiguration {
 	 * 该过滤器用于实现单点登出功能，单点退出配置，一定要放在其他filter之前
 	 */
 	@Bean
-	public FilterRegistrationBean singleSignOutFilter(CasclientProperties properties) {
+	public FilterRegistrationBean singleSignOutFilter(Pac4jProperties properties) {
 		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
 		filterRegistration.setFilter(new SingleSignOutFilter());
 		filterRegistration.setEnabled(properties.isEnabled());
@@ -115,7 +115,7 @@ public class CasAutoConfiguration {
 	 * 该过滤器负责用户的认证工作
 	 */
 	@Bean
-	public FilterRegistrationBean authenticationFilter(CasclientProperties properties){
+	public FilterRegistrationBean authenticationFilter(Pac4jProperties properties){
 		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
 		filterRegistration.setEnabled(properties.isEnabled());  
 		if(Protocol.SAML11.equals(properties.getProtocol())) {
@@ -146,7 +146,7 @@ public class CasAutoConfiguration {
 	 * 该过滤器负责对Ticket的校验工作
 	 */
 	@Bean
-	public FilterRegistrationBean ticketValidationFilter(CasclientProperties properties ){
+	public FilterRegistrationBean ticketValidationFilter(Pac4jProperties properties ){
 		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
 		filterRegistration.setEnabled(properties.isEnabled()); 
 		if(Protocol.CAS1.equals(properties.getProtocol())) {
@@ -215,7 +215,7 @@ public class CasAutoConfiguration {
 	 * 该过滤器对HttpServletRequest请求包装， 可通过HttpServletRequest的getRemoteUser()方法获得登录用户的登录名
 	 */
 	@Bean
-	public FilterRegistrationBean httpServletRequestWrapperFilter(CasclientProperties properties ){
+	public FilterRegistrationBean httpServletRequestWrapperFilter(Pac4jProperties properties ){
 		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
 		filterRegistration.setFilter(new HttpServletRequestWrapperFilter());
 		filterRegistration.setEnabled(properties.isEnabled()); 
@@ -233,7 +233,7 @@ public class CasAutoConfiguration {
 	 * 这个类把Assertion信息放在ThreadLocal变量中，这样应用程序不在web层也能够获取到当前登录信息
 	 */
 	@Bean
-	public FilterRegistrationBean assertionThreadLocalFilter(CasclientProperties properties) {
+	public FilterRegistrationBean assertionThreadLocalFilter(Pac4jProperties properties) {
 		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
 		filterRegistration.setFilter(new AssertionThreadLocalFilter());
 		filterRegistration.setEnabled(properties.isEnabled());

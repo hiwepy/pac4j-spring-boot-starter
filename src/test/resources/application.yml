@@ -1,14 +1,8 @@
-server:
-  tomcat:
-    max-threads: 100
-    min-spare-threads: 20
-  connection-timeout: 5000
-  ssl:
-    key-store: classpath:.keystore
-    key-store-type: JKS
-    key-password: qq123456
-    key-alias: tomcat
-  port: 8080
-spring:  
-  roc
-        
+pac4j:
+  failure-url: 
+  logout:
+    central-logout: true
+    default-url: ddd
+    logout-url-pattern: sadsa 
+    local-logout: true
+    destroy-session: true

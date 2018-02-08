@@ -32,8 +32,12 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+       	<buji-pac4j.version>3.1.0</buji-pac4j.version> 
+		<cas-client.version>3.5.0</cas-client.version>
         <pac4j.version>2.2.1</pac4j.version>
 		<pac4j-webmvc.version>2.2.0</pac4j-webmvc.version>
+		<scribejava.version>5.2.0-java7again</scribejava.version>
+		<woodstox-asl.version>4.4.1</woodstox-asl.version>
 	</properties>
 
 	<dependencies>
@@ -84,10 +88,64 @@
 			<artifactId>spring-boot-autoconfigure</artifactId>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.pac4j/j2e-pac4j -->
+		<dependency>
+			<groupId>org.pac4j</groupId>
+			<artifactId>j2e-pac4j</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.github.scribejava/scribejava-core -->
+		<dependency>
+		    <groupId>com.github.scribejava</groupId>
+		    <artifactId>scribejava-core</artifactId>
+		    <version>${scribejava.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.github.scribejava/scribejava-apis -->
+		<dependency>
+		    <groupId>com.github.scribejava</groupId>
+		    <artifactId>scribejava-apis</artifactId>
+		    <version>${scribejava.version}</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.jasig.cas.client/cas-client-core -->
+		<dependency>
+		    <groupId>org.jasig.cas.client</groupId>
+		    <artifactId>cas-client-core</artifactId>
+		    <version>${cas-client.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.codehaus.woodstox</groupId>
+		    <artifactId>woodstox-core-asl</artifactId>
+		    <version>${woodstox-asl.version}</version>
+		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/org.pac4j -->
         <dependency>
             <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-cas</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
             <artifactId>pac4j-core</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-couch</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+		    <groupId>org.pac4j</groupId>
+		    <artifactId>pac4j-config</artifactId>
+		    <version>2.2.1</version>
+		    <scope>runtime</scope>
+		</dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-gae</artifactId>
             <version>${pac4j.version}</version>
         </dependency>
         <dependency>
@@ -97,37 +155,7 @@
         </dependency>
         <dependency>
             <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-openid</artifactId>
-            <version>${pac4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-cas</artifactId>
-            <version>${pac4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-saml</artifactId>
-            <version>${pac4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-gae</artifactId>
-            <version>${pac4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-oidc</artifactId>
-            <version>${pac4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.pac4j</groupId>
             <artifactId>pac4j-http</artifactId>
-            <version>${pac4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-ldap</artifactId>
             <version>${pac4j.version}</version>
         </dependency>
         <dependency>
@@ -137,7 +165,12 @@
         </dependency>
         <dependency>
             <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-sql</artifactId>
+            <artifactId>pac4j-kerberos</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-ldap</artifactId>
             <version>${pac4j.version}</version>
         </dependency>
         <dependency>
@@ -147,12 +180,27 @@
         </dependency>
         <dependency>
             <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-kerberos</artifactId>
+            <artifactId>pac4j-openid</artifactId>
             <version>${pac4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-couch</artifactId>
+            <artifactId>pac4j-oidc</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-saml</artifactId>
+            <version>${pac4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-stormpath</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-sql</artifactId>
             <version>${pac4j.version}</version>
         </dependency>
 		<dependency>

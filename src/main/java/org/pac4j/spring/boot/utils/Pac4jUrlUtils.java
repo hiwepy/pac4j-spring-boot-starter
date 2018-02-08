@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.jasig.cas.client.util.CommonUtils;
 import org.pac4j.spring.boot.Pac4jCasProperties;
+import org.pac4j.spring.boot.Pac4jProperties;
 import org.springframework.web.util.WebUtils;
 
 public class Pac4jUrlUtils {
@@ -38,9 +39,9 @@ public class Pac4jUrlUtils {
 		return callbackUrlBuilder.toString();
 	}
 	
-	public static String constructCallbackUrl(Pac4jCasProperties casProperties) {
-		String callbackUrl = casProperties.getServerCallbackUrl();
-		StringBuilder callbackUrlBuilder = new StringBuilder(callbackUrl).append((callbackUrl.contains("?") ? "&" : "?")).append(casProperties.getClientParameterName()).append("=").append(casProperties.getClientName());
+	public static String constructCallbackUrl(Pac4jProperties pac4jProperties) {
+		String callbackUrl = pac4jProperties.getCallbackUrl();
+		StringBuilder callbackUrlBuilder = new StringBuilder(callbackUrl).append((callbackUrl.contains("?") ? "&" : "?")).append(pac4jProperties.getClientParameterName()).append("=").append(pac4jProperties.getClientName());
 		return callbackUrlBuilder.toString();
 	}
 	

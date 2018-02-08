@@ -17,9 +17,11 @@ import org.pac4j.spring.boot.utils.CasClientUtils;
 import org.pac4j.spring.boot.utils.CasUrlUtils;
 import org.pac4j.spring.boot.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
@@ -28,10 +30,14 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = "enabled", havingValue = "true")
+@AutoConfigureBefore( name = {
+	"org.pac4j.spring.boot.Pac4jWebFilterConfiguration"
+})
+@ConditionalOnWebApplication
 @ConditionalOnClass({ SingleSignOutHttpSessionListener.class, CasConfiguration.class})
+@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jCasProperties.class, ServerProperties.class })
-public class Pac4jCasAutoConfiguration {
+public class Pac4jCasConfiguration {
 	
 	@Autowired
 	private Pac4jCasProperties pac4jProperties;

@@ -38,12 +38,6 @@ public class CasUrlUtils {
 		return callbackUrlBuilder.toString();
 	}
 	
-	public static String constructCallbackUrl(Pac4jCasProperties casProperties) {
-		String callbackUrl = casProperties.getServerCallbackUrl();
-		StringBuilder callbackUrlBuilder = new StringBuilder(callbackUrl).append((callbackUrl.contains("?") ? "&" : "?")).append(casProperties.getClientParameterName()).append("=").append(casProperties.getClientName());
-		return callbackUrlBuilder.toString();
-	}
-	
 	public static String constructCallbackUrl(Pac4jCasProperties casProperties, String contextPath, String serverUrl) {
 
 		contextPath = StringUtils.hasText(contextPath) ? contextPath : "/";

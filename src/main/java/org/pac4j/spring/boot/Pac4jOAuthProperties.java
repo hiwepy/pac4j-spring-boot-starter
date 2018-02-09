@@ -15,7 +15,12 @@
  */
 package org.pac4j.spring.boot;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.pac4j.spring.boot.ext.property.Pac4jOAuthGenericProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 @ConfigurationProperties(Pac4jOAuthProperties.PREFIX)
 public class Pac4jOAuthProperties {
@@ -24,13 +29,24 @@ public class Pac4jOAuthProperties {
 	
 	/** Whether Enable Pac4j OAuth. */
 	private boolean enabled = false;
-
+	
+	@NestedConfigurationProperty
+	private List<Pac4jOAuthGenericProperties> enerics = new ArrayList<Pac4jOAuthGenericProperties>();
+    
 	public boolean isEnabled() {
 		return enabled;
 	}
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public List<Pac4jOAuthGenericProperties> getEnerics() {
+		return enerics;
+	}
+
+	public void setEnerics(List<Pac4jOAuthGenericProperties> enerics) {
+		this.enerics = enerics;
 	}
 
 }

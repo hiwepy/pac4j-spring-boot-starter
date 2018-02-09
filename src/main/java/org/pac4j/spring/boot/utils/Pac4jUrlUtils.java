@@ -15,21 +15,19 @@
  */
 package org.pac4j.spring.boot.utils;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.jasig.cas.client.util.CommonUtils;
-import org.pac4j.spring.boot.Pac4jCasProperties;
 import org.pac4j.spring.boot.Pac4jProperties;
-import org.springframework.web.util.WebUtils;
 
 public class Pac4jUrlUtils {
 
+	/**
+	 * 
+	 * @description	： 构造回调URL, i.e. myapp/serverUrl
+	 * @author 		： <a href="https://github.com/vindell">vindell</a>
+	 * @date 		：2018年2月9日 上午9:38:23
+	 * @param contextPath
+	 * @param serverUrl
+	 * @return
+	 */
 	public static String constructCallbackUrl(String contextPath, String serverUrl) {
 		contextPath = StringUtils.hasText(contextPath) ? contextPath : "/";
 		if (contextPath.endsWith("/")) {
@@ -39,68 +37,18 @@ public class Pac4jUrlUtils {
 		return callbackUrlBuilder.toString();
 	}
 	
+	/**
+	 * 
+	 * @description	： 构造回调URL, i.e. /callback?client_name=cas
+	 * @author 		： <a href="https://github.com/vindell">vindell</a>
+	 * @date 		：2018年2月9日 上午9:35:29
+	 * @param pac4jProperties
+	 * @return
+	 */
 	public static String constructCallbackUrl(Pac4jProperties pac4jProperties) {
 		String callbackUrl = pac4jProperties.getCallbackUrl();
 		StringBuilder callbackUrlBuilder = new StringBuilder(callbackUrl).append((callbackUrl.contains("?") ? "&" : "?")).append(pac4jProperties.getClientParameterName()).append("=").append(pac4jProperties.getClientName());
 		return callbackUrlBuilder.toString();
-	}
-	
-	public static String constructCallbackUrl(Pac4jCasProperties casProperties, String contextPath, String serverUrl) {
-
-		contextPath = StringUtils.hasText(contextPath) ? contextPath : "/";
-		if (contextPath.endsWith("/")) {
-			contextPath = contextPath.substring(0, contextPath.length() - 1);
-		}
-		
-		try {
-			
-			URL url = new URL(casProperties.getServerName());
-			
-			// 重定向地址：用于重新回到业务系统
-			StringBuilder callbackUrl = new StringBuilder(url.getProtocol()).append("://").append(url.getHost())
-					.append( url.getPort() != -1 ? ":" + url.getPort() : "").append(contextPath).append(serverUrl);
-
-			return callbackUrl.toString();
-			
-		} catch (MalformedURLException e) {
-			// 重定向地址：用于重新回到业务系统
-			StringBuilder callbackUrl = new StringBuilder(casProperties.getServerName()).append(contextPath).append(serverUrl);
-			return callbackUrl.toString();
-		}
-
-	}
-	
-	public static String constructRedirectUrl(Pac4jCasProperties casProperties, String casServerPath, String contextPath, String serverUrl)  {
-
-		StringBuilder casRedirectUrl = new StringBuilder(casProperties.getCasServerUrlPrefix());
-		if (!casRedirectUrl.toString().endsWith("/")) {
-			casRedirectUrl.append("/");
-		}
-		casRedirectUrl.append(casServerPath);
-		
-		String callbackUrl = Pac4jUrlUtils.constructCallbackUrl(casProperties, contextPath, serverUrl);
-		
-		return CommonUtils.constructRedirectUrl(casRedirectUrl.toString(), casProperties.getServiceParameterName(), callbackUrl, casProperties.isRenew(), casProperties.isGateway());
-		
-	}
-	
-	public static String constructLogoutRedirectUrl(Pac4jCasProperties casProperties, String contextPath, String serverUrl){
-		String callbackUrl = Pac4jUrlUtils.constructCallbackUrl(casProperties, contextPath, serverUrl);
-		return CommonUtils.constructRedirectUrl(casProperties.getCasServerLogoutUrl(), casProperties.getServiceParameterName(), callbackUrl, casProperties.isRenew(), casProperties.isGateway());
-	}
-	
-	public static String constructLoginRedirectUrl(Pac4jCasProperties casProperties, String contextPath, String serverUrl){
-		String callbackUrl = Pac4jUrlUtils.constructCallbackUrl(casProperties, contextPath, serverUrl);
-		return CommonUtils.constructRedirectUrl(casProperties.getCasServerLoginUrl(), casProperties.getServiceParameterName(), callbackUrl, casProperties.isRenew(), casProperties.isGateway());
-	}
-	
-	public static String constructServiceUrl(ServletRequest request, ServletResponse response, Pac4jCasProperties casProperties) {
-		 
-		return CommonUtils.constructServiceUrl(WebUtils.getNativeRequest(request, HttpServletRequest.class),
-				WebUtils.getNativeResponse(response, HttpServletResponse.class), casProperties.getServerName(),
-				casProperties.getServerName(), casProperties.getServiceParameterName(),
-				casProperties.getArtifactParameterName(), casProperties.isEncodeServiceUrl());
-		
 	}
 	
 }

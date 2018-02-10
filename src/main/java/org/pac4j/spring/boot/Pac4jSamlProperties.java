@@ -20,7 +20,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(Pac4jSamlProperties.PREFIX)
 public class Pac4jSamlProperties {
 
-	public static final String PREFIX = "shiro.pac4j.saml";
+	public static final String PREFIX = "pac4j.saml";
 	
 	/** Whether Enable Pac4j Saml. */
 	private boolean enabled = false;

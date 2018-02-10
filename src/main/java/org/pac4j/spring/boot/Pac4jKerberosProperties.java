@@ -20,7 +20,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(Pac4jKerberosProperties.PREFIX)
 public class Pac4jKerberosProperties {
 
-	public static final String PREFIX = "shiro.pac4j.kerberos";
+	public static final String PREFIX = "pac4j.kerberos";
 	
 	/** Whether Enable Pac4j Kerberos. */
 	private boolean enabled = false;

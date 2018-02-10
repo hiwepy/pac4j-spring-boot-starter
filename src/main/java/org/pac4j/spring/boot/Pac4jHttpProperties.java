@@ -20,7 +20,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(Pac4jHttpProperties.PREFIX)
 public class Pac4jHttpProperties {
 
-	public static final String PREFIX = "shiro.pac4j.http";
+	public static final String PREFIX = "pac4j.http";
 	
 	/** Whether Enable Pac4j Http. */
 	private boolean enabled = false;

@@ -20,7 +20,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(Pac4jOidcProperties.PREFIX)
 public class Pac4jOidcProperties {
 
-	public static final String PREFIX = "shiro.pac4j.oidc";
+	public static final String PREFIX = "pac4j.oidc";
 	
 	/** Whether Enable Pac4j Oidc. */
 	private boolean enabled = false;

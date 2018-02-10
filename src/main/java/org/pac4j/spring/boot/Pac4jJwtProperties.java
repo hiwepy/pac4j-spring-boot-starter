@@ -20,7 +20,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(Pac4jJwtProperties.PREFIX)
 public class Pac4jJwtProperties {
 
-	public static final String PREFIX = "shiro.pac4j.jwt";
+	public static final String PREFIX = "pac4j.jwt";
 	
 	/** Whether Enable Pac4j Jwt. */
 	private boolean enabled = false;

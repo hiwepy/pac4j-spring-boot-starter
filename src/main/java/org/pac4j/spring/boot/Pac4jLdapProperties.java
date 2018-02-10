@@ -20,7 +20,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(Pac4jLdapProperties.PREFIX)
 public class Pac4jLdapProperties {
 
-	public static final String PREFIX = "shiro.pac4j.ldap";
+	public static final String PREFIX = "pac4j.ldap";
 	
 	/** Whether Enable Pac4j Ldap. */
 	private boolean enabled = false;

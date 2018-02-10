@@ -20,7 +20,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(Pac4jStormpathProperties.PREFIX)
 public class Pac4jStormpathProperties {
 
-	public static final String PREFIX = "shiro.pac4j.stormpath";
+	public static final String PREFIX = "pac4j.stormpath";
 	
 	/** Whether Enable Pac4j Stormpath. */
 	private boolean enabled = false;

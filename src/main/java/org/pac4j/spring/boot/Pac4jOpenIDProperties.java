@@ -20,7 +20,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(Pac4jOpenIDProperties.PREFIX)
 public class Pac4jOpenIDProperties {
 
-	public static final String PREFIX = "shiro.pac4j.openid";
+	public static final String PREFIX = "pac4j.openid";
 	
 	/** Whether Enable Pac4j OpenID. */
 	private boolean enabled = false;

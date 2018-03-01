@@ -45,6 +45,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
@@ -52,7 +53,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ConditionalOnClass({CallbackFilter.class, SecurityFilter.class, LogoutFilter.class })
 @ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jProperties.class, ServerProperties.class })
-public class Pac4jWebFilterConfiguration extends WebMvcConfigurerAdapter {
+public class Pac4jWebFilterConfiguration implements WebMvcConfigurer {
 
 	@Autowired
 	private Pac4jProperties pac4jProperties;
@@ -130,7 +131,7 @@ public class Pac4jWebFilterConfiguration extends WebMvcConfigurerAdapter {
 		// Security Configuration
         logoutFilter.setConfig(config);
         // Default logourl url
-        logoutFilter.setDefaultUrl( pathBuilder.getLogoutURL(serverProperties.getContextPath()) );
+        logoutFilter.setDefaultUrl( pathBuilder.getLogoutURL(serverProperties.getServlet().getContextPath()) );
         // Whether the application logout must be performed（是否注销本地应用身份认证）
         logoutFilter.setLocalLogout(pac4jProperties.isLocalLogout());
         // Pattern that logout urls must match（注销登录路径规则，用于匹配登录请求操作）
@@ -157,7 +158,7 @@ public class Pac4jWebFilterConfiguration extends WebMvcConfigurerAdapter {
 	    // Security Configuration
         callbackFilter.setConfig(config);
         // Default url after login if none was requested（登录成功后的重定向地址，等同于shiro的successUrl）
-        callbackFilter.setDefaultUrl( pathBuilder.getLoginURL(serverProperties.getContextPath()) );
+        callbackFilter.setDefaultUrl( pathBuilder.getLoginURL(serverProperties.getServlet().getContextPath()) );
         // Whether multiple profiles should be kept
         callbackFilter.setMultiProfile(pac4jProperties.isMultiProfile());
         

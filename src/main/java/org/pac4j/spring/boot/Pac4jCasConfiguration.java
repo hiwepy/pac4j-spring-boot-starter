@@ -64,14 +64,14 @@ public class Pac4jCasConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	protected UrlResolver urlResolver() {
-		return new Pac4jRelativeUrlResolver(serverProperties.getContextPath());
+		return new Pac4jRelativeUrlResolver(serverProperties.getServlet().getContextPath());
 	}
 	
 	@Bean
     public CasConfiguration casConfiguration(CasLogoutHandler<WebContext> logoutHandler, UrlResolver urlResolver) {
 
 		// 完整的cas登录地址,比如client项目的https://passport.xxx.com/login?service=https://client.xxx.com
-		String serverLoginUrl = CasUrlUtils.constructLoginRedirectUrl(pac4jProperties, serverProperties.getContextPath(), pac4jProperties.getServerCallbackUrl());
+		String serverLoginUrl = CasUrlUtils.constructLoginRedirectUrl(pac4jProperties, serverProperties.getServlet().getContextPath(), pac4jProperties.getServerCallbackUrl());
 		
 		CasConfiguration configuration = new CasConfiguration(serverLoginUrl, pac4jProperties.getCasProtocol() );
 		

@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.pac4j.core.client.Client;
-import org.pac4j.core.http.AjaxRequestResolver;
-import org.pac4j.core.http.DefaultAjaxRequestResolver;
-import org.pac4j.core.http.UrlResolver;
+import org.pac4j.core.http.ajax.AjaxRequestResolver;
+import org.pac4j.core.http.ajax.DefaultAjaxRequestResolver;
+import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.oauth.client.BaiduClient;
 import org.pac4j.oauth.client.BitbucketClient;
 import org.pac4j.oauth.client.CasOAuthWrapperClient;

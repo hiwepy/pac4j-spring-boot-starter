@@ -23,9 +23,9 @@ import java.util.Map.Entry;
 
 import org.pac4j.core.client.Client;
 import org.pac4j.core.client.Clients;
-import org.pac4j.core.http.AjaxRequestResolver;
-import org.pac4j.core.http.DefaultAjaxRequestResolver;
-import org.pac4j.core.http.UrlResolver;
+import org.pac4j.core.http.ajax.AjaxRequestResolver;
+import org.pac4j.core.http.ajax.DefaultAjaxRequestResolver;
+import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.spring.boot.ext.Pac4jRelativeUrlResolver;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;

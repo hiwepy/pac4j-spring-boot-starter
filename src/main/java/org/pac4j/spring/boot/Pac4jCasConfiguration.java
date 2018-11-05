@@ -11,7 +11,7 @@ import org.pac4j.cas.config.CasConfiguration;
 import org.pac4j.cas.logout.CasLogoutHandler;
 import org.pac4j.cas.logout.DefaultCasLogoutHandler;
 import org.pac4j.core.context.WebContext;
-import org.pac4j.core.http.UrlResolver;
+import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.spring.boot.ext.Pac4jRelativeUrlResolver;
 import org.pac4j.spring.boot.utils.CasClientUtils;
 import org.pac4j.spring.boot.utils.CasUrlUtils;

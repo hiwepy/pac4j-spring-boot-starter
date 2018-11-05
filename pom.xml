@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.5.RELEASE</version>
+		<version>2.1.0.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	
@@ -374,7 +374,7 @@
 		<maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
         <fastjson.version>1.2.51</fastjson.version>
         <pac4j.version>3.2.0</pac4j.version>
-		<pac4j-webmvc.version>3.1.0</pac4j-webmvc.version>
+		<pac4j-webmvc.version>3.2.0</pac4j-webmvc.version>
 		<scribejava.version>5.6.0</scribejava.version>
 		<woodstox-asl.version>4.4.1</woodstox-asl.version>
 	</properties>
@@ -499,12 +499,12 @@
             <artifactId>pac4j-oauth</artifactId>
             <version>${pac4j.version}</version>
         </dependency>
-        
+        <!-- 
         <dependency>
 	        <groupId>com.github.vindell</groupId>
 			<artifactId>pac4j-oauth-ext</artifactId>
 			<version>1.0.0</version>
-		</dependency>
+		</dependency> -->
         
         <dependency>
             <groupId>org.pac4j</groupId>

@@ -6,6 +6,8 @@ pac4j:
     logout-url-pattern: sadsa 
     local-logout: true
     destroy-session: true
+  cas:
+    allowed-proxy-chains: 
   oauth:
     enabled: true
     

@@ -16,6 +16,8 @@
 package org.pac4j.spring.boot;
 
 import org.pac4j.openid.client.YahooOpenIdClient;
+import org.pac4j.spring.boot.ext.property.Pac4jOpenIDProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jProperties;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

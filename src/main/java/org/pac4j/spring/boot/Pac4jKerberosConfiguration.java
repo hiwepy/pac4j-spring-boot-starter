@@ -17,6 +17,8 @@ package org.pac4j.spring.boot;
 
 import org.pac4j.kerberos.client.direct.DirectKerberosClient;
 import org.pac4j.kerberos.client.indirect.IndirectKerberosClient;
+import org.pac4j.spring.boot.ext.property.Pac4jKerberosProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jProperties;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

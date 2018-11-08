@@ -13,17 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot;
+package org.pac4j.spring.boot.ext.property;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.pac4j.spring.boot.ext.property.Pac4jOAuthCasClientProperties;
-import org.pac4j.spring.boot.ext.property.Pac4jOAuthClientProperties;
-import org.pac4j.spring.boot.ext.property.Pac4jOAuthFacebookClientProperties;
-import org.pac4j.spring.boot.ext.property.Pac4jOAuthGenericProperties;
-import org.pac4j.spring.boot.ext.property.Pac4jOAuthOkClientProperties;
-import org.pac4j.spring.boot.ext.property.Pac4jOAuthStravaClientProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 

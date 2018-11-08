@@ -21,18 +21,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.pac4j.config.client.PropertiesConfigFactory;
 import org.pac4j.core.client.Client;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
-import org.pac4j.core.http.ajax.DefaultAjaxRequestResolver;
 import org.pac4j.core.http.url.UrlResolver;
-import org.pac4j.spring.boot.ext.Pac4jRelativeUrlResolver;
+import org.pac4j.spring.boot.ext.property.Pac4jProperties;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -58,20 +57,6 @@ public class Pac4jClientsConfiguration  implements ApplicationContextAware {
 
 	@Autowired
 	private Pac4jProperties pac4jProperties;
-	@Autowired
-	private ServerProperties serverProperties;
-	
-	@Bean
-	@ConditionalOnMissingBean
-	protected AjaxRequestResolver ajaxRequestResolver() {
-		return new DefaultAjaxRequestResolver();
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	protected UrlResolver urlResolver() {
-		return new Pac4jRelativeUrlResolver(serverProperties.getServlet().getContextPath());
-	}
 	
 	@Bean
 	public Clients clients(@Autowired(required = false) @Qualifier("defaultClient") Client defaultClient,
@@ -96,10 +81,10 @@ public class Pac4jClientsConfiguration  implements ApplicationContextAware {
 		clients.setAjaxRequestResolver(ajaxRequestResolver);
 		clients.setCallbackUrl(pac4jProperties.getCallbackUrl());
 		clients.setClients(clientList);
-		clients.setClientNameParameter(pac4jProperties.getClientParameterName());
+		/*clients.setClientNameParameter(pac4jProperties.getClientParameterName());
 		if(defaultClient != null) {
 			clients.setDefaultClient(defaultClient);
-		}
+		}*/
 		clients.setUrlResolver(urlResolver);
 		
 		return clients;

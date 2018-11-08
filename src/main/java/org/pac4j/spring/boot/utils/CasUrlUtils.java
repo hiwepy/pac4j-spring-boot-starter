@@ -24,16 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jasig.cas.client.util.CommonUtils;
-import org.pac4j.spring.boot.Pac4jCasProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jCasProperties;
 import org.springframework.web.util.WebUtils;
 
 public class CasUrlUtils {
 
 	/**
-	 * 
-	 * @description	： TODO
-	 * @author 		： <a href="https://github.com/vindell">vindell</a>
-	 * @date 		：2018年2月9日 上午10:17:48
 	 * @param casProperties : Cas 服务端配置参数
 	 * @param casServerPath : Cas 服务端地址，如 login、logout 等
 	 * @param contextPath	: 本地应用名称
@@ -56,9 +52,7 @@ public class CasUrlUtils {
 	
 	/**
 	 * 
-	 * @description	： 构造完整的Cas注销URL,比如client项目的 https://localhost:8443/cas/logout?service=https://localhost:8080/myapp/callback?client_name=cas
-	 * @author 		： <a href="https://github.com/vindell">vindell</a>
-	 * @date 		：2018年2月9日 上午10:09:15
+	 * 构造完整的Cas注销URL,比如client项目的 https://localhost:8443/cas/logout?service=https://localhost:8080/myapp/callback?client_name=cas
 	 * @param casProperties : Cas 服务端配置参数
 	 * @param contextPath	: 本地应用名称
 	 * @param serverUrl		: 回调地址
@@ -73,9 +67,7 @@ public class CasUrlUtils {
 	
 	/**
 	 * 
-	 * @description	： 构造完整的Cas登录URL,i.e. https://localhost:8443/cas/login?service=https://localhost:8080/myapp/callback?client_name=cas
-	 * @author 		： <a href="https://github.com/vindell">vindell</a>
-	 * @date 		：2018年2月9日 上午10:09:01
+	 * 构造完整的Cas登录URL,i.e. https://localhost:8443/cas/login?service=https://localhost:8080/myapp/callback?client_name=cas
 	 * @param casProperties : Cas 服务端配置参数
 	 * @param contextPath	: 本地应用名称
 	 * @param serverUrl		: 回调地址
@@ -90,9 +82,7 @@ public class CasUrlUtils {
 	
 	/**
 	 * 
-	 * @description	： 完整的回调URL,i.e. https://localhost:8080/myapp/callback?client_name=cas
-	 * @author 		： <a href="https://github.com/vindell">vindell</a>
-	 * @date 		：2018年2月9日 上午10:11:33
+	 * 完整的回调URL,i.e. https://localhost:8080/myapp/callback?client_name=cas
 	 * @param casProperties : Cas 服务端配置参数
 	 * @param contextPath	: 本地应用名称
 	 * @param serverUrl		: 回调地址
@@ -125,9 +115,7 @@ public class CasUrlUtils {
 	
 	/**
 	 * 
-	 * @description	： 根据当前请求构造回调地址
-	 * @author 		： <a href="https://github.com/vindell">vindell</a>
-	 * @date 		：2018年2月9日 上午10:14:57
+	 * 根据当前请求构造回调地址
 	 * @param request		: ServletRequest
 	 * @param response		: ServletResponse
 	 * @param casProperties : Cas 服务端配置参数

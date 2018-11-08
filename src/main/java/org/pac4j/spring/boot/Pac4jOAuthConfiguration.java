@@ -20,9 +20,9 @@ import java.util.List;
 
 import org.pac4j.core.client.Client;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
-import org.pac4j.core.http.ajax.DefaultAjaxRequestResolver;
 import org.pac4j.core.http.url.UrlResolver;
-import org.pac4j.oauth.client.BaiduClient;
+import org.pac4j.core.state.StateGenerator;
+import org.pac4j.core.state.StaticOrRandomStateGenerator;
 import org.pac4j.oauth.client.BitbucketClient;
 import org.pac4j.oauth.client.CasOAuthWrapperClient;
 import org.pac4j.oauth.client.DropBoxClient;
@@ -36,14 +36,11 @@ import org.pac4j.oauth.client.OAuth10Client;
 import org.pac4j.oauth.client.OAuth20Client;
 import org.pac4j.oauth.client.OkClient;
 import org.pac4j.oauth.client.OrcidClient;
-import org.pac4j.oauth.client.OschinaClient;
 import org.pac4j.oauth.client.PayPalClient;
 import org.pac4j.oauth.client.QQClient;
-import org.pac4j.oauth.client.SinaWeiboClient;
 import org.pac4j.oauth.client.StravaClient;
 import org.pac4j.oauth.client.TwitterClient;
 import org.pac4j.oauth.client.VkClient;
-import org.pac4j.oauth.client.WeiXinClient;
 import org.pac4j.oauth.client.WindowsLiveClient;
 import org.pac4j.oauth.client.WordPressClient;
 import org.pac4j.oauth.client.YahooClient;
@@ -51,13 +48,14 @@ import org.pac4j.oauth.config.OAuth10Configuration;
 import org.pac4j.oauth.config.OAuth20Configuration;
 import org.pac4j.oauth.profile.OAuth10Profile;
 import org.pac4j.oauth.profile.OAuth20Profile;
-import org.pac4j.spring.boot.ext.Pac4jRelativeUrlResolver;
 import org.pac4j.spring.boot.ext.property.Pac4jOAuthCasClientProperties;
 import org.pac4j.spring.boot.ext.property.Pac4jOAuthClientProperties;
 import org.pac4j.spring.boot.ext.property.Pac4jOAuthFacebookClientProperties;
 import org.pac4j.spring.boot.ext.property.Pac4jOAuthGenericProperties;
 import org.pac4j.spring.boot.ext.property.Pac4jOAuthOkClientProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jOAuthProperties;
 import org.pac4j.spring.boot.ext.property.Pac4jOAuthStravaClientProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -89,17 +87,12 @@ public class Pac4jOAuthConfiguration {
 	private Pac4jProperties pac4jProperties;
 	@Autowired
 	private ServerProperties serverProperties;
-	
+
 	@Bean
 	@ConditionalOnMissingBean
-	protected AjaxRequestResolver ajaxRequestResolver() {
-		return new DefaultAjaxRequestResolver();
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	protected UrlResolver urlResolver() {
-		return new Pac4jRelativeUrlResolver(serverProperties.getServlet().getContextPath());
+	protected StateGenerator stateGenerator(Pac4jOAuthGenericProperties properties) {
+		StateGenerator stateGenerator = new StaticOrRandomStateGenerator();
+		return stateGenerator;
 	}
 	
 	/**
@@ -108,7 +101,7 @@ public class Pac4jOAuthConfiguration {
 	@Bean("oauth20Clients")
 	@SuppressWarnings("rawtypes")
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "generics")
-	public List<Client> oauth20Clients(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
+	public List<Client> oauth20Clients(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver, StateGenerator stateGenerator) {
 		
 		List<Client> oauth20Clients = new ArrayList<Client>();
 		List<Pac4jOAuthGenericProperties> generics = oauthProperties.getGenerics();
@@ -120,13 +113,13 @@ public class Pac4jOAuthConfiguration {
 				
 				final OAuth20Configuration configuration = client.getConfiguration();
 				
-				configuration.setConnectTimeout(properties.getConnectTimeout());
+				//configuration.setConnectTimeout(properties.getConnectTimeout());
 				configuration.setCustomParams(properties.getCustomParams());
-				configuration.setHasGrantType(properties.isHasGrantType());
-				configuration.setReadTimeout(properties.getReadTimeout());
+				//configuration.setHasGrantType(properties.isHasGrantType());
+				//configuration.setReadTimeout(properties.getReadTimeout());
 				configuration.setResponseType(properties.getResponseType());
 				configuration.setScope(properties.getScope());
-				configuration.setStateData(properties.getStateData());
+				configuration.setStateGenerator(stateGenerator);
 				configuration.setTokenAsHeader(properties.isTokenAsHeader());
 				configuration.setWithState(properties.isWithState());
 				
@@ -136,7 +129,7 @@ public class Pac4jOAuthConfiguration {
 				client.setCallbackUrl(pac4jProperties.getCallbackUrl());
 				client.setConfiguration(configuration);
 				client.setCustomParams(properties.getCustomParams());
-				client.setIncludeClientNameInCallbackUrl(pac4jProperties.isIncludeClientNameInCallbackUrl());
+				// client.setIncludeClientNameInCallbackUrl(pac4jProperties.isIncludeClientNameInCallbackUrl());
 				client.setProfileAttrs(properties.getProfileAttrs());
 				client.setSecret(properties.getSecret());
 				client.setTokenUrl(properties.getTokenUrl());
@@ -151,7 +144,7 @@ public class Pac4jOAuthConfiguration {
 		
 	}
 	
-	@Bean
+	/*@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "baidu")
 	public BaiduClient baiduClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
 		
@@ -160,7 +153,7 @@ public class Pac4jOAuthConfiguration {
 		this.initOAuth20Client(client, properties, ajaxRequestResolver, urlResolver);
 		
 		return client;
-	}
+	}*/
 	
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "bitbucket")
@@ -204,7 +197,7 @@ public class Pac4jOAuthConfiguration {
 		this.initOAuth20Client(client, properties, ajaxRequestResolver, urlResolver);
 		
 		client.setFields(properties.getFields());
-		client.setRequiresExtendedToken(properties.isRequiresExtendedToken());
+		//client.setRequiresExtendedToken(properties.isRequiresExtendedToken());
 		client.setLimit(properties.getLimit());
 		
 		return client;
@@ -276,7 +269,7 @@ public class Pac4jOAuthConfiguration {
 		return client;
 	}
 	
-	@Bean
+	/*@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "oschina")
 	public OschinaClient oschinaClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
 		
@@ -285,7 +278,7 @@ public class Pac4jOAuthConfiguration {
 		this.initOAuth20Client(client, properties, ajaxRequestResolver, urlResolver);
 		
 		return client;
-	}
+	}*/
 	
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "paypal")
@@ -309,7 +302,7 @@ public class Pac4jOAuthConfiguration {
 		return client;
 	}
 	
-	@Bean
+	/*@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "renren")
 	public BaiduClient renrenClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
 		
@@ -318,7 +311,7 @@ public class Pac4jOAuthConfiguration {
 		this.initOAuth20Client(client, properties, ajaxRequestResolver, urlResolver);
 		
 		return client;
-	}
+	}*/
 	
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "strava")
@@ -355,7 +348,7 @@ public class Pac4jOAuthConfiguration {
 		return client;
 	}
 	
-	@Bean
+	/*@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "weibo")
 	public SinaWeiboClient sinaWeiboClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
 		
@@ -365,9 +358,9 @@ public class Pac4jOAuthConfiguration {
 		
 		return client;
 		
-	}
+	}*/
 	
-	@Bean
+	/*@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "weixin")
 	public WeiXinClient weiXinClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
 		
@@ -377,7 +370,7 @@ public class Pac4jOAuthConfiguration {
 		
 		return client;
 		
-	}
+	}*/
 	
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "windowslive")
@@ -418,9 +411,9 @@ public class Pac4jOAuthConfiguration {
 
 		final OAuth10Configuration configuration = client.getConfiguration();
 		
-		configuration.setConnectTimeout(properties.getConnectTimeout());
-		configuration.setHasGrantType(properties.isHasGrantType());
-		configuration.setReadTimeout(properties.getReadTimeout());
+		//configuration.setConnectTimeout(properties.getConnectTimeout());
+		//configuration.setHasGrantType(properties.isHasGrantType());
+		//configuration.setReadTimeout(properties.getReadTimeout());
 		configuration.setResponseType(properties.getResponseType());
 		configuration.setTokenAsHeader(properties.isTokenAsHeader());
 		
@@ -429,7 +422,7 @@ public class Pac4jOAuthConfiguration {
 		client.setCallbackUrl(pac4jProperties.getCallbackUrl());
 		client.setKey(properties.getKey());
 		client.setConfiguration(configuration);
-		client.setIncludeClientNameInCallbackUrl(pac4jProperties.isIncludeClientNameInCallbackUrl());
+		//client.setIncludeClientNameInCallbackUrl(pac4jProperties.isIncludeClientNameInCallbackUrl());
 		client.setSecret(properties.getSecret());
 		client.setUrlResolver(urlResolver);
 		
@@ -441,14 +434,14 @@ public class Pac4jOAuthConfiguration {
 
 		final OAuth20Configuration configuration = client.getConfiguration();
 
-		configuration.setConnectTimeout(properties.getConnectTimeout());
+		//configuration.setConnectTimeout(properties.getConnectTimeout());
 		configuration.setCustomParams(properties.getCustomParams());
-		configuration.setHasGrantType(properties.isHasGrantType());
-		configuration.setReadTimeout(properties.getReadTimeout());
-		configuration.setResponseType(properties.getResponseType());
+		//configuration.setHasGrantType(properties.isHasGrantType());
+		//configuration.setReadTimeout(properties.getReadTimeout());
 		configuration.setScope(properties.getScope());
+		configuration.setResponseType(properties.getResponseType());
 		configuration.setWithState(properties.isWithState());
-		configuration.setStateData(properties.getStateData());
+		//configuration.setStateData(properties.getStateData());
 		configuration.setTokenAsHeader(properties.isTokenAsHeader());
 
 		client.setName(properties.getName());
@@ -456,7 +449,7 @@ public class Pac4jOAuthConfiguration {
 		client.setCallbackUrl(pac4jProperties.getCallbackUrl());
 		client.setKey(properties.getKey());
 		client.setConfiguration(configuration);
-		client.setIncludeClientNameInCallbackUrl(pac4jProperties.isIncludeClientNameInCallbackUrl());
+		//client.setIncludeClientNameInCallbackUrl(pac4jProperties.isIncludeClientNameInCallbackUrl());
 		client.setSecret(properties.getSecret());
 		client.setUrlResolver(urlResolver);
 	}

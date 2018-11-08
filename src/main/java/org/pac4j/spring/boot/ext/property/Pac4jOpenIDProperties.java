@@ -13,16 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot;
+package org.pac4j.spring.boot.ext.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(Pac4jStormpathProperties.PREFIX)
-public class Pac4jStormpathProperties {
+@ConfigurationProperties(Pac4jOpenIDProperties.PREFIX)
+public class Pac4jOpenIDProperties {
 
-	public static final String PREFIX = "pac4j.stormpath";
+	public static final String PREFIX = "pac4j.openid";
 	
-	/** Whether Enable Pac4j Stormpath. */
+	/** Whether Enable Pac4j OpenID. */
 	private boolean enabled = false;
 
 	public boolean isEnabled() {

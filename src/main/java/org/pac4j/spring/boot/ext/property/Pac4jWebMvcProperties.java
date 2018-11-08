@@ -13,16 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot;
+package org.pac4j.spring.boot.ext.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(Pac4jSamlProperties.PREFIX)
-public class Pac4jSamlProperties {
+@ConfigurationProperties(Pac4jWebMvcProperties.PREFIX)
+public class Pac4jWebMvcProperties {
 
-	public static final String PREFIX = "pac4j.saml";
+	public static final String PREFIX = "pac4j.webmvc";
 	
-	/** Whether Enable Pac4j Saml. */
+	/** Whether Enable Pac4j WebMvc. */
 	private boolean enabled = false;
 
 	public boolean isEnabled() {

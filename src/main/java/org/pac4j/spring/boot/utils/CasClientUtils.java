@@ -21,16 +21,18 @@ import org.pac4j.cas.client.direct.DirectCasProxyClient;
 import org.pac4j.cas.client.rest.CasRestBasicAuthClient;
 import org.pac4j.cas.client.rest.CasRestFormClient;
 import org.pac4j.cas.config.CasConfiguration;
-import org.pac4j.spring.boot.Pac4jCasProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jCasProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jProperties;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 
 public class CasClientUtils {
 
-	public static CasClient casClient(CasConfiguration configuration, Pac4jCasProperties pac4jProperties,ServerProperties serverProperties) {
-
+	public static CasClient casClient(CasConfiguration configuration, Pac4jProperties pac4jProperties,
+			Pac4jCasProperties pac4jCasProperties,ServerProperties serverProperties) {
+		
 		CasClient casClient = new CasClient(configuration);
-		casClient.setCallbackUrl( pac4jProperties.getServerCallbackUrl());
-		casClient.setName(StringUtils.hasText(pac4jProperties.getCasClientName()) ? pac4jProperties.getCasClientName() : "CasClient");
+		casClient.setCallbackUrl( pac4jProperties.getCallbackUrl());
+		casClient.setName(StringUtils.hasText(pac4jCasProperties.getCasClientName()) ? pac4jCasProperties.getCasClientName() : "CasClient");
 		
 		return casClient;
 	}

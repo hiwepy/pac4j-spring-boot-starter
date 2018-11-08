@@ -13,19 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot;
+package org.pac4j.spring.boot.ext.property;
 
 import org.pac4j.cas.config.CasProtocol;
 import org.pac4j.core.context.HttpConstants;
 import org.pac4j.core.context.Pac4jConstants;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(Pac4jCasProperties.PREFIX)
 public class Pac4jCasProperties {
 
 	public static final String PREFIX = "pac4j.cas";
 
-	/* ================================== Cas Client ================================= */
+/* ================================== Cas Client ================================= */
 	
 	// default name of the CAS attribute for remember me authentication (CAS 3.4.10+)
     public static final String DEFAULT_REMEMBER_ME_ATTRIBUTE_NAME = "longTermAuthenticationRequestTokenUsed";
@@ -69,7 +67,7 @@ public class Pac4jCasProperties {
 	 */
 	private String serverName;
 	/** Defines the location of the application cas callback URL, i.e. /callback */
-	private String serverCallbackUrl;
+	//private String serverCallbackUrl;
 	/** The service URL to send to the CAS server, i.e. https://localhost:8443/yourwebapp/index.html */
 	private String service;
 	/** Specifies the name of the request parameter on where to find the service (i.e. service). */
@@ -81,7 +79,10 @@ public class Pac4jCasProperties {
 	 */
 	private long tolerance = 1000L;
 	
-	/* ================================== Pac4j Cas ================================= */
+	/* ================================== Shiro Pac4j Cas ================================= */
+	
+	/** Whether Enable Pac4j Cas. */
+	private boolean enabled = false;
 	
 	/** The protocol of the CAS Client. */
 	private CasProtocol casProtocol = CasProtocol.CAS20_PROXY;
@@ -170,6 +171,14 @@ public class Pac4jCasProperties {
 		this.artifactParameterName = artifactParameterName;
 	}
 
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	public String getEncoding() {
 		return encoding;
 	}
@@ -210,13 +219,13 @@ public class Pac4jCasProperties {
 		this.serverName = serverName;
 	}
 
-	public String getServerCallbackUrl() {
+	/*public String getServerCallbackUrl() {
 		return serverCallbackUrl;
 	}
 
 	public void setServerCallbackUrl(String serverCallbackUrl) {
 		this.serverCallbackUrl = serverCallbackUrl;
-	}
+	}*/
 
 	public String getService() {
 		return service;
@@ -361,4 +370,5 @@ public class Pac4jCasProperties {
 	public void setPasswordParameterName(String passwordParameterName) {
 		this.passwordParameterName = passwordParameterName;
 	}
+	
 }

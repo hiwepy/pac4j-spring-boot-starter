@@ -15,28 +15,15 @@
  */
 package org.pac4j.spring.boot;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.ArrayUtils;
-import org.pac4j.core.authorization.authorizer.CheckHttpMethodAuthorizer;
-import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
-import org.pac4j.core.context.HttpConstants.HTTP_METHOD;
-import org.pac4j.core.context.J2EContext;
-import org.pac4j.core.context.session.J2ESessionStore;
-import org.pac4j.core.context.session.SessionStore;
-import org.pac4j.core.http.HttpActionAdapter;
-import org.pac4j.core.http.J2ENopHttpActionAdapter;
-import org.pac4j.http.authorization.authorizer.IpRegexpAuthorizer;
 import org.pac4j.j2e.filter.CallbackFilter;
 import org.pac4j.j2e.filter.LogoutFilter;
 import org.pac4j.j2e.filter.SecurityFilter;
 import org.pac4j.spring.boot.ext.Pac4jPathBuilder;
-import org.pac4j.spring.boot.utils.StringUtils;
+import org.pac4j.spring.boot.ext.property.Pac4jJ2eProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -46,14 +33,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @ConditionalOnWebApplication
 @ConditionalOnClass({CallbackFilter.class, SecurityFilter.class, LogoutFilter.class })
-@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
-@EnableConfigurationProperties({ Pac4jProperties.class, ServerProperties.class })
-public class Pac4jWebFilterConfiguration implements WebMvcConfigurer {
+@ConditionalOnProperty(prefix = Pac4jJ2eProperties.PREFIX, value = "enabled", havingValue = "true")
+@EnableConfigurationProperties({ Pac4jJ2eProperties.class})
+public class Pac4jJ2eConfiguration implements WebMvcConfigurer {
 
 	@Autowired
 	private Pac4jProperties pac4jProperties;
@@ -62,67 +48,13 @@ public class Pac4jWebFilterConfiguration implements WebMvcConfigurer {
 	@Autowired
 	private Pac4jPathBuilder pathBuilder;
 	
-	@Bean
-	protected Pac4jPathBuilder pac4jPathBuilder() {
-		return new Pac4jPathBuilder();
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	protected SessionStore<J2EContext> sessionStore() {
-		return new J2ESessionStore();
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	protected HttpActionAdapter<Object, J2EContext> httpActionAdapter() {
-		return J2ENopHttpActionAdapter.INSTANCE;
-	}
-	
-	@Bean
-	public Config config(Clients clients, 
-			HttpActionAdapter<Object, J2EContext> httpActionAdapter,SessionStore<J2EContext> sessionStore) {
-		
-		final Config config = new Config(clients);
-		if(StringUtils.hasText(pac4jProperties.getAllowedIpRegexpPattern())) {	
-			config.addAuthorizer("isIPAuthenticated", new IpRegexpAuthorizer(pac4jProperties.getAllowedIpRegexpPattern()));
-		}
-		if(ArrayUtils.isNotEmpty(pac4jProperties.getAllowedHttpMethods())) {	
-			String[] allowedHttpMethods = pac4jProperties.getAllowedHttpMethods();
-			List<HTTP_METHOD> methods = new ArrayList<HTTP_METHOD>();
-			for (String method : allowedHttpMethods) {
-				methods.add(HTTP_METHOD.valueOf(method));
-			}
-			config.addAuthorizer("isMethodAuthenticated", new CheckHttpMethodAuthorizer(methods));
-		}
-		
-		/*excludePath
-		excludeRegex
-		excludeBranch
-		
-		[] methods
-		private String headerName;
-	    private String expectedValue;*/
-	    
-	    
-		//config.addMatcher("path", new AntPathMatcher().excludePath("").excludeBranch("").excludeRegex(""));
-		//config.addMatcher("header", new HeaderMatcher());
-		//config.addMatcher("method", new HttpMethodMatcher());
-		
-		config.setClients(clients);
-		config.setHttpActionAdapter(httpActionAdapter);
-		config.setSessionStore(sessionStore);
-		
-		return config;
-	}
-	
 	/**
 	 * 账号注销过滤器 ：处理账号注销
 	 */
 	@Bean
-	public FilterRegistrationBean logoutFilter(Config config){
+	public FilterRegistrationBean<LogoutFilter> j2eLogoutFilter(Config config){
 		
-		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
+		FilterRegistrationBean<LogoutFilter> filterRegistration = new FilterRegistrationBean<LogoutFilter>();
 		
 		LogoutFilter logoutFilter = new LogoutFilter();
 	    
@@ -149,9 +81,9 @@ public class Pac4jWebFilterConfiguration implements WebMvcConfigurer {
 	 * 回调过滤器 ：处理登录后的回调访问
 	 */
 	@Bean
-	public FilterRegistrationBean callbackFilter(Config config){
+	public FilterRegistrationBean<CallbackFilter> j2eCallbackFilter(Config config){
 		
-		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
+		FilterRegistrationBean<CallbackFilter> filterRegistration = new FilterRegistrationBean<CallbackFilter>();
 		
 	    CallbackFilter callbackFilter = new CallbackFilter();
 	    
@@ -173,9 +105,9 @@ public class Pac4jWebFilterConfiguration implements WebMvcConfigurer {
 	 * 权限控制过滤器 ：实现权限认证
 	 */
 	@Bean
-	public FilterRegistrationBean casSecurityFilter(Config config){
+	public FilterRegistrationBean<SecurityFilter> j2eSecurityFilter(Config config){
 		
-		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
+		FilterRegistrationBean<SecurityFilter> filterRegistration = new FilterRegistrationBean<SecurityFilter>();
 		
 		SecurityFilter securityFilter = new SecurityFilter();  
 		

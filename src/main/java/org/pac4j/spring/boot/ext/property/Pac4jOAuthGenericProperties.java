@@ -22,7 +22,6 @@ import org.pac4j.oauth.config.OAuth20Configuration;
 
 import com.github.scribejava.core.model.Verb;
 
-
 public class Pac4jOAuthGenericProperties extends OAuth20Configuration {
 
 	private String name;
@@ -50,7 +49,6 @@ public class Pac4jOAuthGenericProperties extends OAuth20Configuration {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-
 
 	public String getAuthUrl() {
 		return authUrl;

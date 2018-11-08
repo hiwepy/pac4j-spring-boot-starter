@@ -13,16 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot;
+package org.pac4j.spring.boot.ext.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(Pac4jLdapProperties.PREFIX)
-public class Pac4jLdapProperties {
+@ConfigurationProperties(Pac4jOidcProperties.PREFIX)
+public class Pac4jOidcProperties {
 
-	public static final String PREFIX = "pac4j.ldap";
+	public static final String PREFIX = "pac4j.oidc";
 	
-	/** Whether Enable Pac4j Ldap. */
+	/** Whether Enable Pac4j Oidc. */
 	private boolean enabled = false;
 
 	public boolean isEnabled() {

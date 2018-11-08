@@ -16,6 +16,7 @@
 package org.pac4j.spring.boot;
 
 import org.pac4j.core.config.Config;
+import org.pac4j.spring.boot.ext.property.Pac4jWebMvcProperties;
 import org.pac4j.springframework.web.SecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -23,14 +24,14 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @ComponentScan(basePackages = "org.pac4j.springframework.web")
-@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
-@EnableConfigurationProperties({ Pac4jProperties.class })
-public class Pac4jWebAutoConfiguration extends WebMvcConfigurerAdapter {
-
+@ConditionalOnProperty(prefix = Pac4jWebMvcProperties.PREFIX, value = "enabled", havingValue = "true")
+@EnableConfigurationProperties({ Pac4jWebMvcProperties.class })
+public class Pac4jWebMvcConfiguration implements WebMvcConfigurer {
+	
 	@Autowired
     private Config config;
 

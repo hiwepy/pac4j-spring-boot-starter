@@ -17,9 +17,11 @@ package org.pac4j.spring.boot;
 
 import java.io.File;
 
-import org.pac4j.core.http.UrlResolver;
+import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.saml.client.SAML2Client;
 import org.pac4j.saml.client.SAML2ClientConfiguration;
+import org.pac4j.spring.boot.ext.property.Pac4jProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jSamlProperties;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

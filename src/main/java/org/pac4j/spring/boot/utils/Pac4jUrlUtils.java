@@ -15,15 +15,12 @@
  */
 package org.pac4j.spring.boot.utils;
 
-import org.pac4j.spring.boot.Pac4jProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jProperties;
 
 public class Pac4jUrlUtils {
 
 	/**
-	 * 
-	 * @description	： 构造回调URL, i.e. myapp/serverUrl
-	 * @author 		： <a href="https://github.com/vindell">vindell</a>
-	 * @date 		：2018年2月9日 上午9:38:23
+	 * 构造回调URL, i.e. myapp/serverUrl
 	 * @param contextPath
 	 * @param serverUrl
 	 * @return
@@ -39,9 +36,7 @@ public class Pac4jUrlUtils {
 	
 	/**
 	 * 
-	 * @description	： 构造回调URL, i.e. /callback?client_name=cas
-	 * @author 		： <a href="https://github.com/vindell">vindell</a>
-	 * @date 		：2018年2月9日 上午9:35:29
+	 * 构造回调URL, i.e. /callback?client_name=cas
 	 * @param pac4jProperties
 	 * @return
 	 */

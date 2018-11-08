@@ -18,12 +18,12 @@ package org.pac4j.spring.boot.ext;
 import org.pac4j.core.context.ContextHelper;
 import org.pac4j.core.context.HttpConstants;
 import org.pac4j.core.context.WebContext;
-import org.pac4j.core.http.UrlResolver;
+import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.spring.boot.utils.StringUtils;
 
 public class Pac4jRelativeUrlResolver implements UrlResolver {
 
-	private String contextPath;
+private String contextPath;
 	
 	public Pac4jRelativeUrlResolver(String contextPath) {
 		this.contextPath = StringUtils.hasText(contextPath) ? contextPath : "/";
@@ -52,4 +52,5 @@ public class Pac4jRelativeUrlResolver implements UrlResolver {
 
         return url;
     }
+	
 }

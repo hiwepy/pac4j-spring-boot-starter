@@ -13,16 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot;
+package org.pac4j.spring.boot.ext.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(Pac4jOidcProperties.PREFIX)
-public class Pac4jOidcProperties {
+@ConfigurationProperties(Pac4jJwtProperties.PREFIX)
+public class Pac4jJwtProperties {
 
-	public static final String PREFIX = "pac4j.oidc";
+	public static final String PREFIX = "pac4j.jwt";
 	
-	/** Whether Enable Pac4j Oidc. */
+	/** Whether Enable Pac4j Jwt. */
 	private boolean enabled = false;
 
 	public boolean isEnabled() {

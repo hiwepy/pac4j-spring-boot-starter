@@ -19,6 +19,8 @@ import org.pac4j.http.client.direct.DirectBasicAuthClient;
 import org.pac4j.http.client.indirect.FormClient;
 import org.pac4j.http.client.indirect.IndirectBasicAuthClient;
 import org.pac4j.http.credentials.authenticator.test.SimpleTestUsernamePasswordAuthenticator;
+import org.pac4j.spring.boot.ext.property.Pac4jHttpProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jProperties;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -38,32 +40,37 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties({ Pac4jHttpProperties.class, Pac4jProperties.class, ServerProperties.class })
 public class Pac4jHttpConfiguration {
 
-    @Bean
- 	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "casClient", havingValue = "true")
- 	public FormClient formClient() {
- 		
- 		 // HTTP
- 	    final FormClient formClient = new FormClient("http://localhost:8080/loginForm.jsp", new SimpleTestUsernamePasswordAuthenticator());
- 	  
+	@Bean
+ 	@ConditionalOnProperty(prefix = Pac4jHttpProperties.PREFIX, value = "form-client", havingValue = "true")
+ 	public FormClient formClient(Pac4jHttpProperties pac4jHttpProperties) {
+
+		SimpleTestUsernamePasswordAuthenticator usernamePasswordAuthenticator = new SimpleTestUsernamePasswordAuthenticator();
+		final FormClient formClient = new FormClient(pac4jHttpProperties.getLoginUrl(),
+				pac4jHttpProperties.getUsernameParameter(), pac4jHttpProperties.getPasswordParameter(),
+				usernamePasswordAuthenticator);
+		
  		return formClient;
  	}
     
 	@Bean
-	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "casClient", havingValue = "true")
-	public IndirectBasicAuthClient indirectBasicAuthClient() {
+	@ConditionalOnProperty(prefix = Pac4jHttpProperties.PREFIX, value = "indirect-basic-auth-client", havingValue = "true")
+	public IndirectBasicAuthClient indirectBasicAuthClient(Pac4jHttpProperties pac4jHttpProperties) {
 		
-		final IndirectBasicAuthClient indirectBasicAuthClient = new IndirectBasicAuthClient(new SimpleTestUsernamePasswordAuthenticator());
+		final SimpleTestUsernamePasswordAuthenticator usernamePasswordAuthenticator = new SimpleTestUsernamePasswordAuthenticator();
+		
+		final IndirectBasicAuthClient indirectBasicAuthClient = new IndirectBasicAuthClient(pac4jHttpProperties.getRealmName(), usernamePasswordAuthenticator);
 
 		return indirectBasicAuthClient;
 	}
 	
 	@Bean
-	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "casClient", havingValue = "true")
-	public DirectBasicAuthClient directBasicAuthClient() {
+	@ConditionalOnProperty(prefix = Pac4jHttpProperties.PREFIX, value = "direct-basic-auth-client", havingValue = "true")
+	public DirectBasicAuthClient directBasicAuthClient(Pac4jHttpProperties pac4jHttpProperties) {
 		
-		 // basic auth
-	    final DirectBasicAuthClient directBasicAuthClient = new DirectBasicAuthClient(new SimpleTestUsernamePasswordAuthenticator());
-
+		final SimpleTestUsernamePasswordAuthenticator usernamePasswordAuthenticator = new SimpleTestUsernamePasswordAuthenticator();
+		// basic auth
+	    final DirectBasicAuthClient directBasicAuthClient = new DirectBasicAuthClient(usernamePasswordAuthenticator);
+	    
 		return directBasicAuthClient;
 		
 	}

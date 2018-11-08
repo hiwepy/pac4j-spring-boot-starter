@@ -29,23 +29,14 @@ public class Pac4jOAuthClientProperties {
 	private String name;
 	private String desc;
 	private String logoUrl;
-
 	private String key;
-
 	private String secret;
-
 	private boolean tokenAsHeader;
-
 	private String responseType = RESPONSE_TYPE_CODE;
-
 	private String scope;
-
 	private boolean hasGrantType;
-
 	private int connectTimeout = HttpConstants.DEFAULT_CONNECT_TIMEOUT;
-
 	private int readTimeout = HttpConstants.DEFAULT_READ_TIMEOUT;
-
 	private Verb profileVerb = Verb.POST;
 
 	/* Map containing user defined parameters */

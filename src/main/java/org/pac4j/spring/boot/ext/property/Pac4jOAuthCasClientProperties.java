@@ -22,11 +22,8 @@ public class Pac4jOAuthCasClientProperties extends Pac4jOAuthClientProperties {
      * For example: http://localhost:8080/cas/oauth2.0
      */
     private String casOAuthUrl;
-
     private String casLogoutUrl;
-
     private boolean springSecurityCompliant = false;
-
     private boolean implicitFlow = false;
 
 	public String getCasOAuthUrl() {

@@ -1,4 +1,16 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.apache.shiro.spring.boot.ShiroPac4jCasWebAutoConfiguration,\
-org.apache.shiro.spring.boot.ShiroPac4jCasWebFilterConfiguration
+org.pac4j.spring.boot.Pac4jBaseConfiguration,\
+org.pac4j.spring.boot.Pac4jCasConfiguration,\
+org.pac4j.spring.boot.Pac4jHttpConfiguration,\
+org.pac4j.spring.boot.Pac4jJwtConfiguration,\
+org.pac4j.spring.boot.Pac4jKerberosConfiguration,\
+org.pac4j.spring.boot.Pac4jLdapConfiguration,\
+org.pac4j.spring.boot.Pac4jOAuthConfiguration,\
+org.pac4j.spring.boot.Pac4jOidcConfiguration,\
+org.pac4j.spring.boot.Pac4jOpenIDConfiguration,\
+org.pac4j.spring.boot.Pac4jSamlConfiguration,\
+org.pac4j.spring.boot.Pac4jClientsConfiguration,\
+org.pac4j.spring.boot.Pac4jAutoConfiguration,\
+org.pac4j.spring.boot.Pac4jJ2eConfiguration,\
+org.pac4j.spring.boot.Pac4jWebMvcConfiguration

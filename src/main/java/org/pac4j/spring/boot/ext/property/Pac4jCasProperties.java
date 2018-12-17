@@ -18,7 +18,9 @@ package org.pac4j.spring.boot.ext.property;
 import org.pac4j.cas.config.CasProtocol;
 import org.pac4j.core.context.HttpConstants;
 import org.pac4j.core.context.Pac4jConstants;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
+@ConfigurationProperties(Pac4jCasProperties.PREFIX)
 public class Pac4jCasProperties {
 
 	public static final String PREFIX = "pac4j.cas";

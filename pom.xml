@@ -373,13 +373,13 @@
         <maven-surefire-plugin.vertsion>2.21.0</maven-surefire-plugin.vertsion>
 		<maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
         <fastjson.version>1.2.51</fastjson.version>
-        <pac4j.version>3.3.0</pac4j.version>
+        <pac4j.version>3.4.0</pac4j.version>
         <pac4j-dropwizard.version>3.0.0</pac4j-dropwizard.version>
 		<pac4j-jax-rs.version>3.0.0</pac4j-jax-rs.version>
 		<pac4j-j2e.version>4.1.0</pac4j-j2e.version>
 		<pac4j-spark.version>3.0.0</pac4j-spark.version> 
 		<pac4j-webmvc.version>3.2.0</pac4j-webmvc.version>
-		<scribejava.version>6.0.0</scribejava.version>
+		<scribejava.version>6.2.0</scribejava.version>
 		<woodstox-asl.version>4.4.1</woodstox-asl.version>
 	</properties>
 

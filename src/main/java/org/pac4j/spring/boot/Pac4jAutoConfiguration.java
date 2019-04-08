@@ -44,14 +44,13 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @ConditionalOnWebApplication
 @ConditionalOnClass({CallbackFilter.class, SecurityFilter.class, LogoutFilter.class })
 @ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jProperties.class, ServerProperties.class })
-public class Pac4jAutoConfiguration implements WebMvcConfigurer {
+public class Pac4jAutoConfiguration {
 
 	@Bean
 	protected Pac4jPathBuilder pac4jPathBuilder() {

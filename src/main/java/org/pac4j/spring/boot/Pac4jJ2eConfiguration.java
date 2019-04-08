@@ -32,14 +32,13 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @ConditionalOnWebApplication
 @ConditionalOnClass({CallbackFilter.class, SecurityFilter.class, LogoutFilter.class })
 @ConditionalOnProperty(prefix = Pac4jJ2eProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jJ2eProperties.class})
-public class Pac4jJ2eConfiguration implements WebMvcConfigurer {
+public class Pac4jJ2eConfiguration {
 
 	@Autowired
 	private Pac4jProperties pac4jProperties;

@@ -19,7 +19,7 @@ import java.io.File;
 
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.saml.client.SAML2Client;
-import org.pac4j.saml.client.SAML2ClientConfiguration;
+import org.pac4j.saml.config.SAML2Configuration;
 import org.pac4j.spring.boot.ext.property.Pac4jProperties;
 import org.pac4j.spring.boot.ext.property.Pac4jSamlProperties;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -38,15 +38,15 @@ import org.springframework.core.io.FileSystemResource;
 	"org.pac4j.spring.boot.Pac4jWebFilterConfiguration"
 })
 @ConditionalOnWebApplication
-@ConditionalOnClass({ SAML2ClientConfiguration.class, SAML2Client.class})
+@ConditionalOnClass({ SAML2Configuration.class, SAML2Client.class})
 @ConditionalOnProperty(prefix = Pac4jSamlProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jSamlProperties.class, Pac4jProperties.class, ServerProperties.class })
 public class Pac4jSamlConfiguration {
 
 	@Bean
-    public SAML2ClientConfiguration samlConfiguration() {
+    public SAML2Configuration samlConfiguration() {
 		
-		final SAML2ClientConfiguration configuration = new SAML2ClientConfiguration(new ClassPathResource("samlKeystore.jks"),
+		final SAML2Configuration configuration = new SAML2Configuration(new ClassPathResource("samlKeystore.jks"),
                 "pac4j-demo-passwd",
                 "pac4j-demo-passwd",
                 new ClassPathResource("metadata-okta.xml"));
@@ -78,7 +78,7 @@ public class Pac4jSamlConfiguration {
 	
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "casClient", havingValue = "true")
-	public SAML2Client saml2Client(SAML2ClientConfiguration samlConfiguration, UrlResolver urlResolver) {
+	public SAML2Client saml2Client(SAML2Configuration samlConfiguration, UrlResolver urlResolver) {
 		
 	    final SAML2Client saml2Client = new SAML2Client(samlConfiguration);
 	    

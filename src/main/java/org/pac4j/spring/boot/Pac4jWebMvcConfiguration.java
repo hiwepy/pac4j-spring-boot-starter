@@ -19,6 +19,7 @@ import org.pac4j.core.config.Config;
 import org.pac4j.spring.boot.ext.property.Pac4jWebMvcProperties;
 import org.pac4j.springframework.web.SecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@ConditionalOnClass({ SecurityInterceptor.class})
 @ComponentScan(basePackages = "org.pac4j.springframework.web")
 @ConditionalOnProperty(prefix = Pac4jWebMvcProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jWebMvcProperties.class })

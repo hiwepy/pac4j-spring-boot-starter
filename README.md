@@ -1,2 +1,4 @@
-# spring-boot-starter-casclient
-casclient starter for spring boot
+# spring-boot-starter-pac4j
+pac4j starter for spring boot
+
+https://github.com/pac4j/spring-security-pac4j/wiki/Security-configuration

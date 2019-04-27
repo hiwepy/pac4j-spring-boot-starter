@@ -297,12 +297,7 @@ public class Pac4jProperties {
 
     /** SecurityFilter */
     
-    /** Pattern that logout urls must match（注销登录路径规则，用于匹配登录请求操作）*/
-    private String logoutUrlPattern;
-    /** Whether the application logout must be performed（是否注销本地应用身份认证）. 默认 true*/
-    private boolean localLogout = true;
-    /** Whether the centralLogout must be performed（是否注销统一身份认证）. 默认 true*/
-    private boolean centralLogout = true;
+
     
     /** 登录地址：会话不存在时访问的地址 */
 	private String loginUrl;
@@ -417,29 +412,6 @@ public class Pac4jProperties {
 		this.multiProfile = multiProfile;
 	}
 
-	public String getLogoutUrlPattern() {
-		return logoutUrlPattern;
-	}
-
-	public void setLogoutUrlPattern(String logoutUrlPattern) {
-		this.logoutUrlPattern = logoutUrlPattern;
-	}
-
-	public boolean isLocalLogout() {
-		return localLogout;
-	}
-
-	public void setLocalLogout(boolean localLogout) {
-		this.localLogout = localLogout;
-	}
-
-	public boolean isCentralLogout() {
-		return centralLogout;
-	}
-
-	public void setCentralLogout(boolean centralLogout) {
-		this.centralLogout = centralLogout;
-	}
 
 	public String getLoginUrl() {
 		return loginUrl;

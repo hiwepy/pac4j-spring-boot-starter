@@ -21,6 +21,7 @@ import org.pac4j.j2e.filter.LogoutFilter;
 import org.pac4j.j2e.filter.SecurityFilter;
 import org.pac4j.spring.boot.ext.Pac4jPathBuilder;
 import org.pac4j.spring.boot.ext.property.Pac4jJ2eProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jLogoutProperties;
 import org.pac4j.spring.boot.ext.property.Pac4jProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -37,11 +38,13 @@ import org.springframework.core.Ordered;
 @ConditionalOnWebApplication
 @ConditionalOnClass({CallbackFilter.class, SecurityFilter.class, LogoutFilter.class })
 @ConditionalOnProperty(prefix = Pac4jJ2eProperties.PREFIX, value = "enabled", havingValue = "true")
-@EnableConfigurationProperties({ Pac4jJ2eProperties.class})
+@EnableConfigurationProperties({ Pac4jJ2eProperties.class, Pac4jLogoutProperties.class})
 public class Pac4jJ2eConfiguration {
 
 	@Autowired
 	private Pac4jProperties pac4jProperties;
+	@Autowired
+	private Pac4jLogoutProperties logoutProperties;
 	@Autowired
 	private ServerProperties serverProperties;
 	@Autowired
@@ -51,22 +54,53 @@ public class Pac4jJ2eConfiguration {
 	 * 账号注销过滤器 ：处理账号注销
 	 */
 	@Bean
-	public FilterRegistrationBean<LogoutFilter> j2eLogoutFilter(Config config){
+	@ConditionalOnProperty(prefix = Pac4jLogoutProperties.PREFIX, value = "local-logout", havingValue = "true")
+	public FilterRegistrationBean<LogoutFilter> j2eLocalLogoutFilter(Config config){
 		
 		FilterRegistrationBean<LogoutFilter> filterRegistration = new FilterRegistrationBean<LogoutFilter>();
 		
 		LogoutFilter logoutFilter = new LogoutFilter();
 	    
 		// Whether the centralLogout must be performed（是否注销统一身份认证）
-        logoutFilter.setCentralLogout(pac4jProperties.isCentralLogout());
+        logoutFilter.setCentralLogout(logoutProperties.isCentralLogout());
 		// Security Configuration
         logoutFilter.setConfig(config);
         // Default logourl url
         logoutFilter.setDefaultUrl( pathBuilder.getLogoutURL(serverProperties.getServlet().getContextPath()) );
         // Whether the application logout must be performed（是否注销本地应用身份认证）
-        logoutFilter.setLocalLogout(pac4jProperties.isLocalLogout());
+        logoutFilter.setLocalLogout(logoutProperties.isLocalLogout());
         // Pattern that logout urls must match（注销登录路径规则，用于匹配登录请求操作）
-        logoutFilter.setLogoutUrlPattern(pac4jProperties.getLogoutUrlPattern());
+        logoutFilter.setLogoutUrlPattern(logoutProperties.getLogoutUrlPattern());
+        
+        filterRegistration.setFilter(logoutFilter);
+        
+        filterRegistration.setOrder(Ordered.HIGHEST_PRECEDENCE + 1000);
+	    filterRegistration.addUrlPatterns("/logout");
+	    
+	    return filterRegistration;
+	}
+	
+	/**
+	 * 账号注销过滤器 ：处理账号注销
+	 */
+	@Bean
+	@ConditionalOnProperty(prefix = Pac4jLogoutProperties.PREFIX, value = "central-logout", havingValue = "true")
+	public FilterRegistrationBean<LogoutFilter> j2eCentralLogoutFilter(Config config){
+		
+		FilterRegistrationBean<LogoutFilter> filterRegistration = new FilterRegistrationBean<LogoutFilter>();
+		
+		LogoutFilter logoutFilter = new LogoutFilter();
+	    
+		// Whether the centralLogout must be performed（是否注销统一身份认证）
+        logoutFilter.setCentralLogout(true);
+		// Security Configuration
+        logoutFilter.setConfig(config);
+        // Default logourl url
+        logoutFilter.setDefaultUrl( pathBuilder.getLogoutURL(serverProperties.getServlet().getContextPath()) );
+        // Whether the application logout must be performed（是否注销本地应用身份认证）
+        logoutFilter.setLocalLogout(logoutProperties.isLocalLogout());
+        // Pattern that logout urls must match（注销登录路径规则，用于匹配登录请求操作）
+        logoutFilter.setLogoutUrlPattern(logoutProperties.getLogoutUrlPattern());
         
         filterRegistration.setFilter(logoutFilter);
         

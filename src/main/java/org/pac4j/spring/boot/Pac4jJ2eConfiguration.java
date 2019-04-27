@@ -67,6 +67,8 @@ public class Pac4jJ2eConfiguration {
         logoutFilter.setConfig(config);
         // Default logourl url
         logoutFilter.setDefaultUrl( pathBuilder.getLogoutURL(serverProperties.getServlet().getContextPath()) );
+        // Whether the Session must be destroyed（是否销毁Session）
+        logoutFilter.setDestroySession(logoutProperties.isDestroySession());
         // Whether the application logout must be performed（是否注销本地应用身份认证）
         logoutFilter.setLocalLogout(logoutProperties.isLocalLogout());
         // Pattern that logout urls must match（注销登录路径规则，用于匹配登录请求操作）
@@ -97,6 +99,8 @@ public class Pac4jJ2eConfiguration {
         logoutFilter.setConfig(config);
         // Default logourl url
         logoutFilter.setDefaultUrl( pathBuilder.getLogoutURL(serverProperties.getServlet().getContextPath()) );
+        // Whether the Session must be destroyed（是否销毁Session）
+        logoutFilter.setDestroySession(logoutProperties.isDestroySession());
         // Whether the application logout must be performed（是否注销本地应用身份认证）
         logoutFilter.setLocalLogout(logoutProperties.isLocalLogout());
         // Pattern that logout urls must match（注销登录路径规则，用于匹配登录请求操作）

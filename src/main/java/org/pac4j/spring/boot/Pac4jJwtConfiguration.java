@@ -15,50 +15,131 @@
  */
 package org.pac4j.spring.boot;
 
+import java.util.List;
+
+import org.pac4j.http.client.direct.CookieClient;
+import org.pac4j.http.client.direct.HeaderClient;
 import org.pac4j.http.client.direct.ParameterClient;
+import org.pac4j.jwt.config.encryption.EncryptionConfiguration;
 import org.pac4j.jwt.config.encryption.SecretEncryptionConfiguration;
 import org.pac4j.jwt.config.signature.SecretSignatureConfiguration;
+import org.pac4j.jwt.config.signature.SignatureConfiguration;
 import org.pac4j.jwt.credentials.authenticator.JwtAuthenticator;
-import org.pac4j.oidc.config.OidcConfiguration;
 import org.pac4j.spring.boot.ext.property.Pac4jJwtProperties;
 import org.pac4j.spring.boot.ext.property.Pac4jProperties;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.nimbusds.jose.EncryptionMethod;
+import com.nimbusds.jose.JWSAlgorithm;
+
 @Configuration
-@AutoConfigureBefore( name = {
-	"org.pac4j.spring.boot.Pac4jWebFilterConfiguration"
-})
-@ConditionalOnWebApplication
-@ConditionalOnClass({ ParameterClient.class, JwtAuthenticator.class})
+@ConditionalOnClass({ CookieClient.class, ParameterClient.class, HeaderClient.class, JwtAuthenticator.class })
 @ConditionalOnProperty(prefix = Pac4jJwtProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jJwtProperties.class, Pac4jProperties.class, ServerProperties.class })
 public class Pac4jJwtConfiguration {
 
-	String salt = "";
+	@Autowired
+	private Pac4jJwtProperties jwtProperties;
+
+	@Bean
+	@ConditionalOnMissingBean
+	public EncryptionConfiguration encryptionConfiguration() {
+		SecretEncryptionConfiguration encryptionConfiguration = new SecretEncryptionConfiguration(
+				jwtProperties.getSecret(), JWSAlgorithm.parse(jwtProperties.getAlgorithm().value()),
+				EncryptionMethod.parse(jwtProperties.getEncryption().value()));
+		return encryptionConfiguration;
+	}
 	
 	@Bean
-	@ConditionalOnProperty(prefix = Pac4jJwtProperties.PREFIX, value = "casClient", havingValue = "true")
-	public ParameterClient parameterClient(OidcConfiguration oidcConfiguration) {
-		
-        // REST authent with JWT for a token passed in the url as the token parameter
-        final SecretSignatureConfiguration secretSignatureConfiguration = new SecretSignatureConfiguration(salt);
-        final SecretEncryptionConfiguration secretEncryptionConfiguration = new SecretEncryptionConfiguration(salt);
-        final JwtAuthenticator authenticator = new JwtAuthenticator();
-        authenticator.setSignatureConfiguration(secretSignatureConfiguration);
-        authenticator.setEncryptionConfiguration(secretEncryptionConfiguration);
-        ParameterClient parameterClient = new ParameterClient("token", authenticator);
-        parameterClient.setSupportGetRequest(true);
-        parameterClient.setSupportPostRequest(false);
-	    
-		return parameterClient;
+	@ConditionalOnMissingBean
+	public SignatureConfiguration signatureConfiguration() {
+		return new SecretSignatureConfiguration(jwtProperties.getSecret(),
+				JWSAlgorithm.parse(jwtProperties.getAlgorithm().value()));
 	}
-    
-    
+
+	@Bean
+	@ConditionalOnMissingBean
+	public JwtAuthenticator jwtAuthenticator(List<SignatureConfiguration> signatureConfigurations,
+			List<EncryptionConfiguration> encryptionConfigurations) {
+
+		JwtAuthenticator authenticator = new JwtAuthenticator();
+		//authenticator.setEncryptionConfiguration(encryptionConfiguration);
+		authenticator.setEncryptionConfigurations(encryptionConfigurations);
+		//authenticator.setExpirationTime(expirationTime);
+		//authenticator.setProfileDefinition(profileDefinition);
+		//authenticator.setRealmName(realmName);
+		//authenticator.setSignatureConfiguration(signatureConfiguration);
+		authenticator.setSignatureConfigurations(signatureConfigurations);
+		
+		return authenticator;
+	}
+	
+	@Bean
+	public CookieClient jwtCookieClient(JwtAuthenticator jwtAuthenticator) {
+
+		CookieClient client = new CookieClient(jwtProperties.getAuthorizationCookieName(), jwtAuthenticator);
+		
+		//client.setAuthenticator(jwtAuthenticator);
+		//client.setAuthorizationGenerator(authorizationGenerator);
+		//client.setAuthorizationGenerators(authorizationGenerators);
+		//client.setCredentialsExtractor(credentialsExtractor);
+		if(jwtProperties.getCustomProperties() != null ) {
+			client.setCustomProperties(jwtProperties.getCustomProperties());
+		}
+		client.setName(jwtProperties.getCookieClientName());
+		client.setCookieName(jwtProperties.getAuthorizationCookieName());
+		//client.setProfileCreator(profileCreator);
+		
+		return client;
+	}
+
+	@Bean
+	public HeaderClient jwtHeaderClient(JwtAuthenticator jwtAuthenticator) {
+
+		HeaderClient client = new HeaderClient(jwtProperties.getAuthorizationHeaderName(), jwtAuthenticator);
+		
+		//client.setAuthenticator(jwtAuthenticator);
+		//client.setAuthorizationGenerator(authorizationGenerator);
+		//client.setAuthorizationGenerators(authorizationGenerators);
+		//client.setCredentialsExtractor(credentialsExtractor);
+		if(jwtProperties.getCustomProperties() != null ) {
+			client.setCustomProperties(jwtProperties.getCustomProperties());
+		}
+		client.setName(jwtProperties.getHeaderClientName());
+		client.setHeaderName(jwtProperties.getAuthorizationHeaderName());
+		client.setPrefixHeader(jwtProperties.getAuthorizationHeaderPrefix());
+		//client.setProfileCreator(profileCreator);
+
+		return client;
+	}
+
+	@Bean
+	public ParameterClient jwtParameterClient(JwtAuthenticator jwtAuthenticator) {
+		
+		// REST authent with JWT for a token passed in the url as the token parameter
+
+		ParameterClient client = new ParameterClient(jwtProperties.getAuthorizationParamName(), jwtAuthenticator);
+		//client.setAuthenticator(jwtAuthenticator);
+		//client.setAuthorizationGenerator(authorizationGenerator);
+		//client.setAuthorizationGenerators(authorizationGenerators);
+		//client.setCredentialsExtractor(credentialsExtractor);
+		if(jwtProperties.getCustomProperties() != null ) {
+			client.setCustomProperties(jwtProperties.getCustomProperties());
+		}
+		client.setName(jwtProperties.getParamClientName());
+		client.setParameterName(jwtProperties.getAuthorizationParamName());
+		//client.setProfileCreator(profileCreator);
+		client.setSupportGetRequest(jwtProperties.isSupportGetRequest());
+		client.setSupportPostRequest(jwtProperties.isSupportPostRequest());
+		
+		return client;
+	}
+
 }

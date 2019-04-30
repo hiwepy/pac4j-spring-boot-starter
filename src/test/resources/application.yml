@@ -10,4 +10,5 @@ pac4j:
     allowed-proxy-chains: 
   oauth:
     enabled: true
+  jwt:    algorithm: hs256        
     

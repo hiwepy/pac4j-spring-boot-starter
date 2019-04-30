@@ -77,7 +77,7 @@ public class Pac4jSamlConfiguration {
 	}
 	
 	@Bean
-	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "casClient", havingValue = "true")
+	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "saml2-client", havingValue = "true")
 	public SAML2Client saml2Client(SAML2Configuration samlConfiguration, UrlResolver urlResolver) {
 		
 	    final SAML2Client saml2Client = new SAML2Client(samlConfiguration);

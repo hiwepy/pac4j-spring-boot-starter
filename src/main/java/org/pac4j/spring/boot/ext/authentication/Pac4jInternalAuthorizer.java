@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.authz;
+package org.pac4j.spring.boot.ext.authentication;
 
 import java.util.List;
 

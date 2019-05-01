@@ -15,9 +15,6 @@
  */
 package org.pac4j.spring.boot.ext.authentication;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
 import org.pac4j.core.context.Pac4jConstants;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.credentials.authenticator.Authenticator;
@@ -27,9 +24,10 @@ import org.pac4j.core.util.CommonHelper;
 import org.pac4j.spring.boot.ext.Pac4jExtConstants;
 import org.pac4j.spring.boot.ext.authentication.captcha.CaptchaResolver;
 import org.pac4j.spring.boot.ext.credentials.UsernamePasswordCaptchaCredentials;
-import org.pac4j.spring.boot.ext.credentials.extractor.AuthenticationCaptchaIncorrectException;
-import org.pac4j.spring.boot.ext.credentials.extractor.AuthenticationCaptchaNotFoundException;
+import org.pac4j.spring.boot.ext.exception.AuthenticationCaptchaIncorrectException;
+import org.pac4j.spring.boot.ext.exception.AuthenticationCaptchaNotFoundException;
 import org.pac4j.spring.boot.ext.exception.AuthenticationOverRetryRemindException;
+import org.springframework.util.StringUtils;
 
 /**
  * TODO
@@ -37,11 +35,9 @@ import org.pac4j.spring.boot.ext.exception.AuthenticationOverRetryRemindExceptio
  */
 public class UsernamePasswordCaptchaAuthenticator implements Authenticator<UsernamePasswordCaptchaCredentials> {
 
-	public static final String DEFAULT_RETRY_TIMES_KEY_ATTRIBUTE_NAME = "securityLoginFailureRetries";
-
 	private boolean captchaRequired = false;
 	private CaptchaResolver captchaResolver;
-	private String retryTimesKeyAttribute = DEFAULT_RETRY_TIMES_KEY_ATTRIBUTE_NAME;
+	private String retryTimesKeyAttribute = Pac4jExtConstants.RETRY_TIMES_KEY_ATTRIBUTE_NAME;
 	/** Maximum number of retry to login . */
 	private int retryTimesWhenAccessDenied = 3;
 	private AuthenticatingFailureCounter failureCounter;
@@ -74,18 +70,19 @@ public class UsernamePasswordCaptchaAuthenticator implements Authenticator<Usern
         }
         
     	// The retry limit has been exceeded and a reminder is required
-        if(isOverRetryRemind(request, response)) {
+        if(isOverRetryRemind(context)) {
         	throw new AuthenticationOverRetryRemindException("The number of login errors exceeds the maximum retry limit and a verification code is required.");
         }
         
         // 验证码必填或者错误次数超出系统限制，则要求填入验证码
- 		if(isCaptchaRequired() || isOverRetryTimes(request, response)) {
+ 		if(isCaptchaRequired() || isOverRetryTimes(context)) {
  			
- 			if(!StringUtils.hasText(loginRequest.getCaptcha())) {
+ 			if(!StringUtils.hasText(credentials.getCaptcha())) {
 				throw new AuthenticationCaptchaNotFoundException("Captcha not provided");
-			}  
+			}
+ 			
  	        // 进行验证	
-	        	boolean validation = captchaResolver.validCaptcha(request, loginRequest.getCaptcha());
+	        boolean validation = captchaResolver.validCaptcha(context, credentials.getCaptcha());
 			if (!validation) {
 				throw new AuthenticationCaptchaIncorrectException("Captcha validation failed!");
 			}
@@ -138,15 +135,16 @@ public class UsernamePasswordCaptchaAuthenticator implements Authenticator<Usern
 	public void setRetryTimesWhenAccessDenied(int retryTimesWhenAccessDenied) {
 		this.retryTimesWhenAccessDenied = retryTimesWhenAccessDenied;
 	}
-	protected boolean isOverRetryRemind(ServletRequest request, ServletResponse response) {
-		if (null != getFailureCounter() && getFailureCounter().get(request, response, getRetryTimesKeyAttribute()) == getRetryTimesWhenAccessDenied()) {
+	
+	protected boolean isOverRetryRemind(WebContext context) {
+		if (null != getFailureCounter() && getFailureCounter().get(context, getRetryTimesKeyAttribute()) == getRetryTimesWhenAccessDenied()) {
 			return true;
 		}
 		return false;
 	}
 	
-	protected boolean isOverRetryTimes(ServletRequest request, ServletResponse response) {
-		if (null != getFailureCounter() && getFailureCounter().get(request, response, getRetryTimesKeyAttribute()) >= getRetryTimesWhenAccessDenied()) {
+	protected boolean isOverRetryTimes(WebContext context) {
+		if (null != getFailureCounter() && getFailureCounter().get(context, getRetryTimesKeyAttribute()) >= getRetryTimesWhenAccessDenied()) {
 			return true;
 		}
 		return false;

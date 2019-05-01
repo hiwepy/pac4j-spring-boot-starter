@@ -19,7 +19,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.pac4j.core.context.Pac4jConstants;
+import org.pac4j.spring.boot.ext.authentication.AuthenticatingFailureCounter;
+import org.pac4j.spring.boot.ext.authentication.UsernamePasswordCaptchaAuthenticator;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import org.springframework.security.boot.biz.property.SecurityAuthcProperties;
 
 @ConfigurationProperties(Pac4jJwtProperties.PREFIX)
 public class Pac4jJwtProperties {
@@ -256,12 +260,7 @@ public class Pac4jJwtProperties {
 
 	/** Whether Enable Pac4j Jwt. */
 	private boolean enabled = false;
-
-	/** 登录地址：会话不存在时访问的地址 */
-	private String loginUrl;
-    private String usernameParameterName = Pac4jConstants.USERNAME;
-    private String passwordParameterName = Pac4jConstants.PASSWORD;
-    private String callbackUrl;
+ 
     
 	private String encryptSecret;
 	private String signSecret;
@@ -349,10 +348,10 @@ public class Pac4jJwtProperties {
 	private EncryptionMethod encryption = EncryptionMethod.A256GCM;
 	
     private Map<String, Object> customProperties = new LinkedHashMap<>();
+ 
+	@NestedConfigurationProperty
+	private Pac4jAuthcProperties authc = new Pac4jAuthcProperties();
 	
-    /** The Name of Authc Client. */
-	private String authcClientName = "jwt-authc";
-    
 	/**
 	 * HTTP Authorization header, equal to <code>X-Authorization</code>
 	 */

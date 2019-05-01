@@ -24,13 +24,14 @@ import org.pac4j.http.client.direct.CookieClient;
 import org.pac4j.http.client.direct.HeaderClient;
 import org.pac4j.http.client.direct.ParameterClient;
 import org.pac4j.http.client.indirect.FormClient;
-import org.pac4j.http.credentials.authenticator.test.SimpleTestUsernamePasswordAuthenticator;
 import org.pac4j.jwt.config.encryption.EncryptionConfiguration;
 import org.pac4j.jwt.config.encryption.SecretEncryptionConfiguration;
 import org.pac4j.jwt.config.signature.SecretSignatureConfiguration;
 import org.pac4j.jwt.config.signature.SignatureConfiguration;
 import org.pac4j.jwt.credentials.authenticator.JwtAuthenticator;
+import org.pac4j.spring.boot.ext.authentication.AuthenticatingFailureCounter;
 import org.pac4j.spring.boot.ext.authentication.UsernamePasswordCaptchaAuthenticator;
+import org.pac4j.spring.boot.ext.authentication.captcha.CaptchaResolver;
 import org.pac4j.spring.boot.ext.credentials.extractor.PostRequestAuthenticationExtractor;
 import org.pac4j.spring.boot.ext.property.Pac4jJwtProperties;
 import org.pac4j.spring.boot.ext.property.Pac4jProperties;
@@ -91,7 +92,8 @@ public class Pac4jJwtConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public UsernamePasswordCaptchaAuthenticator usernamePasswordAuthenticator() {
+	public UsernamePasswordCaptchaAuthenticator usernamePasswordAuthenticator(CaptchaResolver captchaResolver,
+			AuthenticatingFailureCounter failureCounter) {
 		
 		UsernamePasswordCaptchaAuthenticator authenticator = new UsernamePasswordCaptchaAuthenticator();
 		

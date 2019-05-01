@@ -17,10 +17,12 @@ package org.pac4j.spring.boot.ext;
 
 /**
  * TODO
- * @author 		： <a href="https://github.com/vindell">vindell</a>
+ * 
+ * @author ： <a href="https://github.com/vindell">vindell</a>
  */
 public class Pac4jExtConstants {
 
-   public static String CAPTCHA = "captcha";
-	
+	public static String CAPTCHA = "captcha";
+	public static String RETRY_TIMES_KEY_ATTRIBUTE_NAME = "pac4jLoginFailureRetries";
+	public static String RETRY_TIMES_KEY_PARAM_NAME = "failureRetries";
 }

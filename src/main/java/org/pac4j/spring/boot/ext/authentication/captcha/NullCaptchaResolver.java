@@ -17,18 +17,17 @@ package org.pac4j.spring.boot.ext.authentication.captcha;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.pac4j.core.context.WebContext;
 
 public class NullCaptchaResolver implements CaptchaResolver {
 
 	@Override
-	public boolean validCaptcha(HttpServletRequest request, String capText) {
+	public boolean validCaptcha(WebContext context, String capText) {
 		return true;
 	}
 
 	@Override
-	public void setCaptcha(HttpServletRequest request, HttpServletResponse response, String capText, Date capDate) {
+	public void setCaptcha(WebContext context, String capText, Date capDate) {
 
 	}
 

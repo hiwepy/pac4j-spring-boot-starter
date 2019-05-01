@@ -17,12 +17,10 @@ package org.pac4j.spring.boot.ext.authentication.captcha;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.util.WebUtils;
+import org.pac4j.core.context.WebContext;
 
+@SuppressWarnings("unchecked")
 public class SessionCaptchaResolver implements CaptchaResolver {
 
 	/**
@@ -36,11 +34,12 @@ public class SessionCaptchaResolver implements CaptchaResolver {
 	private String sessionKeyDateValue = KAPTCHA_DATE_SESSION_ATTRIBUTE_NAME;
 	
 	@Override
-	public boolean validCaptcha(HttpServletRequest request, String capText) {
+	public boolean validCaptcha(WebContext context, String capText) {
 		if(StringUtils.isEmpty(capText)){
 			return false;
 		}
-		String sessionCapText = (String) WebUtils.getSessionAttribute(request, this.sessionKeyValue);
+		
+		String sessionCapText = (String) context.getSessionStore().get(context, this.sessionKeyValue);
 		//String sessionCapDate = (String) WebUtils.getSessionAttribute(request, this.sessionKeyDateValue);
 		if (sessionCapText != null) {
 			return StringUtils.equalsIgnoreCase(sessionCapText, capText);
@@ -49,15 +48,15 @@ public class SessionCaptchaResolver implements CaptchaResolver {
 	}
 
 	@Override
-	public void setCaptcha(HttpServletRequest request, HttpServletResponse response, String capText, Date capDate) {
+	public void setCaptcha(WebContext context, String capText, Date capDate) {
 		
 		// store the text in the session
-		WebUtils.setSessionAttribute(request, sessionKeyValue, (StringUtils.isNotEmpty(capText) ? capText : null));
+		context.getSessionStore().set(context, sessionKeyValue, (StringUtils.isNotEmpty(capText) ? capText : null));
 
 		// store the date in the session so that it can be compared
 		// against to make sure someone hasn't taken too long to enter
 		// their kaptcha
-		WebUtils.setSessionAttribute(request, sessionKeyDateValue, (capDate != null ? capDate : new Date()) );
+		context.getSessionStore().set(context, sessionKeyDateValue, (capDate != null ? capDate : new Date()) );
 
 	}
 

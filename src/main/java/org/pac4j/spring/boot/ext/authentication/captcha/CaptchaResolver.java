@@ -17,25 +17,23 @@ package org.pac4j.spring.boot.ext.authentication.captcha;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.pac4j.core.context.WebContext;
 
 public interface CaptchaResolver {
 
 	/**
 	 * Valid the current captcha via the given request.
-	 * @param request request to be used for resolution
+	 * @param context request to be used for resolution
 	 * @return the result
 	 */
-	boolean validCaptcha(HttpServletRequest request, String capText);
+	boolean validCaptcha(WebContext context, String capText);
 
 	/**
 	 * Set the current captcha to the given one.
-	 * @param request request to be used for captcha modification
-	 * @param response response to be used for captcha modification
+	 * @param context request to be used for captcha modification
 	 * @param capText the new captcha value
 	 * @throws UnsupportedOperationException if the CaptchaResolver implementation does not support dynamic changing of the captcha
 	 */
-	void setCaptcha(HttpServletRequest request, HttpServletResponse response, String capText, Date capDate);
+	void setCaptcha(WebContext context, String capText, Date capDate);
 	
 }

@@ -15,8 +15,10 @@
  */
 package org.pac4j.spring.boot.ext.credentials.extractor;
 
+import org.pac4j.core.context.Pac4jConstants;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.credentials.extractor.CredentialsExtractor;
+import org.pac4j.spring.boot.ext.Pac4jExtConstants;
 import org.pac4j.spring.boot.ext.authentication.AuthenticationRequest;
 import org.pac4j.spring.boot.ext.credentials.UsernamePasswordCaptchaCredentials;
 import org.pac4j.spring.boot.ext.exception.AuthMethodNotSupportedException;
@@ -36,13 +38,9 @@ public class PostRequestAuthenticationExtractor implements CredentialsExtractor<
 	// =====================================================================================
 	private static Logger logger = LoggerFactory.getLogger(PostRequestAuthenticationExtractor.class);
 
-	public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
-	public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "password";
-	public static final String SPRING_SECURITY_FORM_CAPTCHA_KEY = "captcha";
-
-	private String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;
-	private String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;
-	private String captchaParameter = SPRING_SECURITY_FORM_CAPTCHA_KEY;
+	private String usernameParameter = Pac4jConstants.USERNAME;
+	private String passwordParameter = Pac4jConstants.PASSWORD;
+	private String captchaParameter = Pac4jExtConstants.CAPTCHA;
 	private boolean postOnly = true;
 
     @Override

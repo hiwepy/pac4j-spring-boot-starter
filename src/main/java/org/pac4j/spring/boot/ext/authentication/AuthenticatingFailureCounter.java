@@ -15,15 +15,12 @@
  */
 package org.pac4j.spring.boot.ext.authentication;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import org.pac4j.core.context.WebContext;
 
 public interface AuthenticatingFailureCounter {
 
-	public static final String DEFAULT_RETRY_TIMES_KEY_PARAM_NAME = "failureRetries";
-
-	int get(ServletRequest request, ServletResponse response, String retryTimesKeyAttribute);
+	int get(WebContext context, String retryTimesKeyAttribute);
 	
-	void increment(ServletRequest request, ServletResponse response, String retryTimesKeyAttribute);
+	void increment(WebContext context, String retryTimesKeyAttribute);
 	
 }

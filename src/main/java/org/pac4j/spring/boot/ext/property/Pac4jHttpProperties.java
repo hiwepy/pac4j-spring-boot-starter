@@ -28,7 +28,6 @@ public class Pac4jHttpProperties {
 
 	/** 登录地址：会话不存在时访问的地址 */
 	private String loginUrl;
-	
     private String usernameParameter = Pac4jConstants.USERNAME;
     private String passwordParameter = Pac4jConstants.PASSWORD;
 	

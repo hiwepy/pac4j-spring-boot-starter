@@ -17,14 +17,21 @@ package org.pac4j.spring.boot;
 
 import java.util.List;
 
+import org.pac4j.core.http.ajax.AjaxRequestResolver;
+import org.pac4j.core.http.callback.CallbackUrlResolver;
+import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.http.client.direct.CookieClient;
 import org.pac4j.http.client.direct.HeaderClient;
 import org.pac4j.http.client.direct.ParameterClient;
+import org.pac4j.http.client.indirect.FormClient;
+import org.pac4j.http.credentials.authenticator.test.SimpleTestUsernamePasswordAuthenticator;
 import org.pac4j.jwt.config.encryption.EncryptionConfiguration;
 import org.pac4j.jwt.config.encryption.SecretEncryptionConfiguration;
 import org.pac4j.jwt.config.signature.SecretSignatureConfiguration;
 import org.pac4j.jwt.config.signature.SignatureConfiguration;
 import org.pac4j.jwt.credentials.authenticator.JwtAuthenticator;
+import org.pac4j.spring.boot.ext.authentication.UsernamePasswordCaptchaAuthenticator;
+import org.pac4j.spring.boot.ext.credentials.extractor.PostRequestAuthenticationExtractor;
 import org.pac4j.spring.boot.ext.property.Pac4jJwtProperties;
 import org.pac4j.spring.boot.ext.property.Pac4jProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +90,64 @@ public class Pac4jJwtConfiguration {
 	}
 	
 	@Bean
-	public CookieClient jwtCookieClient(JwtAuthenticator jwtAuthenticator) {
+	@ConditionalOnMissingBean
+	public UsernamePasswordCaptchaAuthenticator usernamePasswordAuthenticator() {
+		
+		UsernamePasswordCaptchaAuthenticator authenticator = new UsernamePasswordCaptchaAuthenticator();
+		
+		authenticator.setCaptchaRequired(captchaRequired);
+		authenticator.setCaptchaResolver(captchaResolver);
+		authenticator.setFailureCounter(failureCounter);
+		authenticator.setRetryTimesKeyAttribute(retryTimesKeyAttribute);
+		authenticator.setRetryTimesWhenAccessDenied(retryTimesWhenAccessDenied);
+		
+		return authenticator;
+	}
+	
+	
+	@Bean
+	@ConditionalOnMissingBean
+	public PostRequestAuthenticationExtractor credentialsExtractor() {
+		
+		PostRequestAuthenticationExtractor credentialsExtractor = new PostRequestAuthenticationExtractor();
+		
+		return credentialsExtractor;
+		
+	}
+	
+	@Bean
+ 	public FormClient jwtAuthcClient(AjaxRequestResolver ajaxRequestResolver,
+ 			CallbackUrlResolver callbackUrlResolver,
+ 			PostRequestAuthenticationExtractor credentialsExtractor,
+ 			UrlResolver urlResolver) {
+
+		UsernamePasswordCaptchaAuthenticator usernamePasswordAuthenticator = new UsernamePasswordCaptchaAuthenticator();
+		FormClient client = new FormClient();
+		
+		client.setAjaxRequestResolver(ajaxRequestResolver);
+		client.setAuthenticator(usernamePasswordAuthenticator);
+		//client.setAuthorizationGenerator(authorizationGenerator);
+		//client.setAuthorizationGenerators(authorizationGenerators);
+		client.setCallbackUrl(jwtProperties.getCallbackUrl());
+		client.setCallbackUrlResolver(callbackUrlResolver);
+		client.setCredentialsExtractor(credentialsExtractor);
+		if(jwtProperties.getCustomProperties() != null ) {
+			client.setCustomProperties(jwtProperties.getCustomProperties());
+		}
+		client.setLoginUrl(jwtProperties.getLoginUrl());
+		//client.setLogoutActionBuilder(NoLogoutActionBuilder.INSTANCE);
+		client.setName(jwtProperties.getAuthcClientName());
+		client.setPasswordParameter(jwtProperties.getPasswordParameterName());
+		//client.setProfileCreator(profileCreator);
+		//client.setRedirectActionBuilder(redirectActionBuilder);
+		client.setUrlResolver(urlResolver);
+		client.setUsernameParameter(jwtProperties.getUsernameParameterName());
+		
+ 		return client;
+ 	}
+	
+	@Bean
+	public CookieClient jwtCookieAuthzClient(JwtAuthenticator jwtAuthenticator) {
 
 		CookieClient client = new CookieClient(jwtProperties.getAuthorizationCookieName(), jwtAuthenticator);
 		
@@ -102,7 +166,7 @@ public class Pac4jJwtConfiguration {
 	}
 
 	@Bean
-	public HeaderClient jwtHeaderClient(JwtAuthenticator jwtAuthenticator) {
+	public HeaderClient jwtHeaderAuthzClient(JwtAuthenticator jwtAuthenticator) {
 
 		HeaderClient client = new HeaderClient(jwtProperties.getAuthorizationHeaderName(), jwtAuthenticator);
 		
@@ -122,7 +186,7 @@ public class Pac4jJwtConfiguration {
 	}
 
 	@Bean
-	public ParameterClient jwtParameterClient(JwtAuthenticator jwtAuthenticator) {
+	public ParameterClient jwtParamAuthzClient(JwtAuthenticator jwtAuthenticator) {
 		
 		// REST authent with JWT for a token passed in the url as the token parameter
 

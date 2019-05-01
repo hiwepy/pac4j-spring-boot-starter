@@ -18,6 +18,7 @@ package org.pac4j.spring.boot.ext.property;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.pac4j.core.context.Pac4jConstants;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(Pac4jJwtProperties.PREFIX)
@@ -256,6 +257,12 @@ public class Pac4jJwtProperties {
 	/** Whether Enable Pac4j Jwt. */
 	private boolean enabled = false;
 
+	/** 登录地址：会话不存在时访问的地址 */
+	private String loginUrl;
+    private String usernameParameterName = Pac4jConstants.USERNAME;
+    private String passwordParameterName = Pac4jConstants.PASSWORD;
+    private String callbackUrl;
+    
 	private String encryptSecret;
 	private String signSecret;
 	
@@ -343,6 +350,9 @@ public class Pac4jJwtProperties {
 	
     private Map<String, Object> customProperties = new LinkedHashMap<>();
 	
+    /** The Name of Authc Client. */
+	private String authcClientName = "jwt-authc";
+    
 	/**
 	 * HTTP Authorization header, equal to <code>X-Authorization</code>
 	 */
@@ -367,6 +377,38 @@ public class Pac4jJwtProperties {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public String getLoginUrl() {
+		return loginUrl;
+	}
+
+	public void setLoginUrl(String loginUrl) {
+		this.loginUrl = loginUrl;
+	}
+
+	public String getUsernameParameterName() {
+		return usernameParameterName;
+	}
+
+	public void setUsernameParameterName(String usernameParameterName) {
+		this.usernameParameterName = usernameParameterName;
+	}
+
+	public String getPasswordParameterName() {
+		return passwordParameterName;
+	}
+
+	public void setPasswordParameterName(String passwordParameterName) {
+		this.passwordParameterName = passwordParameterName;
+	}
+
+	public String getCallbackUrl() {
+		return callbackUrl;
+	}
+
+	public void setCallbackUrl(String callbackUrl) {
+		this.callbackUrl = callbackUrl;
 	}
 
 	public String getEncryptSecret() {
@@ -415,6 +457,14 @@ public class Pac4jJwtProperties {
 
 	public void setCustomProperties(Map<String, Object> customProperties) {
 		this.customProperties = customProperties;
+	}
+	
+	public String getAuthcClientName() {
+		return authcClientName;
+	}
+
+	public void setAuthcClientName(String authcClientName) {
+		this.authcClientName = authcClientName;
 	}
 
 	public String getAuthorizationHeaderName() {

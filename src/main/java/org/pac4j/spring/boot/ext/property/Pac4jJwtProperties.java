@@ -27,6 +27,104 @@ public class Pac4jJwtProperties {
 	public static final String AUTHORIZATION_PARAM = "token";
 	public static final String PREFIX = "pac4j.jwt";
 
+	public enum JWEAlgorithm {
+		
+		/**
+		 * RSAES using Optimal Asymmetric Encryption Padding (OAEP) (RFC 3447),
+		 * with the SHA-256 hash function and the MGF1 with SHA-256 mask
+		 * generation function.
+		 */
+		RSA_OAEP_256("RSA-OAEP-256"),
+		/**
+		 * Advanced Encryption Standard (AES) Key Wrap Algorithm (RFC 3394) 
+		 * using 128 bit keys.
+		 */
+		A128KW("A128KW"),
+		/**
+		 * Advanced Encryption Standard (AES) Key Wrap Algorithm (RFC 3394)
+		 * using 192 bit keys.
+		 */
+		A192KW("A192KW"),
+		/**
+		 * Advanced Encryption Standard (AES) Key Wrap Algorithm (RFC 3394) 
+		 * using 256 bit keys.
+		 */
+		A256KW("A256KW"),
+		/**
+		 * Direct use of a shared symmetric key as the Content Encryption Key 
+		 * (CEK) for the block encryption step (rather than using the symmetric
+		 * key to wrap the CEK).
+		 */
+		DIR("dir"),
+		/**
+		 * Elliptic Curve Diffie-Hellman Ephemeral Static (RFC 6090) key 
+		 * agreement using the Concat KDF, as defined in section 5.8.1 of
+		 * NIST.800-56A, with the agreed-upon key being used directly as the 
+		 * Content Encryption Key (CEK) (rather than being used to wrap the 
+		 * CEK).
+		 */
+		ECDH_ES("ECDH-ES"),
+		/**
+		 * Elliptic Curve Diffie-Hellman Ephemeral Static key agreement per
+		 * "ECDH-ES", but where the agreed-upon key is used to wrap the Content
+		 * Encryption Key (CEK) with the "A128KW" function (rather than being 
+		 * used directly as the CEK).
+		 */
+		ECDH_ES_A128KW("ECDH-ES+A128KW"),
+		/**
+		 * Elliptic Curve Diffie-Hellman Ephemeral Static key agreement per
+		 * "ECDH-ES", but where the agreed-upon key is used to wrap the Content
+		 * Encryption Key (CEK) with the "A192KW" function (rather than being
+		 * used directly as the CEK).
+		 */
+		ECDH_ES_A192KW("ECDH-ES+A192KW"),
+		/**
+		 * Elliptic Curve Diffie-Hellman Ephemeral Static key agreement per
+		 * "ECDH-ES", but where the agreed-upon key is used to wrap the Content
+		 * Encryption Key (CEK) with the "A256KW" function (rather than being 
+		 * used directly as the CEK).
+		 */
+		ECDH_ES_A256KW("ECDH-ES+A256KW"),
+		/**
+		 * AES in Galois/Counter Mode (GCM) (NIST.800-38D) 128 bit keys.
+		 */
+		A128GCMKW("A128GCMKW"),
+		/**
+		 * AES in Galois/Counter Mode (GCM) (NIST.800-38D) 192 bit keys.
+		 */
+		A192GCMKW("A192GCMKW"),
+		/**
+		 * AES in Galois/Counter Mode (GCM) (NIST.800-38D) 256 bit keys.
+		 */
+		A256GCMKW("A256GCMKW"),
+		/**
+		 * PBES2 (RFC 2898) with HMAC SHA-256 as the PRF and AES Key Wrap
+		 * (RFC 3394) using 128 bit keys for the encryption scheme.
+		 */
+		PBES2_HS256_A128KW("PBES2-HS256+A128KW"),
+		/**
+		 * PBES2 (RFC 2898) with HMAC SHA-384 as the PRF and AES Key Wrap
+		 * (RFC 3394) using 192 bit keys for the encryption scheme.
+		 */
+		PBES2_HS384_A192KW("PBES2-HS384+A192KW"),
+		/**
+		 * PBES2 (RFC 2898) with HMAC SHA-512 as the PRF and AES Key Wrap
+		 * (RFC 3394) using 256 bit keys for the encryption scheme.
+		 */
+		PBES2_HS512_A256KW("PBES2-HS512+A256KW");
+
+		private final String algorithm;
+
+		JWEAlgorithm(String algorithm) {
+			this.algorithm = algorithm;
+		}
+
+		public String value() {
+			return algorithm;
+		}
+
+	}
+	
 	public enum JWSAlgorithm {
 		/**
 		 * HMAC using SHA-256 hash algorithm (required).
@@ -158,7 +256,37 @@ public class Pac4jJwtProperties {
 	/** Whether Enable Pac4j Jwt. */
 	private boolean enabled = false;
 
-	private String secret;
+	private String encryptSecret;
+	private String signSecret;
+	
+	/**
+	 * JSON Web Encryption (JWE) algorithm name, represents the {@code alg} header 
+	 * parameter in JWE objects. This class is immutable.
+	 *
+	 * <p>Includes constants for the following standard JWE algorithm names:
+	 *
+	 * <ul>
+	 *     <li>{@link #RSA_OAEP_256 RSA-OAEP-256}
+	 *     <li>{@link #RSA_OAEP RSA-OAEP} (deprecated)
+	 *     <li>{@link #RSA1_5} (deprecated)
+	 *     <li>{@link #A128KW}
+	 *     <li>{@link #A192KW}
+	 *     <li>{@link #A256KW}
+	 *     <li>{@link #DIR dir}
+	 *     <li>{@link #ECDH_ES ECDH-ES}
+	 *     <li>{@link #ECDH_ES_A128KW ESDH-ES+A128KW}
+	 *     <li>{@link #ECDH_ES_A128KW ESDH-ES+A192KW}
+	 *     <li>{@link #ECDH_ES_A256KW ESDH-ES+A256KW}
+	 *     <li>{@link #PBES2_HS256_A128KW PBES2-HS256+A128KW}
+	 *     <li>{@link #PBES2_HS384_A192KW PBES2-HS256+A192KW}
+	 *     <li>{@link #PBES2_HS512_A256KW PBES2-HS256+A256KW}
+	 * </ul>
+	 *
+	 * <p>Additional JWE algorithm names can be defined using the constructors.
+	 * 
+	 */
+	private JWEAlgorithm jweAlgorithm = JWEAlgorithm.DIR;
+	
 	/**
 	 * JSON Web Signature (JWS) algorithm name, represents the {@code alg} header
 	 * parameter in JWS objects. Also used to represent integrity algorithm
@@ -187,7 +315,7 @@ public class Pac4jJwtProperties {
 	 * <p>
 	 * Additional JWS algorithm names can be defined using the constructors.
 	 */
-	private JWSAlgorithm algorithm = JWSAlgorithm.HS256;
+	private JWSAlgorithm jwsAlgorithm = JWSAlgorithm.HS256;
 
 	/**
 	 * Encryption method name, represents the {@code enc} header parameter in JSON
@@ -241,20 +369,36 @@ public class Pac4jJwtProperties {
 		this.enabled = enabled;
 	}
 
-	public String getSecret() {
-		return secret;
+	public String getEncryptSecret() {
+		return encryptSecret;
 	}
 
-	public void setSecret(String secret) {
-		this.secret = secret;
+	public void setEncryptSecret(String encryptSecret) {
+		this.encryptSecret = encryptSecret;
 	}
 
-	public JWSAlgorithm getAlgorithm() {
-		return algorithm;
+	public String getSignSecret() {
+		return signSecret;
 	}
 
-	public void setAlgorithm(JWSAlgorithm algorithm) {
-		this.algorithm = algorithm;
+	public void setSignSecret(String signSecret) {
+		this.signSecret = signSecret;
+	}
+
+	public JWEAlgorithm getJweAlgorithm() {
+		return jweAlgorithm;
+	}
+
+	public void setJweAlgorithm(JWEAlgorithm jweAlgorithm) {
+		this.jweAlgorithm = jweAlgorithm;
+	}
+
+	public JWSAlgorithm getJwsAlgorithm() {
+		return jwsAlgorithm;
+	}
+
+	public void setJwsAlgorithm(JWSAlgorithm jwsAlgorithm) {
+		this.jwsAlgorithm = jwsAlgorithm;
 	}
 
 	public EncryptionMethod getEncryption() {

@@ -37,6 +37,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.nimbusds.jose.EncryptionMethod;
+import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.JWSAlgorithm;
 
 @Configuration
@@ -52,7 +53,7 @@ public class Pac4jJwtConfiguration {
 	@ConditionalOnMissingBean
 	public EncryptionConfiguration encryptionConfiguration() {
 		SecretEncryptionConfiguration encryptionConfiguration = new SecretEncryptionConfiguration(
-				jwtProperties.getSecret(), JWSAlgorithm.parse(jwtProperties.getAlgorithm().value()),
+				jwtProperties.getEncryptSecret(), JWEAlgorithm.parse(jwtProperties.getJweAlgorithm().value()),
 				EncryptionMethod.parse(jwtProperties.getEncryption().value()));
 		return encryptionConfiguration;
 	}
@@ -60,8 +61,8 @@ public class Pac4jJwtConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public SignatureConfiguration signatureConfiguration() {
-		return new SecretSignatureConfiguration(jwtProperties.getSecret(),
-				JWSAlgorithm.parse(jwtProperties.getAlgorithm().value()));
+		return new SecretSignatureConfiguration(jwtProperties.getSignSecret(),
+				JWSAlgorithm.parse(jwtProperties.getJwsAlgorithm().value()));
 	}
 
 	@Bean

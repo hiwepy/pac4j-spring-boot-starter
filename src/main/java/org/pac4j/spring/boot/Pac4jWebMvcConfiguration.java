@@ -16,7 +16,6 @@
 package org.pac4j.spring.boot;
 
 import org.pac4j.core.config.Config;
-import org.pac4j.spring.boot.ext.property.Pac4jWebMvcProperties;
 import org.pac4j.springframework.web.SecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

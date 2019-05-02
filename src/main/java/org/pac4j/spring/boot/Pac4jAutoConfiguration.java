@@ -34,7 +34,6 @@ import org.pac4j.j2e.filter.CallbackFilter;
 import org.pac4j.j2e.filter.LogoutFilter;
 import org.pac4j.j2e.filter.SecurityFilter;
 import org.pac4j.spring.boot.ext.Pac4jPathBuilder;
-import org.pac4j.spring.boot.ext.property.Pac4jProperties;
 import org.pac4j.spring.boot.utils.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

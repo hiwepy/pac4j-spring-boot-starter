@@ -13,24 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.ext.property;
+package org.pac4j.spring.boot;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+public class Pac4jOAuthOkClientProperties extends Pac4jOAuthClientProperties {
 
-@ConfigurationProperties(Pac4jOpenIDProperties.PREFIX)
-public class Pac4jOpenIDProperties {
+	/**
+	 * Public key (required as well as application key by API on ok.ru)
+	 */
+	private String publicKey;
 
-	public static final String PREFIX = "pac4j.openid";
-	
-	/** Whether Enable Pac4j OpenID. */
-	private boolean enabled = false;
-
-	public boolean isEnabled() {
-		return enabled;
+	public String getPublicKey() {
+		return publicKey;
 	}
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+	public void setPublicKey(String publicKey) {
+		this.publicKey = publicKey;
 	}
 
 }

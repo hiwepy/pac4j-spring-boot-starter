@@ -1,4 +1,4 @@
-package org.pac4j.spring.boot.ext.property;
+package org.pac4j.spring.boot;
 
 import java.util.HashMap;
 import java.util.Map;

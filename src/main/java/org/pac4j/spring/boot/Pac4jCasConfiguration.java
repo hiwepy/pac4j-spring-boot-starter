@@ -8,20 +8,14 @@ import org.pac4j.cas.client.direct.DirectCasProxyClient;
 import org.pac4j.cas.client.rest.CasRestBasicAuthClient;
 import org.pac4j.cas.client.rest.CasRestFormClient;
 import org.pac4j.cas.config.CasConfiguration;
-import org.pac4j.cas.logout.CasLogoutHandler;
-import org.pac4j.cas.logout.DefaultCasLogoutHandler;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.http.url.UrlResolver;
-import org.pac4j.spring.boot.ext.property.Pac4jCasProperties;
-import org.pac4j.spring.boot.ext.property.Pac4jProperties;
+import org.pac4j.core.logout.handler.LogoutHandler;
 import org.pac4j.spring.boot.utils.CasClientUtils;
 import org.pac4j.spring.boot.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
@@ -30,10 +24,6 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@AutoConfigureBefore( name = {
-	"org.pac4j.spring.boot.Pac4jWebFilterConfiguration"
-})
-@ConditionalOnWebApplication
 @ConditionalOnClass({ SingleSignOutHttpSessionListener.class, CasConfiguration.class})
 @ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jCasProperties.class, Pac4jProperties.class, ServerProperties.class })
@@ -58,13 +48,7 @@ public class Pac4jCasConfiguration {
 	}
 	
 	@Bean
-	@ConditionalOnMissingBean
-    public CasLogoutHandler<WebContext> logoutHandler(){
-		return new DefaultCasLogoutHandler<WebContext>();
-	}
-	
-	@Bean
-    public CasConfiguration casConfiguration(CasLogoutHandler<WebContext> logoutHandler, UrlResolver urlResolver) {
+    public CasConfiguration casConfiguration(LogoutHandler<WebContext> logoutHandler, UrlResolver urlResolver) {
 
 		CasConfiguration configuration = new CasConfiguration(pac4jCasProperties.getCasServerLoginUrl(), pac4jCasProperties.getCasProtocol() );
 		

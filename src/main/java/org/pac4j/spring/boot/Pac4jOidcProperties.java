@@ -13,16 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.ext.property;
+package org.pac4j.spring.boot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(Pac4jKerberosProperties.PREFIX)
-public class Pac4jKerberosProperties {
+@ConfigurationProperties(Pac4jOidcProperties.PREFIX)
+public class Pac4jOidcProperties {
 
-	public static final String PREFIX = "pac4j.kerberos";
+	public static final String PREFIX = "pac4j.oidc";
 	
-	/** Whether Enable Pac4j Kerberos. */
+	/** Whether Enable Pac4j Oidc. */
 	private boolean enabled = false;
 
 	public boolean isEnabled() {

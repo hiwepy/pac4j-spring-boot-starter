@@ -13,22 +13,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.ext.property;
+package org.pac4j.spring.boot;
 
-public class Pac4jOAuthStravaClientProperties extends Pac4jOAuthClientProperties {
-   
-	/**
-     * approvalPrompt is by default "auto".   <br>
-     * If "force", then the authorization dialog is always displayed by Strava.
-     */
-    private String approvalPrompt = "auto";
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-	public String getApprovalPrompt() {
-		return approvalPrompt;
+@ConfigurationProperties(Pac4jWebMvcProperties.PREFIX)
+public class Pac4jWebMvcProperties {
+
+	public static final String PREFIX = "pac4j.webmvc";
+	
+	/** Whether Enable Pac4j WebMvc. */
+	private boolean enabled = false;
+
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setApprovalPrompt(String approvalPrompt) {
-		this.approvalPrompt = approvalPrompt;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 }

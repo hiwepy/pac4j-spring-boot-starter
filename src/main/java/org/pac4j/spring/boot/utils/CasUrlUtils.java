@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jasig.cas.client.util.CommonUtils;
-import org.pac4j.spring.boot.ext.property.Pac4jCasProperties;
+import org.pac4j.spring.boot.Pac4jCasProperties;
 import org.springframework.web.util.WebUtils;
 
 public class CasUrlUtils {

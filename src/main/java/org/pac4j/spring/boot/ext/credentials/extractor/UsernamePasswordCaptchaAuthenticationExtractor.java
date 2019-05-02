@@ -33,10 +33,10 @@ import com.alibaba.fastjson.JSONObject;
  * TODO
  * @author 		： <a href="https://github.com/vindell">vindell</a>
  */
-public class PostRequestAuthenticationExtractor implements CredentialsExtractor<UsernamePasswordCaptchaCredentials> {
+public class UsernamePasswordCaptchaAuthenticationExtractor implements CredentialsExtractor<UsernamePasswordCaptchaCredentials> {
 	
 	// =====================================================================================
-	private static Logger logger = LoggerFactory.getLogger(PostRequestAuthenticationExtractor.class);
+	private static Logger logger = LoggerFactory.getLogger(UsernamePasswordCaptchaAuthenticationExtractor.class);
 
 	private String usernameParameter = Pac4jConstants.USERNAME;
 	private String passwordParameter = Pac4jConstants.PASSWORD;

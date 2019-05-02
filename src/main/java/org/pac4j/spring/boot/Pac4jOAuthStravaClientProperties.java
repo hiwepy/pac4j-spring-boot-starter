@@ -13,24 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.ext.property;
+package org.pac4j.spring.boot;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+public class Pac4jOAuthStravaClientProperties extends Pac4jOAuthClientProperties {
+   
+	/**
+     * approvalPrompt is by default "auto".   <br>
+     * If "force", then the authorization dialog is always displayed by Strava.
+     */
+    private String approvalPrompt = "auto";
 
-@ConfigurationProperties(Pac4jOidcProperties.PREFIX)
-public class Pac4jOidcProperties {
-
-	public static final String PREFIX = "pac4j.oidc";
-	
-	/** Whether Enable Pac4j Oidc. */
-	private boolean enabled = false;
-
-	public boolean isEnabled() {
-		return enabled;
+	public String getApprovalPrompt() {
+		return approvalPrompt;
 	}
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+	public void setApprovalPrompt(String approvalPrompt) {
+		this.approvalPrompt = approvalPrompt;
 	}
 
 }

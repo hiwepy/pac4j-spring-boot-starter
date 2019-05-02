@@ -15,7 +15,7 @@
  */
 package org.pac4j.spring.boot.utils;
 
-import org.pac4j.spring.boot.ext.property.Pac4jProperties;
+import org.pac4j.spring.boot.Pac4jProperties;
 
 public class Pac4jUrlUtils {
 

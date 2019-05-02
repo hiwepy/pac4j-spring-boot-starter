@@ -13,21 +13,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.ext.property;
+package org.pac4j.spring.boot;
 
-public class Pac4jOAuthOkClientProperties extends Pac4jOAuthClientProperties {
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-	/**
-	 * Public key (required as well as application key by API on ok.ru)
-	 */
-	private String publicKey;
+@ConfigurationProperties(Pac4jStormpathProperties.PREFIX)
+public class Pac4jStormpathProperties {
 
-	public String getPublicKey() {
-		return publicKey;
+	public static final String PREFIX = "pac4j.stormpath";
+	
+	/** Whether Enable Pac4j Stormpath. */
+	private boolean enabled = false;
+
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setPublicKey(String publicKey) {
-		this.publicKey = publicKey;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 }

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.ext.property;
+package org.pac4j.spring.boot;
 
 import org.pac4j.cas.config.CasProtocol;
 import org.pac4j.core.context.HttpConstants;
@@ -25,7 +25,7 @@ public class Pac4jCasProperties {
 
 	public static final String PREFIX = "pac4j.cas";
 
-/* ================================== Cas Client ================================= */
+	/* ================================== Cas Client ================================= */
 	
 	// default name of the CAS attribute for remember me authentication (CAS 3.4.10+)
     public static final String DEFAULT_REMEMBER_ME_ATTRIBUTE_NAME = "longTermAuthenticationRequestTokenUsed";

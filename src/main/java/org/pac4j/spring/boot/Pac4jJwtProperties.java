@@ -13,17 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.ext.property;
+package org.pac4j.spring.boot;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.pac4j.core.context.Pac4jConstants;
-import org.pac4j.spring.boot.ext.authentication.AuthenticatingFailureCounter;
-import org.pac4j.spring.boot.ext.authentication.UsernamePasswordCaptchaAuthenticator;
+import org.pac4j.spring.boot.ext.property.Pac4jAuthcProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
-import org.springframework.security.boot.biz.property.SecurityAuthcProperties;
 
 @ConfigurationProperties(Pac4jJwtProperties.PREFIX)
 public class Pac4jJwtProperties {
@@ -378,38 +375,6 @@ public class Pac4jJwtProperties {
 		this.enabled = enabled;
 	}
 
-	public String getLoginUrl() {
-		return loginUrl;
-	}
-
-	public void setLoginUrl(String loginUrl) {
-		this.loginUrl = loginUrl;
-	}
-
-	public String getUsernameParameterName() {
-		return usernameParameterName;
-	}
-
-	public void setUsernameParameterName(String usernameParameterName) {
-		this.usernameParameterName = usernameParameterName;
-	}
-
-	public String getPasswordParameterName() {
-		return passwordParameterName;
-	}
-
-	public void setPasswordParameterName(String passwordParameterName) {
-		this.passwordParameterName = passwordParameterName;
-	}
-
-	public String getCallbackUrl() {
-		return callbackUrl;
-	}
-
-	public void setCallbackUrl(String callbackUrl) {
-		this.callbackUrl = callbackUrl;
-	}
-
 	public String getEncryptSecret() {
 		return encryptSecret;
 	}
@@ -456,14 +421,6 @@ public class Pac4jJwtProperties {
 
 	public void setCustomProperties(Map<String, Object> customProperties) {
 		this.customProperties = customProperties;
-	}
-	
-	public String getAuthcClientName() {
-		return authcClientName;
-	}
-
-	public void setAuthcClientName(String authcClientName) {
-		this.authcClientName = authcClientName;
 	}
 
 	public String getAuthorizationHeaderName() {

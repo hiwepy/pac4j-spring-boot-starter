@@ -13,16 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.ext.property;
+package org.pac4j.spring.boot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(Pac4jSamlProperties.PREFIX)
-public class Pac4jSamlProperties {
+@ConfigurationProperties(Pac4jLdapProperties.PREFIX)
+public class Pac4jLdapProperties {
 
-	public static final String PREFIX = "pac4j.saml";
+	public static final String PREFIX = "pac4j.ldap";
 	
-	/** Whether Enable Pac4j Saml. */
+	/** Whether Enable Pac4j Ldap. */
 	private boolean enabled = false;
 
 	public boolean isEnabled() {

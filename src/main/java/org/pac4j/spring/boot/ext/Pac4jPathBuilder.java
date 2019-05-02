@@ -15,8 +15,8 @@
  */
 package org.pac4j.spring.boot.ext;
 
-import org.pac4j.spring.boot.ext.property.Pac4jCasProperties;
-import org.pac4j.spring.boot.ext.property.Pac4jProperties;
+import org.pac4j.spring.boot.Pac4jCasProperties;
+import org.pac4j.spring.boot.Pac4jProperties;
 import org.pac4j.spring.boot.utils.CasUrlUtils;
 import org.pac4j.spring.boot.utils.Pac4jUrlUtils;
 import org.springframework.beans.factory.annotation.Autowired;

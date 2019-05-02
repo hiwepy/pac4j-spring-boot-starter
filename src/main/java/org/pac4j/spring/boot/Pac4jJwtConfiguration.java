@@ -17,6 +17,7 @@ package org.pac4j.spring.boot;
 
 import java.util.List;
 
+import org.pac4j.core.credentials.extractor.CredentialsExtractor;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
@@ -32,9 +33,8 @@ import org.pac4j.jwt.credentials.authenticator.JwtAuthenticator;
 import org.pac4j.spring.boot.ext.authentication.AuthenticatingFailureCounter;
 import org.pac4j.spring.boot.ext.authentication.UsernamePasswordCaptchaAuthenticator;
 import org.pac4j.spring.boot.ext.authentication.captcha.CaptchaResolver;
-import org.pac4j.spring.boot.ext.credentials.extractor.PostRequestAuthenticationExtractor;
-import org.pac4j.spring.boot.ext.property.Pac4jJwtProperties;
-import org.pac4j.spring.boot.ext.property.Pac4jProperties;
+import org.pac4j.spring.boot.ext.credentials.extractor.C;
+import org.pac4j.spring.boot.ext.credentials.extractor.UsernamePasswordCaptchaAuthenticationExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -109,9 +109,9 @@ public class Pac4jJwtConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public PostRequestAuthenticationExtractor credentialsExtractor() {
+	public UsernamePasswordCaptchaAuthenticationExtractor credentialsExtractor() {
 		
-		PostRequestAuthenticationExtractor credentialsExtractor = new PostRequestAuthenticationExtractor();
+		UsernamePasswordCaptchaAuthenticationExtractor credentialsExtractor = new UsernamePasswordCaptchaAuthenticationExtractor();
 		
 		return credentialsExtractor;
 		
@@ -120,7 +120,7 @@ public class Pac4jJwtConfiguration {
 	@Bean
  	public FormClient jwtAuthcClient(AjaxRequestResolver ajaxRequestResolver,
  			CallbackUrlResolver callbackUrlResolver,
- 			PostRequestAuthenticationExtractor credentialsExtractor,
+ 			UsernamePasswordCaptchaAuthenticationExtractor credentialsExtractor,
  			UrlResolver urlResolver) {
 
 		UsernamePasswordCaptchaAuthenticator usernamePasswordAuthenticator = new UsernamePasswordCaptchaAuthenticator();

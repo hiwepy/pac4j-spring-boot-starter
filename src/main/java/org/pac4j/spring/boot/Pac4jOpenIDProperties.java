@@ -13,16 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.ext.property;
+package org.pac4j.spring.boot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(Pac4jJ2eProperties.PREFIX)
-public class Pac4jJ2eProperties {
+@ConfigurationProperties(Pac4jOpenIDProperties.PREFIX)
+public class Pac4jOpenIDProperties {
 
-	public static final String PREFIX = "pac4j.j2e";
+	public static final String PREFIX = "pac4j.openid";
 	
-	/** Whether Enable Pac4j J2E. */
+	/** Whether Enable Pac4j OpenID. */
 	private boolean enabled = false;
 
 	public boolean isEnabled() {

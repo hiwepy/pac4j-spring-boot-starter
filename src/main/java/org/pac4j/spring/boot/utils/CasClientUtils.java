@@ -21,8 +21,8 @@ import org.pac4j.cas.client.direct.DirectCasProxyClient;
 import org.pac4j.cas.client.rest.CasRestBasicAuthClient;
 import org.pac4j.cas.client.rest.CasRestFormClient;
 import org.pac4j.cas.config.CasConfiguration;
-import org.pac4j.spring.boot.ext.property.Pac4jCasProperties;
-import org.pac4j.spring.boot.ext.property.Pac4jProperties;
+import org.pac4j.spring.boot.Pac4jCasProperties;
+import org.pac4j.spring.boot.Pac4jProperties;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 
 public class CasClientUtils {

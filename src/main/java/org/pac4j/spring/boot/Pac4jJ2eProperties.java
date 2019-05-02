@@ -13,16 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.ext.property;
+package org.pac4j.spring.boot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(Pac4jWebMvcProperties.PREFIX)
-public class Pac4jWebMvcProperties {
+@ConfigurationProperties(Pac4jJ2eProperties.PREFIX)
+public class Pac4jJ2eProperties {
 
-	public static final String PREFIX = "pac4j.webmvc";
+	public static final String PREFIX = "pac4j.j2e";
 	
-	/** Whether Enable Pac4j WebMvc. */
+	/** Whether Enable Pac4j J2E. */
 	private boolean enabled = false;
 
 	public boolean isEnabled() {

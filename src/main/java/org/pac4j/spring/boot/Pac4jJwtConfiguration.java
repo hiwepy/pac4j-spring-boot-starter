@@ -17,14 +17,12 @@ package org.pac4j.spring.boot;
 
 import java.util.List;
 
-import org.pac4j.core.credentials.extractor.CredentialsExtractor;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.http.client.direct.CookieClient;
 import org.pac4j.http.client.direct.HeaderClient;
 import org.pac4j.http.client.direct.ParameterClient;
-import org.pac4j.http.client.indirect.FormClient;
 import org.pac4j.jwt.config.encryption.EncryptionConfiguration;
 import org.pac4j.jwt.config.encryption.SecretEncryptionConfiguration;
 import org.pac4j.jwt.config.signature.SecretSignatureConfiguration;
@@ -32,9 +30,9 @@ import org.pac4j.jwt.config.signature.SignatureConfiguration;
 import org.pac4j.jwt.credentials.authenticator.JwtAuthenticator;
 import org.pac4j.spring.boot.ext.authentication.AuthenticatingFailureCounter;
 import org.pac4j.spring.boot.ext.authentication.UsernamePasswordCaptchaAuthenticator;
+import org.pac4j.spring.boot.ext.authentication.UsernamePasswordCaptchaFormClient;
 import org.pac4j.spring.boot.ext.authentication.captcha.CaptchaResolver;
-import org.pac4j.spring.boot.ext.credentials.extractor.C;
-import org.pac4j.spring.boot.ext.credentials.extractor.UsernamePasswordCaptchaAuthenticationExtractor;
+import org.pac4j.spring.boot.ext.credentials.extractor.UsernamePasswordCaptchaCredentialsExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -92,58 +90,61 @@ public class Pac4jJwtConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public UsernamePasswordCaptchaAuthenticator usernamePasswordAuthenticator(CaptchaResolver captchaResolver,
+	public UsernamePasswordCaptchaAuthenticator upcAuthenticator(CaptchaResolver captchaResolver,
 			AuthenticatingFailureCounter failureCounter) {
 		
 		UsernamePasswordCaptchaAuthenticator authenticator = new UsernamePasswordCaptchaAuthenticator();
 		
-		authenticator.setCaptchaRequired(captchaRequired);
+		authenticator.setCaptchaRequired(jwtProperties.getCaptcha().isRequired());
 		authenticator.setCaptchaResolver(captchaResolver);
 		authenticator.setFailureCounter(failureCounter);
-		authenticator.setRetryTimesKeyAttribute(retryTimesKeyAttribute);
-		authenticator.setRetryTimesWhenAccessDenied(retryTimesWhenAccessDenied);
+		authenticator.setRetryTimesKeyAttribute(jwtProperties.getAuthc().getRetryTimesKeyAttribute());
+		authenticator.setRetryTimesWhenAccessDenied(jwtProperties.getAuthc().getRetryTimesWhenAccessDenied());
 		
 		return authenticator;
 	}
 	
-	
 	@Bean
 	@ConditionalOnMissingBean
-	public UsernamePasswordCaptchaAuthenticationExtractor credentialsExtractor() {
-		
-		UsernamePasswordCaptchaAuthenticationExtractor credentialsExtractor = new UsernamePasswordCaptchaAuthenticationExtractor();
+	public UsernamePasswordCaptchaCredentialsExtractor upcCredentialsExtractor() {
+
+		UsernamePasswordCaptchaCredentialsExtractor credentialsExtractor = new UsernamePasswordCaptchaCredentialsExtractor(
+				jwtProperties.getAuthc().getUsernameParameterName(),
+				jwtProperties.getAuthc().getPasswordParameterName(), 
+				jwtProperties.getCaptcha().getParamName(),
+				jwtProperties.getAuthc().isPostOnly());
 		
 		return credentialsExtractor;
 		
 	}
 	
 	@Bean
- 	public FormClient jwtAuthcClient(AjaxRequestResolver ajaxRequestResolver,
+ 	public UsernamePasswordCaptchaFormClient jwtAuthcClient(AjaxRequestResolver ajaxRequestResolver,
  			CallbackUrlResolver callbackUrlResolver,
- 			UsernamePasswordCaptchaAuthenticationExtractor credentialsExtractor,
+ 			UsernamePasswordCaptchaCredentialsExtractor credentialsExtractor,
  			UrlResolver urlResolver) {
 
 		UsernamePasswordCaptchaAuthenticator usernamePasswordAuthenticator = new UsernamePasswordCaptchaAuthenticator();
-		FormClient client = new FormClient();
+		UsernamePasswordCaptchaFormClient client = new UsernamePasswordCaptchaFormClient();
 		
 		client.setAjaxRequestResolver(ajaxRequestResolver);
 		client.setAuthenticator(usernamePasswordAuthenticator);
 		//client.setAuthorizationGenerator(authorizationGenerator);
 		//client.setAuthorizationGenerators(authorizationGenerators);
-		client.setCallbackUrl(jwtProperties.getCallbackUrl());
+		client.setCallbackUrl(jwtProperties.getAuthc().getCallbackUrl());
 		client.setCallbackUrlResolver(callbackUrlResolver);
 		client.setCredentialsExtractor(credentialsExtractor);
 		if(jwtProperties.getCustomProperties() != null ) {
 			client.setCustomProperties(jwtProperties.getCustomProperties());
 		}
-		client.setLoginUrl(jwtProperties.getLoginUrl());
+		client.setLoginUrl(jwtProperties.getAuthc().getLoginUrl());
 		//client.setLogoutActionBuilder(NoLogoutActionBuilder.INSTANCE);
-		client.setName(jwtProperties.getAuthcClientName());
-		client.setPasswordParameter(jwtProperties.getPasswordParameterName());
+		client.setName(jwtProperties.getAuthc().getClientName());
+		client.setPasswordParameter(jwtProperties.getAuthc().getPasswordParameterName());
 		//client.setProfileCreator(profileCreator);
 		//client.setRedirectActionBuilder(redirectActionBuilder);
 		client.setUrlResolver(urlResolver);
-		client.setUsernameParameter(jwtProperties.getUsernameParameterName());
+		client.setUsernameParameter(jwtProperties.getAuthc().getUsernameParameterName());
 		
  		return client;
  	}

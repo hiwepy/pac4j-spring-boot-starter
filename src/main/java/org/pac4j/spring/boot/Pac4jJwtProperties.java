@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.pac4j.spring.boot.ext.property.Pac4jAuthcProperties;
+import org.pac4j.spring.boot.ext.property.Pac4jCaptchaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
@@ -348,7 +349,8 @@ public class Pac4jJwtProperties {
  
 	@NestedConfigurationProperty
 	private Pac4jAuthcProperties authc = new Pac4jAuthcProperties();
-	
+	@NestedConfigurationProperty
+	private Pac4jCaptchaProperties captcha = new Pac4jCaptchaProperties();
 	/**
 	 * HTTP Authorization header, equal to <code>X-Authorization</code>
 	 */
@@ -373,6 +375,22 @@ public class Pac4jJwtProperties {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	public Pac4jAuthcProperties getAuthc() {
+		return authc;
+	}
+
+	public void setAuthc(Pac4jAuthcProperties authc) {
+		this.authc = authc;
+	}
+
+	public Pac4jCaptchaProperties getCaptcha() {
+		return captcha;
+	}
+
+	public void setCaptcha(Pac4jCaptchaProperties captcha) {
+		this.captcha = captcha;
 	}
 
 	public String getEncryptSecret() {

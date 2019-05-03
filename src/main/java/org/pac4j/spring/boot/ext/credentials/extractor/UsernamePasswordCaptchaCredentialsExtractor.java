@@ -33,17 +33,25 @@ import com.alibaba.fastjson.JSONObject;
  * TODO
  * @author 		： <a href="https://github.com/vindell">vindell</a>
  */
-public class UsernamePasswordCaptchaAuthenticationExtractor implements CredentialsExtractor<UsernamePasswordCaptchaCredentials> {
+public class UsernamePasswordCaptchaCredentialsExtractor implements CredentialsExtractor<UsernamePasswordCaptchaCredentials> {
 	
 	// =====================================================================================
-	private static Logger logger = LoggerFactory.getLogger(UsernamePasswordCaptchaAuthenticationExtractor.class);
+	private static Logger logger = LoggerFactory.getLogger(UsernamePasswordCaptchaCredentialsExtractor.class);
 
 	private String usernameParameter = Pac4jConstants.USERNAME;
 	private String passwordParameter = Pac4jConstants.PASSWORD;
 	private String captchaParameter = Pac4jExtConstants.CAPTCHA;
 	private boolean postOnly = true;
+	
+    public UsernamePasswordCaptchaCredentialsExtractor(String usernameParameter, String passwordParameter,
+			String captchaParameter, boolean postOnly) {
+		this.usernameParameter = usernameParameter;
+		this.passwordParameter = passwordParameter;
+		this.captchaParameter = captchaParameter;
+		this.postOnly = postOnly;
+	}
 
-    @Override
+	@Override
     public UsernamePasswordCaptchaCredentials extract(WebContext context) {
     	
     	if (isPostOnly() && ! WebUtils.isPostRequest(context)) {

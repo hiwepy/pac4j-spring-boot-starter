@@ -20,6 +20,7 @@ import java.util.List;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
+import org.pac4j.core.logout.NoLogoutActionBuilder;
 import org.pac4j.http.client.direct.CookieClient;
 import org.pac4j.http.client.direct.HeaderClient;
 import org.pac4j.http.client.direct.ParameterClient;
@@ -34,6 +35,7 @@ import org.pac4j.spring.boot.ext.authentication.UsernamePasswordCaptchaFormClien
 import org.pac4j.spring.boot.ext.authentication.captcha.CaptchaResolver;
 import org.pac4j.spring.boot.ext.credentials.extractor.UsernamePasswordCaptchaCredentialsExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -88,9 +90,8 @@ public class Pac4jJwtConfiguration {
 		return authenticator;
 	}
 	
-	@Bean
-	@ConditionalOnMissingBean
-	public UsernamePasswordCaptchaAuthenticator upcAuthenticator(CaptchaResolver captchaResolver,
+	@Bean("jwtUpcAuthenticator")
+	public UsernamePasswordCaptchaAuthenticator jwtUpcAuthenticator(CaptchaResolver captchaResolver,
 			AuthenticatingFailureCounter failureCounter) {
 		
 		UsernamePasswordCaptchaAuthenticator authenticator = new UsernamePasswordCaptchaAuthenticator();
@@ -104,9 +105,8 @@ public class Pac4jJwtConfiguration {
 		return authenticator;
 	}
 	
-	@Bean
-	@ConditionalOnMissingBean
-	public UsernamePasswordCaptchaCredentialsExtractor upcCredentialsExtractor() {
+	@Bean("jwtUpcCredentialsExtractor")
+	public UsernamePasswordCaptchaCredentialsExtractor jwtUpcCredentialsExtractor() {
 
 		UsernamePasswordCaptchaCredentialsExtractor credentialsExtractor = new UsernamePasswordCaptchaCredentialsExtractor(
 				jwtProperties.getAuthc().getUsernameParameterName(),
@@ -118,18 +118,17 @@ public class Pac4jJwtConfiguration {
 		
 	}
 	
-	@Bean
- 	public UsernamePasswordCaptchaFormClient jwtAuthcClient(AjaxRequestResolver ajaxRequestResolver,
- 			CallbackUrlResolver callbackUrlResolver,
- 			UsernamePasswordCaptchaCredentialsExtractor credentialsExtractor,
+	@Bean("jwtAuthcClient")
+ 	public UsernamePasswordCaptchaFormClient jwtAuthcClient(AjaxRequestResolver ajaxRequestResolver, CallbackUrlResolver callbackUrlResolver,
+ 			@Qualifier("jwtUpcAuthenticator") UsernamePasswordCaptchaAuthenticator authenticator,
+ 			@Qualifier("jwtUpcCredentialsExtractor") UsernamePasswordCaptchaCredentialsExtractor credentialsExtractor,
  			UrlResolver urlResolver) {
 
-		UsernamePasswordCaptchaAuthenticator usernamePasswordAuthenticator = new UsernamePasswordCaptchaAuthenticator();
 		UsernamePasswordCaptchaFormClient client = new UsernamePasswordCaptchaFormClient();
 		
 		client.setAjaxRequestResolver(ajaxRequestResolver);
-		client.setAuthenticator(usernamePasswordAuthenticator);
-		//client.setAuthorizationGenerator(authorizationGenerator);
+		client.setAuthenticator(authenticator);
+		client.setAuthorizationGenerator(authorizationGenerator);
 		//client.setAuthorizationGenerators(authorizationGenerators);
 		client.setCallbackUrl(jwtProperties.getAuthc().getCallbackUrl());
 		client.setCallbackUrlResolver(callbackUrlResolver);
@@ -138,21 +137,19 @@ public class Pac4jJwtConfiguration {
 			client.setCustomProperties(jwtProperties.getCustomProperties());
 		}
 		client.setLoginUrl(jwtProperties.getAuthc().getLoginUrl());
-		//client.setLogoutActionBuilder(NoLogoutActionBuilder.INSTANCE);
 		client.setName(jwtProperties.getAuthc().getClientName());
 		client.setPasswordParameter(jwtProperties.getAuthc().getPasswordParameterName());
-		//client.setProfileCreator(profileCreator);
-		//client.setRedirectActionBuilder(redirectActionBuilder);
 		client.setUrlResolver(urlResolver);
 		client.setUsernameParameter(jwtProperties.getAuthc().getUsernameParameterName());
 		
  		return client;
  	}
 	
-	@Bean
+	@Bean("jwtCookieAuthzClient")
 	public CookieClient jwtCookieAuthzClient(JwtAuthenticator jwtAuthenticator) {
 
-		CookieClient client = new CookieClient(jwtProperties.getAuthorizationCookieName(), jwtAuthenticator);
+		CookieClient client = new CookieClient(jwtProperties.getAuthorizationCookieName(), 
+				jwtAuthenticator);
 		
 		//client.setAuthenticator(jwtAuthenticator);
 		//client.setAuthorizationGenerator(authorizationGenerator);
@@ -168,7 +165,7 @@ public class Pac4jJwtConfiguration {
 		return client;
 	}
 
-	@Bean
+	@Bean("jwtHeaderAuthzClient")
 	public HeaderClient jwtHeaderAuthzClient(JwtAuthenticator jwtAuthenticator) {
 
 		HeaderClient client = new HeaderClient(jwtProperties.getAuthorizationHeaderName(), jwtAuthenticator);

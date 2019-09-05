@@ -15,16 +15,19 @@
  */
 package org.pac4j.spring.boot.ext.authentication.generator;
 
+import java.util.Optional;
+
 import org.pac4j.core.authorization.generator.AuthorizationGenerator;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.profile.CommonProfile;
+import org.pac4j.core.profile.UserProfile;
 import org.pac4j.spring.boot.ext.authentication.userdetails.UserDetailsService;
 
 /**
  * TODO
  * @author 		： <a href="https://github.com/vindell">vindell</a>
  */
-public class UserDetailsAuthorizationGenerator<U extends CommonProfile> implements AuthorizationGenerator<U> {
+public class UserDetailsAuthorizationGenerator<U extends CommonProfile> implements AuthorizationGenerator {
 
 	private final UserDetailsService<U> detailsService;
 	
@@ -34,11 +37,11 @@ public class UserDetailsAuthorizationGenerator<U extends CommonProfile> implemen
 	}
 	
 	@Override
-    public U generate(final WebContext context, final U profile) {
+    public Optional<UserProfile> generate(final WebContext context, final UserProfile profile) {
 		UserDetails details = getDetailsService().loadUserDetails(context, profile);
         profile.addPermissions(details.getPermissions());
         profile.addRoles(details.getRoles());
-        return profile;
+        return Optional.ofNullable(profile);
     }
 
 	public UserDetailsService<U> getDetailsService() {

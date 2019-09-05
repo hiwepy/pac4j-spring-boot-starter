@@ -15,6 +15,8 @@
  */
 package org.pac4j.spring.boot.ext.credentials.extractor;
 
+import java.util.Optional;
+
 import org.pac4j.core.context.Pac4jConstants;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.credentials.extractor.CredentialsExtractor;
@@ -52,7 +54,7 @@ public class UsernamePasswordCaptchaCredentialsExtractor implements CredentialsE
 	}
 
 	@Override
-    public UsernamePasswordCaptchaCredentials extract(WebContext context) {
+    public Optional<UsernamePasswordCaptchaCredentials> extract(WebContext context) {
     	
     	if (isPostOnly() && ! WebUtils.isPostRequest(context)) {
 			if (logger.isDebugEnabled()) {
@@ -72,19 +74,19 @@ public class UsernamePasswordCaptchaCredentialsExtractor implements CredentialsE
 	            return null;
 	        }
 	        String captcha = loginRequest.getCaptcha();
-	        
-	        return new UsernamePasswordCaptchaCredentials(username, password, captcha);
+	        return Optional.ofNullable(new UsernamePasswordCaptchaCredentials(username, password, captcha));
 
 		} else {
 			
-			final String username = context.getRequestParameter(this.usernameParameter);
-	        final String password = context.getRequestParameter(this.passwordParameter);
-	        if (username == null || password == null) {
+			final Optional<String> username = context.getRequestParameter(this.usernameParameter);
+	        final Optional<String> password = context.getRequestParameter(this.passwordParameter);
+	        if (!username.isPresent() || !password.isPresent()) {
 	            return null;
 	        }
-	        String captcha = context.getRequestParameter(this.captchaParameter);
 	        
-	        return new UsernamePasswordCaptchaCredentials(username, password, captcha);
+	        Optional<String> captcha = context.getRequestParameter(this.captchaParameter);
+	        
+	        return Optional.ofNullable(new UsernamePasswordCaptchaCredentials(username.get(), password.get(), captcha.get()));
 	 		
 		}
         

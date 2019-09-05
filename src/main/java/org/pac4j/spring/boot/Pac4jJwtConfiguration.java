@@ -128,7 +128,7 @@ public class Pac4jJwtConfiguration {
 		
 		client.setAjaxRequestResolver(ajaxRequestResolver);
 		client.setAuthenticator(authenticator);
-		client.setAuthorizationGenerator(authorizationGenerator);
+		//client.setAuthorizationGenerator(authorizationGenerator);
 		//client.setAuthorizationGenerators(authorizationGenerators);
 		client.setCallbackUrl(jwtProperties.getAuthc().getCallbackUrl());
 		client.setCallbackUrlResolver(callbackUrlResolver);

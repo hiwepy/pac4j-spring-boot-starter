@@ -16,6 +16,7 @@
 package org.pac4j.spring.boot.ext.authentication.captcha;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.pac4j.core.context.WebContext;
@@ -39,10 +40,10 @@ public class SessionCaptchaResolver implements CaptchaResolver {
 			return false;
 		}
 		
-		String sessionCapText = (String) context.getSessionStore().get(context, this.sessionKeyValue);
+		Optional<Object> sessionCapText = context.getSessionStore().get(context, this.sessionKeyValue);
 		//String sessionCapDate = (String) WebUtils.getSessionAttribute(request, this.sessionKeyDateValue);
-		if (sessionCapText != null) {
-			return StringUtils.equalsIgnoreCase(sessionCapText, capText);
+		if (sessionCapText.isPresent()) {
+			return StringUtils.equalsIgnoreCase(String.valueOf(sessionCapText.get()), capText);
 		}
 		return false;
 	}

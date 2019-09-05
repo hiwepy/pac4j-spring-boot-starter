@@ -373,10 +373,10 @@
         <maven-surefire-plugin.vertsion>2.22.1</maven-surefire-plugin.vertsion>
 		<maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
         <fastjson.version>1.2.57</fastjson.version>
-        <pac4j.version>3.7.0</pac4j.version>
+        <pac4j.version>4.0.0-RC1</pac4j.version>
 		<pac4j-j2e.version>4.1.0</pac4j-j2e.version>
 		<pac4j-webmvc.version>3.2.0</pac4j-webmvc.version>
-		<scribejava.version>6.8.1</scribejava.version>
+		<scribe.version>6.3.0</scribe.version>
 		<woodstox-asl.version>4.4.1</woodstox-asl.version>
 	</properties>
 	
@@ -386,13 +386,13 @@
 			<dependency>
 			    <groupId>com.github.scribejava</groupId>
 			    <artifactId>scribejava-core</artifactId>
-			    <version>${scribejava.version}</version>
+			    <version>${scribe.version}</version>
 			</dependency>
 			<!-- https://mvnrepository.com/artifact/com.github.scribejava/scribejava-apis -->
 			<dependency>
 			    <groupId>com.github.scribejava</groupId>
 			    <artifactId>scribejava-apis</artifactId>
-			    <version>${scribejava.version}</version>
+			    <version>${scribe.version}</version>
 			</dependency>
 			
 			<!-- https://mvnrepository.com/artifact/org.jasig.cas.client/cas-client-core -->
@@ -535,7 +535,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<optional>true</optional>
+			 <scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -570,7 +570,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
+			 <scope>provided</scope>
 		</dependency>
 		<!-- Compile dependencies -->
 		<dependency>
@@ -601,17 +601,17 @@
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-cas</artifactId>
-            <optional>true</optional>
+             <scope>provided</scope>
         </dependency>
         <dependency>
 		    <groupId>org.jasig.cas.client</groupId>
 		    <artifactId>cas-client-core</artifactId>
-		    <optional>true</optional>
+		     <scope>provided</scope>
 		</dependency>
 		<dependency>
 		    <groupId>org.codehaus.woodstox</groupId>
 		    <artifactId>woodstox-core-asl</artifactId>
-		    <optional>true</optional>
+		     <scope>provided</scope>
 		</dependency>
         <!-- PAC4J For HTTP Protocol  -->
         <dependency>
@@ -622,17 +622,17 @@
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-oauth</artifactId>
-            <optional>true</optional>
+             <scope>provided</scope>
         </dependency>
         <dependency>
 		    <groupId>com.github.scribejava</groupId>
 		    <artifactId>scribejava-core</artifactId>
-		    <optional>true</optional>
+		    <scope>provided</scope>
 		</dependency>
 		<dependency>
 		    <groupId>com.github.scribejava</groupId>
 		    <artifactId>scribejava-apis</artifactId>
-		    <optional>true</optional>
+		     <scope>provided</scope>
 		</dependency>
         <!-- 
         <dependency>
@@ -644,19 +644,19 @@
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-openid</artifactId>
-            <optional>true</optional>
+             <scope>provided</scope>
         </dependency>
         <!-- PAC4J For OpenID Connect Protocol  -->
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-oidc</artifactId>
-            <optional>true</optional>
+             <scope>provided</scope>
         </dependency>
         <!-- PAC4J For SAML Protocol  -->
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-saml</artifactId>
-            <optional>true</optional>
+             <scope>provided</scope>
             <exclusions>
             	<exclusion>
             		<groupId>org.opensaml</groupId>
@@ -672,43 +672,43 @@
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-couch</artifactId>
-            <optional>true</optional>
+             <scope>provided</scope>
         </dependency>
         <!-- PAC4J For GAE UserService Mechanism -->
         <!-- <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-gae</artifactId>
-            <optional>true</optional>
+             <scope>provided</scope>
         </dependency> -->
         <!-- PAC4J For JWT -->
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-jwt</artifactId>
-            <optional>true</optional>
+             <scope>provided</scope>
         </dependency>
         <!-- PAC4J For Kerberos -->
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-kerberos</artifactId>
-            <optional>true</optional>
+             <scope>provided</scope>
         </dependency>
         <!-- PAC4J For LDAP  -->
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-ldap</artifactId>
-            <optional>true</optional>
+             <scope>provided</scope>
         </dependency>
         <!-- PAC4J For MongoDB  -->
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-mongo</artifactId>
-            <optional>true</optional>
+             <scope>provided</scope>
         </dependency>
         <!-- PAC4J For Relational DB  -->
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-sql</artifactId>
-            <optional>true</optional>
+             <scope>provided</scope>
         </dependency>
          <!-- https://mvnrepository.com/artifact/org.pac4j/j2e-pac4j -->
 		<dependency>
@@ -721,6 +721,12 @@
             <groupId>org.pac4j</groupId>
             <artifactId>spring-webmvc-pac4j</artifactId>
         </dependency>
+        
+		<!-- Commons项目中用来处理Java基本对象方法的工具类包， 可以简化很多平时经常要用到的写法， 例如判断字符串是否为空等等 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 				        
 	</dependencies>
 

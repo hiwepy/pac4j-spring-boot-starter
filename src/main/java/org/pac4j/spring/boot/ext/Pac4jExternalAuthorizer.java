@@ -20,7 +20,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.pac4j.core.authorization.authorizer.ProfileAuthorizer;
 import org.pac4j.core.context.WebContext;
-import org.pac4j.core.exception.HttpAction;
+import org.pac4j.core.exception.http.HttpAction;
 import org.pac4j.core.profile.CommonProfile;
 
 public class Pac4jExternalAuthorizer extends ProfileAuthorizer<CommonProfile> {

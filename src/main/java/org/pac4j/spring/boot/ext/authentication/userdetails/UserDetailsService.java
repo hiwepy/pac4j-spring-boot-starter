@@ -16,16 +16,16 @@
 package org.pac4j.spring.boot.ext.authentication.userdetails;
 
 import org.pac4j.core.context.WebContext;
-import org.pac4j.core.profile.CommonProfile;
+import org.pac4j.core.profile.UserProfile;
 import org.pac4j.spring.boot.ext.authentication.generator.UserDetails;
 
 /**
  * TODO
  * @author 		： <a href="https://github.com/vindell">vindell</a>
  */
-public interface UserDetailsService<U extends CommonProfile> {
+public interface UserDetailsService<U extends UserProfile> {
 	
-	UserDetails loadUserDetails(final WebContext context, final U profile) throws UsernameNotFoundException;
+	UserDetails loadUserDetails(final WebContext context, final UserProfile profile) throws UsernameNotFoundException;
 	
 }
 

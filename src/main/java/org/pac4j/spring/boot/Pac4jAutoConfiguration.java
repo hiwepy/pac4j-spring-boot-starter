@@ -24,11 +24,11 @@ import org.pac4j.core.authorization.authorizer.CheckHttpMethodAuthorizer;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.context.HttpConstants.HTTP_METHOD;
-import org.pac4j.core.context.J2EContext;
-import org.pac4j.core.context.session.J2ESessionStore;
+import org.pac4j.core.context.JEEContext;
+import org.pac4j.core.context.session.JEESessionStore;
 import org.pac4j.core.context.session.SessionStore;
 import org.pac4j.core.http.adapter.HttpActionAdapter;
-import org.pac4j.core.http.adapter.J2ENopHttpActionAdapter;
+import org.pac4j.core.http.adapter.JEEHttpActionAdapter;
 import org.pac4j.http.authorization.authorizer.IpRegexpAuthorizer;
 import org.pac4j.j2e.filter.CallbackFilter;
 import org.pac4j.j2e.filter.LogoutFilter;
@@ -58,19 +58,19 @@ public class Pac4jAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	protected SessionStore<J2EContext> sessionStore() {
-		return new J2ESessionStore();
+	protected SessionStore<JEEContext> sessionStore() {
+		return new JEESessionStore();
 	}
 	
 	@Bean
 	@ConditionalOnMissingBean
-	protected HttpActionAdapter<Object, J2EContext> httpActionAdapter() {
-		return J2ENopHttpActionAdapter.INSTANCE;
+	protected HttpActionAdapter<Object, JEEContext> httpActionAdapter() {
+		return JEEHttpActionAdapter.INSTANCE;
 	}
 	
 	@Bean
 	public Config config(Pac4jProperties pac4jProperties, Clients clients, 
-			HttpActionAdapter<Object, J2EContext> httpActionAdapter,SessionStore<J2EContext> sessionStore) {
+			HttpActionAdapter<Object, JEEContext> httpActionAdapter,SessionStore<JEEContext> sessionStore) {
 		
 
 		PropertiesConfigFactory configFactory = new PropertiesConfigFactory(pac4jProperties.getCallbackUrl(), pac4jProperties.getClientsProperties());

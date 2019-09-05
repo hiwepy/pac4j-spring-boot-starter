@@ -397,7 +397,7 @@ public class Pac4jOAuthConfiguration {
 		return client;
 	}
 	
-	protected <U extends OAuth10Profile> void initOAuth10Client(OAuth10Client<U> client,
+	protected <U extends OAuth10Profile> void initOAuth10Client(OAuth10Client client,
 			Pac4jOAuthClientProperties properties, AjaxRequestResolver ajaxRequestResolver,
 			UrlResolver urlResolver) {
 
@@ -420,7 +420,7 @@ public class Pac4jOAuthConfiguration {
 		
 	}
 
-	protected <U extends OAuth20Profile> void initOAuth20Client(OAuth20Client<U> client,
+	protected <U extends OAuth20Profile> void initOAuth20Client(OAuth20Client client,
 			Pac4jOAuthClientProperties properties, AjaxRequestResolver ajaxRequestResolver,
 			UrlResolver urlResolver) {
 

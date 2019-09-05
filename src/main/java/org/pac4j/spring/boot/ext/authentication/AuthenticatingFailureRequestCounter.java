@@ -16,6 +16,8 @@
 package org.pac4j.spring.boot.ext.authentication;
 
 
+import java.util.Optional;
+
 import org.pac4j.core.context.WebContext;
 import org.pac4j.spring.boot.ext.Pac4jExtConstants;
 
@@ -26,9 +28,9 @@ public class AuthenticatingFailureRequestCounter implements AuthenticatingFailur
     
 	@Override
 	public int get(WebContext context, String retryTimesKeyAttribute) {
-		String count = context.getRequestParameter(getRetryTimesKeyParameter());
-		if (null != count) {
-			return Integer.parseInt(count);
+		Optional<String> count = context.getRequestParameter(getRetryTimesKeyParameter());
+		if (count.isPresent()) {
+			return Integer.parseInt(count.get());
 		}
 		return 0;
 	}

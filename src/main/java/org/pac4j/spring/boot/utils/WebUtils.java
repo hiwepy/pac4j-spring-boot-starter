@@ -15,6 +15,8 @@
  */
 package org.pac4j.spring.boot.utils;
 
+import java.util.Optional;
+
 import org.pac4j.core.context.HttpConstants;
 import org.pac4j.core.context.WebContext;
 import org.springframework.http.HttpMethod;
@@ -26,11 +28,13 @@ import org.springframework.http.HttpMethod;
 public class WebUtils {
 
 	public static boolean isAjaxRequest(WebContext context) {
-		return context.getRequestHeader(HttpConstants.AJAX_HEADER_NAME).contains(HttpConstants.AJAX_HEADER_VALUE);
+		Optional<String> header = context.getRequestHeader(HttpConstants.AJAX_HEADER_NAME);
+		return header.isPresent() ? header.get().contains(HttpConstants.AJAX_HEADER_VALUE) : false;
 	}
 
 	public static boolean isContentTypeJson(WebContext context) {
-		return context.getRequestHeader(HttpConstants.CONTENT_TYPE_HEADER).contains(HttpConstants.APPLICATION_JSON);
+		Optional<String> header = context.getRequestHeader(HttpConstants.CONTENT_TYPE_HEADER);
+		return header.isPresent() ? header.get().contains(HttpConstants.APPLICATION_JSON) : false;
 	}
 
 	public static boolean isPostRequest(WebContext context) {

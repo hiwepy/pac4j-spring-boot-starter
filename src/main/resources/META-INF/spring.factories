@@ -11,6 +11,4 @@ org.pac4j.spring.boot.Pac4jOidcConfiguration,\
 org.pac4j.spring.boot.Pac4jOpenIDConfiguration,\
 org.pac4j.spring.boot.Pac4jSamlConfiguration,\
 org.pac4j.spring.boot.Pac4jClientsConfiguration,\
-org.pac4j.spring.boot.Pac4jAutoConfiguration,\
-org.pac4j.spring.boot.Pac4jJ2eConfiguration,\
-org.pac4j.spring.boot.Pac4jWebMvcConfiguration
+org.pac4j.spring.boot.Pac4jAutoConfiguration

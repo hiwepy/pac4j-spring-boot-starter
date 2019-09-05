@@ -77,8 +77,6 @@ public class Pac4jOAuthConfiguration {
 	private Pac4jOAuthProperties oauthProperties; 
 	@Autowired
 	private Pac4jProperties pac4jProperties;
-	@Autowired
-	private ServerProperties serverProperties;
 
 	@Bean
 	@ConditionalOnMissingBean

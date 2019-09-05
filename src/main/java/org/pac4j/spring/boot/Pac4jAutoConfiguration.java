@@ -30,12 +30,8 @@ import org.pac4j.core.context.session.SessionStore;
 import org.pac4j.core.http.adapter.HttpActionAdapter;
 import org.pac4j.core.http.adapter.JEEHttpActionAdapter;
 import org.pac4j.http.authorization.authorizer.IpRegexpAuthorizer;
-import org.pac4j.j2e.filter.CallbackFilter;
-import org.pac4j.j2e.filter.LogoutFilter;
-import org.pac4j.j2e.filter.SecurityFilter;
 import org.pac4j.spring.boot.ext.Pac4jPathBuilder;
 import org.pac4j.spring.boot.utils.StringUtils;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -46,7 +42,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConditionalOnWebApplication
-@ConditionalOnClass({CallbackFilter.class, SecurityFilter.class, LogoutFilter.class })
+//@ConditionalOnClass({CallbackFilter.class, SecurityFilter.class, LogoutFilter.class })
 @ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jProperties.class, ServerProperties.class })
 public class Pac4jAutoConfiguration {

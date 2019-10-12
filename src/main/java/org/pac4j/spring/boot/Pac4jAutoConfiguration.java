@@ -44,12 +44,12 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnWebApplication
 //@ConditionalOnClass({CallbackFilter.class, SecurityFilter.class, LogoutFilter.class })
 @ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
-@EnableConfigurationProperties({ Pac4jProperties.class, ServerProperties.class })
+@EnableConfigurationProperties({ Pac4jProperties.class, Pac4jCasProperties.class, ServerProperties.class })
 public class Pac4jAutoConfiguration {
 
 	@Bean
-	protected Pac4jPathBuilder pac4jPathBuilder() {
-		return new Pac4jPathBuilder();
+	protected Pac4jPathBuilder pac4jPathBuilder(Pac4jProperties pac4jProperties, Pac4jCasProperties casProperties) {
+		return new Pac4jPathBuilder(pac4jProperties, casProperties);
 	}
 	
 	@Bean

@@ -19,15 +19,18 @@ import org.pac4j.spring.boot.Pac4jCasProperties;
 import org.pac4j.spring.boot.Pac4jProperties;
 import org.pac4j.spring.boot.utils.CasUrlUtils;
 import org.pac4j.spring.boot.utils.Pac4jUrlUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class Pac4jPathBuilder {
 	
-	@Autowired
 	private Pac4jProperties pac4jProperties;
-	@Autowired
 	private Pac4jCasProperties casProperties;
 	
+	public Pac4jPathBuilder(Pac4jProperties pac4jProperties, Pac4jCasProperties casProperties) {
+		super();
+		this.pac4jProperties = pac4jProperties;
+		this.casProperties = casProperties;
+	}
+
 	public String getLoginURL(String contextPath) {
 		// 如果是Cas认证，则构造Cas登录跳转地址
 		if(casProperties != null && (casProperties.isCasClient() || casProperties.isDirectCasClient() || casProperties.isDirectCasProxyClient())) {

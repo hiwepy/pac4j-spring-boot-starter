@@ -589,11 +589,6 @@
             <artifactId>pac4j-cas</artifactId>
              <scope>provided</scope>
         </dependency>
-        <dependency>
-		    <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-core</artifactId>
-		     <scope>provided</scope>
-		</dependency>
 		<dependency>
 		    <groupId>org.codehaus.woodstox</groupId>
 		    <artifactId>woodstox-core-asl</artifactId>

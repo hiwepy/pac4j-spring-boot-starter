@@ -17,20 +17,19 @@ package org.pac4j.spring.boot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @ConfigurationProperties(Pac4jSamlProperties.PREFIX)
+@Getter
+@Setter
+@ToString
 public class Pac4jSamlProperties {
 
 	public static final String PREFIX = "pac4j.saml";
 	
 	/** Whether Enable Pac4j Saml. */
 	private boolean enabled = false;
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
 
 }

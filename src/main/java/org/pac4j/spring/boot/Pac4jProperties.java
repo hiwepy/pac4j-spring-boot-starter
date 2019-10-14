@@ -7,7 +7,14 @@ import org.pac4j.cas.authorization.DefaultCasAuthorizationGenerator;
 import org.pac4j.core.context.DefaultAuthorizers;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @ConfigurationProperties(Pac4jProperties.PREFIX)
+@Getter
+@Setter
+@ToString
 public class Pac4jProperties {
 
 	/* ================================== Pac4j ================================= */
@@ -294,10 +301,10 @@ public class Pac4jProperties {
     
     /** Whether multiple profiles should be kept . 默认 false*/
     private boolean multiProfile = false;
+    
+    boolean completeRelativeUrl = false;
 
     /** SecurityFilter */
-    
-
     
     /** 登录地址：会话不存在时访问的地址 */
 	private String loginUrl;
@@ -316,149 +323,5 @@ public class Pac4jProperties {
      */
     private Map<String, String> clientsProperties = new HashMap<>();
     
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public String getAllowedIpRegexpPattern() {
-		return allowedIpRegexpPattern;
-	}
-
-	public void setAllowedIpRegexpPattern(String allowedIpRegexpPattern) {
-		this.allowedIpRegexpPattern = allowedIpRegexpPattern;
-	}
-
-	public String[] getAllowedHttpMethods() {
-		return allowedHttpMethods;
-	}
-
-	public void setAllowedHttpMethods(String[] allowedHttpMethods) {
-		this.allowedHttpMethods = allowedHttpMethods;
-	}
-
-	public String getClientName() {
-		return clientName;
-	}
-
-	public void setClientName(String clientName) {
-		this.clientName = clientName;
-	}
-
-	public String getCallbackUrl() {
-		return callbackUrl;
-	}
-
-	public void setCallbackUrl(String callbackUrl) {
-		this.callbackUrl = callbackUrl;
-	}
-
-	public String getClientParameterName() {
-		return clientParameterName;
-	}
-
-	public void setClientParameterName(String clientParameterName) {
-		this.clientParameterName = clientParameterName;
-	}
-
-	public boolean isIncludeClientNameInCallbackUrl() {
-		return includeClientNameInCallbackUrl;
-	}
-
-	public void setIncludeClientNameInCallbackUrl(boolean includeClientNameInCallbackUrl) {
-		this.includeClientNameInCallbackUrl = includeClientNameInCallbackUrl;
-	}
-
-	public String getRememberMeAttributeName() {
-		return rememberMeAttributeName;
-	}
-
-	public void setRememberMeAttributeName(String rememberMeAttributeName) {
-		this.rememberMeAttributeName = rememberMeAttributeName;
-	}
-	
-	public String getClients() {
-		return clients;
-	}
-
-	public void setClients(String clients) {
-		this.clients = clients;
-	}
-
-	public String getAuthorizers() {
-		return authorizers;
-	}
-
-	public void setAuthorizers(String authorizers) {
-		this.authorizers = authorizers;
-	}
-
-	public String getMatchers() {
-		return matchers;
-	}
-
-	public void setMatchers(String matchers) {
-		this.matchers = matchers;
-	}
-
-	public boolean isMultiProfile() {
-		return multiProfile;
-	}
-
-	public void setMultiProfile(boolean multiProfile) {
-		this.multiProfile = multiProfile;
-	}
-
-
-	public String getLoginUrl() {
-		return loginUrl;
-	}
-
-	public void setLoginUrl(String loginUrl) {
-		this.loginUrl = loginUrl;
-	}
-
-	public String getRedirectUrl() {
-		return redirectUrl;
-	}
-
-	public void setRedirectUrl(String redirectUrl) {
-		this.redirectUrl = redirectUrl;
-	}
-
-	public String getSuccessUrl() {
-		return successUrl;
-	}
-
-	public void setSuccessUrl(String successUrl) {
-		this.successUrl = successUrl;
-	}
-
-	public String getUnauthorizedUrl() {
-		return unauthorizedUrl;
-	}
-
-	public void setUnauthorizedUrl(String unauthorizedUrl) {
-		this.unauthorizedUrl = unauthorizedUrl;
-	}
-
-	public String getFailureUrl() {
-		return failureUrl;
-	}
-
-	public void setFailureUrl(String failureUrl) {
-		this.failureUrl = failureUrl;
-	}
-
-	public Map<String, String> getClientsProperties() {
-		return clientsProperties;
-	}
-
-	public void setClientsProperties(Map<String, String> clientsProperties) {
-		this.clientsProperties = clientsProperties;
-	}
 
 }

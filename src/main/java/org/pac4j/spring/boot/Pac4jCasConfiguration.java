@@ -3,6 +3,7 @@ package org.pac4j.spring.boot;
 import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.util.CommonUtils;
 import org.pac4j.cas.client.CasClient;
+import org.pac4j.cas.client.CasProxyReceptor;
 import org.pac4j.cas.client.direct.DirectCasClient;
 import org.pac4j.cas.client.direct.DirectCasProxyClient;
 import org.pac4j.cas.client.rest.CasRestBasicAuthClient;
@@ -18,6 +19,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -44,32 +46,37 @@ public class Pac4jCasConfiguration {
 		registration.setOrder(1);
 		return registration;
 	}	 */
-	
+    
 	@Bean
-    public CasConfiguration casConfiguration(LogoutHandler<WebContext> logoutHandler, UrlResolver urlResolver) {
+	public CasConfiguration casConfiguration(LogoutHandler<WebContext> logoutHandler, UrlResolver urlResolver,
+			@Autowired(required = false) CasProxyReceptor proxyReceptor) {
 
-		CasConfiguration configuration = new CasConfiguration(pac4jCasProperties.getCasServerLoginUrl(), pac4jCasProperties.getCasProtocol() );
+		CasConfiguration configuration = new CasConfiguration(pac4jCasProperties.getLoginUrl(), pac4jCasProperties.getProtocol() );
 		
 		if(pac4jCasProperties.isAcceptAnyProxy() && StringUtils.hasText(pac4jCasProperties.getAllowedProxyChains())) {	
 			configuration.setAcceptAnyProxy(pac4jCasProperties.isAcceptAnyProxy());
 			configuration.setAllowedProxyChains(CommonUtils.createProxyList(pac4jCasProperties.getAllowedProxyChains()));
 		}
 		
-		if(StringUtils.hasText(pac4jCasProperties.getEncoding())) {	
-			configuration.setEncoding(pac4jCasProperties.getEncoding());
-		}
-		configuration.setGateway(pac4jCasProperties.isGateway());
-		configuration.setLoginUrl(pac4jCasProperties.getCasServerLoginUrl());
-		configuration.setLogoutHandler(logoutHandler);
-		if(StringUtils.hasText(pac4jCasProperties.getServiceParameterName())) {	
-			configuration.setPostLogoutUrlParameter(pac4jCasProperties.getServiceParameterName());
-		}
-		configuration.setPrefixUrl(pac4jCasProperties.getCasServerUrlPrefix());
-		configuration.setProtocol(pac4jCasProperties.getCasProtocol());
-		//configuration.setRenew(pac4jProperties.isRenew());
-		configuration.setRestUrl(pac4jCasProperties.getCasServerRestUrl());
-		configuration.setTimeTolerance(pac4jCasProperties.getTolerance());
-		configuration.setUrlResolver(urlResolver);
+		/**
+		 * 批量设置参数
+		 */
+		PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
+		
+		map.from(pac4jCasProperties.getEncoding()).to(configuration::setEncoding);
+		map.from(pac4jCasProperties.getCustomParams()).to(configuration::setCustomParams);
+		map.from(pac4jCasProperties.isGateway()).to(configuration::setGateway);
+		map.from(pac4jCasProperties.getLoginUrl()).to(configuration::setLoginUrl);
+		map.from(logoutHandler).to(configuration::setLogoutHandler);
+		map.from(pac4jCasProperties.getMethod()).to(configuration::setMethod);
+		map.from(pac4jCasProperties.getPostLogoutUrlParameter()).to(configuration::setPostLogoutUrlParameter);
+		map.from(pac4jCasProperties.getPrefixUrl()).to(configuration::setPrefixUrl);
+		map.from(pac4jCasProperties.getProtocol()).to(configuration::setProtocol);
+		map.from(proxyReceptor).to(configuration::setProxyReceptor);
+		map.from(pac4jCasProperties.isRenew()).to(configuration::setRenew);
+		map.from(pac4jCasProperties.getRestUrl()).to(configuration::setRestUrl);
+		map.from(pac4jCasProperties.getTolerance()).to(configuration::setTimeTolerance);
+		map.from(urlResolver).to(configuration::setUrlResolver);
 		
 		return configuration;
 	}
@@ -89,7 +96,7 @@ public class Pac4jCasConfiguration {
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = "direct-cas-proxy-client", havingValue = "true")
 	public DirectCasProxyClient directCasProxyClient(CasConfiguration configuration) {
-		return CasClientUtils.directCasProxyClient(configuration, pac4jCasProperties, pac4jCasProperties.getCasServerUrlPrefix());
+		return CasClientUtils.directCasProxyClient(configuration, pac4jCasProperties, pac4jCasProperties.getPrefixUrl());
 	}
 	
 	@Bean

@@ -23,7 +23,14 @@ import org.pac4j.spring.boot.ext.property.Pac4jCaptchaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @ConfigurationProperties(Pac4jJwtProperties.PREFIX)
+@Getter
+@Setter
+@ToString
 public class Pac4jJwtProperties {
 
 	public static final String AUTHORIZATION_HEADER = "X-Authorization";

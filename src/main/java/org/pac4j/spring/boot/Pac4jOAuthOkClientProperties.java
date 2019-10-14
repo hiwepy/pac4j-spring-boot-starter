@@ -15,19 +15,18 @@
  */
 package org.pac4j.spring.boot;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class Pac4jOAuthOkClientProperties extends Pac4jOAuthClientProperties {
 
 	/**
 	 * Public key (required as well as application key by API on ok.ru)
 	 */
 	private String publicKey;
-
-	public String getPublicKey() {
-		return publicKey;
-	}
-
-	public void setPublicKey(String publicKey) {
-		this.publicKey = publicKey;
-	}
 
 }

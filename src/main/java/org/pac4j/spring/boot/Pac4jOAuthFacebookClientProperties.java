@@ -18,6 +18,13 @@ package org.pac4j.spring.boot;
 import org.pac4j.oauth.client.FacebookClient;
 import org.pac4j.oauth.profile.facebook.FacebookProfileDefinition;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class Pac4jOAuthFacebookClientProperties extends Pac4jOAuthClientProperties {
 
 	protected String fields = FacebookClient.ATTEMPTED_AUTHENTICATION_SUFFIX;

@@ -22,6 +22,13 @@ import org.pac4j.core.context.HttpConstants;
 
 import com.github.scribejava.core.model.Verb;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class Pac4jOAuthClientProperties {
 
 	public static final String RESPONSE_TYPE_CODE = "code";
@@ -46,133 +53,5 @@ public class Pac4jOAuthClientProperties {
 	private boolean withState;
 
 	private String stateData;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
-	public String getLogoUrl() {
-		return logoUrl;
-	}
-
-	public void setLogoUrl(String logoUrl) {
-		this.logoUrl = logoUrl;
-	}
-
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	public String getSecret() {
-		return secret;
-	}
-
-	public void setSecret(String secret) {
-		this.secret = secret;
-	}
-
-	public boolean isTokenAsHeader() {
-		return tokenAsHeader;
-	}
-
-	public void setTokenAsHeader(boolean tokenAsHeader) {
-		this.tokenAsHeader = tokenAsHeader;
-	}
-
-	public String getResponseType() {
-		return responseType;
-	}
-
-	public void setResponseType(String responseType) {
-		this.responseType = responseType;
-	}
-
-	public String getScope() {
-		return scope;
-	}
-
-	public void setScope(String scope) {
-		this.scope = scope;
-	}
-
-	public boolean isHasGrantType() {
-		return hasGrantType;
-	}
-
-	public void setHasGrantType(boolean hasGrantType) {
-		this.hasGrantType = hasGrantType;
-	}
-
-	public int getConnectTimeout() {
-		return connectTimeout;
-	}
-
-	public void setConnectTimeout(int connectTimeout) {
-		this.connectTimeout = connectTimeout;
-	}
-
-	public int getReadTimeout() {
-		return readTimeout;
-	}
-
-	public void setReadTimeout(int readTimeout) {
-		this.readTimeout = readTimeout;
-	}
-
-	public Verb getProfileVerb() {
-		return profileVerb;
-	}
-
-	public void setProfileVerb(Verb profileVerb) {
-		this.profileVerb = profileVerb;
-	}
-
-	public Map<String, String> getCustomParams() {
-		return customParams;
-	}
-
-	public void setCustomParams(Map<String, String> customParams) {
-		this.customParams = customParams;
-	}
-
-	public Map<String, String> getProfileAttrs() {
-		return profileAttrs;
-	}
-
-	public void setProfileAttrs(Map<String, String> profileAttrs) {
-		this.profileAttrs = profileAttrs;
-	}
-
-	public boolean isWithState() {
-		return withState;
-	}
-
-	public void setWithState(boolean withState) {
-		this.withState = withState;
-	}
-
-	public String getStateData() {
-		return stateData;
-	}
-
-	public void setStateData(String stateData) {
-		this.stateData = stateData;
-	}
 
 }

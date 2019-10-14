@@ -22,6 +22,13 @@ import org.pac4j.oauth.config.OAuth20Configuration;
 
 import com.github.scribejava.core.model.Verb;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class Pac4jOAuthGenericProperties extends OAuth20Configuration {
 
 	private String name;
@@ -33,77 +40,5 @@ public class Pac4jOAuthGenericProperties extends OAuth20Configuration {
 	private String profilePath;
 	private Verb profileVerb = Verb.POST;
 	private Map<String, String> profileAttrs = new HashMap<String, String>();
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
-	public String getAuthUrl() {
-		return authUrl;
-	}
-
-	public void setAuthUrl(String authUrl) {
-		this.authUrl = authUrl;
-	}
-
-	public String getLogoUrl() {
-		return logoUrl;
-	}
-
-	public void setLogoUrl(String logoUrl) {
-		this.logoUrl = logoUrl;
-	}
-
-	public String getTokenUrl() {
-		return tokenUrl;
-	}
-
-	public void setTokenUrl(String tokenUrl) {
-		this.tokenUrl = tokenUrl;
-	}
-
-	public String getProfileUrl() {
-		return profileUrl;
-	}
-
-	public void setProfileUrl(String profileUrl) {
-		this.profileUrl = profileUrl;
-	}
-
-	public String getProfilePath() {
-		return profilePath;
-	}
-
-	public void setProfilePath(String profilePath) {
-		this.profilePath = profilePath;
-	}
-
-	public Verb getProfileVerb() {
-		return profileVerb;
-	}
-
-	public void setProfileVerb(Verb profileVerb) {
-		this.profileVerb = profileVerb;
-	}
-
-	public Map<String, String> getProfileAttrs() {
-		return profileAttrs;
-	}
-
-	public void setProfileAttrs(Map<String, String> profileAttrs) {
-		this.profileAttrs = profileAttrs;
-	}
 
 }

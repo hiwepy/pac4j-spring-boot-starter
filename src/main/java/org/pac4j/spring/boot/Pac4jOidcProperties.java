@@ -17,20 +17,19 @@ package org.pac4j.spring.boot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @ConfigurationProperties(Pac4jOidcProperties.PREFIX)
+@Getter
+@Setter
+@ToString
 public class Pac4jOidcProperties {
 
 	public static final String PREFIX = "pac4j.oidc";
 	
 	/** Whether Enable Pac4j Oidc. */
 	private boolean enabled = false;
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
 
 }

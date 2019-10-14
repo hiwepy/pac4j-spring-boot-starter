@@ -17,7 +17,14 @@ package org.pac4j.spring.boot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @ConfigurationProperties(Pac4jLogoutProperties.PREFIX)
+@Getter
+@Setter
+@ToString
 public class Pac4jLogoutProperties {
 
 	public static final String PREFIX = "pac4j.logout";
@@ -32,45 +39,5 @@ public class Pac4jLogoutProperties {
 	private boolean centralLogout = true;
 	/** Whether the Session must be destroyed（是否销毁Session）. 默认 true */
 	private boolean destroySession = true;
-
-	public String getDefaultUrl() {
-		return defaultUrl;
-	}
-
-	public void setDefaultUrl(String defaultUrl) {
-		this.defaultUrl = defaultUrl;
-	}
-
-	public String getLogoutUrlPattern() {
-		return logoutUrlPattern;
-	}
-
-	public void setLogoutUrlPattern(String logoutUrlPattern) {
-		this.logoutUrlPattern = logoutUrlPattern;
-	}
-
-	public boolean isLocalLogout() {
-		return localLogout;
-	}
-
-	public void setLocalLogout(boolean localLogout) {
-		this.localLogout = localLogout;
-	}
-
-	public boolean isCentralLogout() {
-		return centralLogout;
-	}
-
-	public void setCentralLogout(boolean centralLogout) {
-		this.centralLogout = centralLogout;
-	}
-
-	public boolean isDestroySession() {
-		return destroySession;
-	}
-
-	public void setDestroySession(boolean destroySession) {
-		this.destroySession = destroySession;
-	}
 
 }

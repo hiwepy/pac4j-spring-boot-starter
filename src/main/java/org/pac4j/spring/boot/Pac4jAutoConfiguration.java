@@ -30,7 +30,6 @@ import org.pac4j.core.context.session.SessionStore;
 import org.pac4j.core.http.adapter.HttpActionAdapter;
 import org.pac4j.core.http.adapter.JEEHttpActionAdapter;
 import org.pac4j.http.authorization.authorizer.IpRegexpAuthorizer;
-import org.pac4j.spring.boot.ext.Pac4jPathBuilder;
 import org.pac4j.spring.boot.utils.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -47,11 +46,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties({ Pac4jProperties.class, Pac4jCasProperties.class, ServerProperties.class })
 public class Pac4jAutoConfiguration {
 
-	@Bean
-	protected Pac4jPathBuilder pac4jPathBuilder(Pac4jProperties pac4jProperties, Pac4jCasProperties casProperties) {
-		return new Pac4jPathBuilder(pac4jProperties, casProperties);
-	}
-	
 	@Bean
 	@ConditionalOnMissingBean
 	protected SessionStore<JEEContext> sessionStore() {

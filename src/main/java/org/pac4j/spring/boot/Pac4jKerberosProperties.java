@@ -17,7 +17,14 @@ package org.pac4j.spring.boot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @ConfigurationProperties(Pac4jKerberosProperties.PREFIX)
+@Getter
+@Setter
+@ToString
 public class Pac4jKerberosProperties {
 
 	public static final String PREFIX = "pac4j.kerberos";

@@ -15,6 +15,13 @@
  */
 package org.pac4j.spring.boot;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class Pac4jOAuthStravaClientProperties extends Pac4jOAuthClientProperties {
    
 	/**
@@ -22,13 +29,5 @@ public class Pac4jOAuthStravaClientProperties extends Pac4jOAuthClientProperties
      * If "force", then the authorization dialog is always displayed by Strava.
      */
     private String approvalPrompt = "auto";
-
-	public String getApprovalPrompt() {
-		return approvalPrompt;
-	}
-
-	public void setApprovalPrompt(String approvalPrompt) {
-		this.approvalPrompt = approvalPrompt;
-	}
 
 }

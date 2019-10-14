@@ -51,6 +51,16 @@ public class Pac4jCasProperties {
 	/** The prefix url of the CAS server. i.e.https://localhost:8443/cas */
 	private String prefixUrl;
 	
+	/**
+	 * The name of the server this application is hosted on. 
+	 * Service URL will be dynamically constructed using this, 
+	 * i.e. https://localhost:8443 (you must include the protocol, but port is optional if it's a standard port).
+	 * 此处为应用服务器地址,http://ip:端口即可
+	 */
+	private String serverName;
+	/** Specifies the name of the request parameter on where to find the service (i.e. service). */
+	private String serviceParameterName = CasConfiguration.SERVICE_PARAMETER;
+	
     /** Specifies whether any proxy is OK. Defaults to false. */
 	private boolean acceptAnyProxy = false;
 	/**

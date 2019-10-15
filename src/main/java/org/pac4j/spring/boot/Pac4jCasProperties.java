@@ -96,7 +96,6 @@ public class Pac4jCasProperties {
 
     private String method;
     
-    
 	/* ================================== Pac4j Cas ================================= */
 	
 	/** Whether Enable Pac4j Cas. */

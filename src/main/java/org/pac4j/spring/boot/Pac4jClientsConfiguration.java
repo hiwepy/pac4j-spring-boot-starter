@@ -15,80 +15,48 @@
  */
 package org.pac4j.spring.boot;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
+import org.pac4j.core.authorization.generator.AuthorizationGenerator;
 import org.pac4j.core.client.Client;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
+import org.pac4j.core.http.callback.CallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.ObjectUtils;
 
 @Configuration
 @ConditionalOnClass({ Clients.class })
 @ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jProperties.class, ServerProperties.class })
 @SuppressWarnings("rawtypes")
-public class Pac4jClientsConfiguration implements ApplicationContextAware {
-	
-	private ApplicationContext applicationContext;
+public class Pac4jClientsConfiguration {
 
-	@Autowired
-	private Pac4jProperties pac4jProperties;
-	
 	@Bean
-	public Clients clients(@Autowired(required = false) @Qualifier("defaultClient") Client defaultClient,
-			@Autowired(required = false) @Qualifier("oauth20Clients") List<Client> oauth20Clients,
-			AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
+	public Clients clients (
+			Pac4jProperties pac4jProperties,
+			List<Client> clientList,
+			List<AuthorizationGenerator> authorizationGenerators,
+			AjaxRequestResolver ajaxRequestResolver,
+			CallbackUrlResolver callbackUrlResolver,
+			UrlResolver urlResolver) {
 		
-		final List<Client> clientList = new ArrayList<Client>();
-		Map<String, Client> beansOfType = getApplicationContext().getBeansOfType(Client.class);
-		if (!ObjectUtils.isEmpty(beansOfType)) {
-			Iterator<Entry<String, Client>> ite = beansOfType.entrySet().iterator();
-			while (ite.hasNext()) {
-				clientList.add(ite.next().getValue());
-			}
-		}
-		
-		if(oauth20Clients != null) {
-			clientList.addAll(oauth20Clients);
-		}
-		
-		final Clients clients = new Clients(pac4jProperties.getCallbackUrl(), clientList);
+		Clients clients = new Clients(pac4jProperties.getCallbackUrl(), clientList);
 		
 		clients.setAjaxRequestResolver(ajaxRequestResolver);
+		clients.setAuthorizationGenerators(authorizationGenerators);
 		clients.setCallbackUrl(pac4jProperties.getCallbackUrl());
+		clients.setCallbackUrlResolver(callbackUrlResolver);
 		clients.setClients(clientList);
-		/*clients.setClientNameParameter(pac4jProperties.getClientParameterName());
-		if(defaultClient != null) {
-			clients.setDefaultClient(defaultClient);
-		}*/
+		clients.setDefaultSecurityClients(pac4jProperties.getClients());
 		clients.setUrlResolver(urlResolver);
 		
 		return clients;
-	}
-
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext = applicationContext;
-	}
-
-	public ApplicationContext getApplicationContext() {
-		return applicationContext;
 	}
 	
 }

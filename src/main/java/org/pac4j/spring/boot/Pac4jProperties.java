@@ -304,6 +304,9 @@ public class Pac4jProperties {
     
     boolean completeRelativeUrl = false;
 
+    /* Map containing user defined parameters */
+    private Map<String, String> customParams = new HashMap<>();
+
     /** SecurityFilter */
     
     /** 登录地址：会话不存在时访问的地址 */
@@ -315,7 +318,7 @@ public class Pac4jProperties {
     /** 异常页面：认证失败时的跳转路径 */
     private String failureUrl;
     /**
-     * 通过属性配置形式初始化客户端
+	 * 	通过属性配置形式初始化客户端
      * 
      * @see {@link org.pac4j.config.client.PropertiesConfigFactory}
      */

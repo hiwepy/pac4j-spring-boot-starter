@@ -3,6 +3,8 @@ package org.pac4j.spring.boot;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.ajax.DefaultAjaxRequestResolver;
+import org.pac4j.core.http.callback.CallbackUrlResolver;
+import org.pac4j.core.http.callback.QueryParameterCallbackUrlResolver;
 import org.pac4j.core.http.url.DefaultUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.core.logout.handler.DefaultLogoutHandler;
@@ -24,14 +26,20 @@ public class Pac4jBaseConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
+    public LogoutHandler<WebContext> logoutHandler(){
+		return new DefaultLogoutHandler<WebContext>();
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean
 	protected AjaxRequestResolver ajaxRequestResolver() {
 		return new DefaultAjaxRequestResolver();
 	}
 	
 	@Bean
 	@ConditionalOnMissingBean
-    public LogoutHandler<WebContext> logoutHandler(){
-		return new DefaultLogoutHandler<WebContext>();
+	protected CallbackUrlResolver callbackUrlResolver(Pac4jProperties pac4jProperties) {
+		return new QueryParameterCallbackUrlResolver(pac4jProperties.getCustomParams());
 	}
 	
 	@Bean

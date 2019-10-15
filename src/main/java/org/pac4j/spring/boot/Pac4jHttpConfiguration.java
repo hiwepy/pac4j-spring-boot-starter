@@ -35,7 +35,7 @@ import org.springframework.context.annotation.Configuration;
 public class Pac4jHttpConfiguration {
 
 	@Bean
- 	@ConditionalOnProperty(prefix = Pac4jHttpProperties.PREFIX, value = "form-client", havingValue = "true")
+ 	@ConditionalOnProperty(prefix = Pac4jHttpProperties.PREFIX, value = Pac4jClientNames.FORM_CLIENT, havingValue = "true")
  	public FormClient formClient(Pac4jHttpProperties pac4jHttpProperties) {
 
 		SimpleTestUsernamePasswordAuthenticator usernamePasswordAuthenticator = new SimpleTestUsernamePasswordAuthenticator();
@@ -47,7 +47,7 @@ public class Pac4jHttpConfiguration {
  	}
     
 	@Bean
-	@ConditionalOnProperty(prefix = Pac4jHttpProperties.PREFIX, value = "indirect-basic-auth-client", havingValue = "true")
+	@ConditionalOnProperty(prefix = Pac4jHttpProperties.PREFIX, value = Pac4jClientNames.INDIRECT_BASIC_AUTH_CLIENT, havingValue = "true")
 	public IndirectBasicAuthClient indirectBasicAuthClient(Pac4jHttpProperties pac4jHttpProperties) {
 		
 		final SimpleTestUsernamePasswordAuthenticator usernamePasswordAuthenticator = new SimpleTestUsernamePasswordAuthenticator();
@@ -58,7 +58,7 @@ public class Pac4jHttpConfiguration {
 	}
 	
 	@Bean
-	@ConditionalOnProperty(prefix = Pac4jHttpProperties.PREFIX, value = "direct-basic-auth-client", havingValue = "true")
+	@ConditionalOnProperty(prefix = Pac4jHttpProperties.PREFIX, value = Pac4jClientNames.DIRECT_BASIC_AUTH_CLIENT, havingValue = "true")
 	public DirectBasicAuthClient directBasicAuthClient(Pac4jHttpProperties pac4jHttpProperties) {
 		
 		final SimpleTestUsernamePasswordAuthenticator usernamePasswordAuthenticator = new SimpleTestUsernamePasswordAuthenticator();

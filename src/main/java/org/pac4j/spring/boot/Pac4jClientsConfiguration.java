@@ -15,20 +15,25 @@
  */
 package org.pac4j.spring.boot;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.pac4j.core.authorization.generator.AuthorizationGenerator;
 import org.pac4j.core.client.Client;
 import org.pac4j.core.client.Clients;
+import org.pac4j.core.context.Pac4jConstants;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 
 @Configuration
 @ConditionalOnClass({ Clients.class })
@@ -41,10 +46,13 @@ public class Pac4jClientsConfiguration {
 	public Clients clients (
 			Pac4jProperties pac4jProperties,
 			List<Client> clientList,
+			@Autowired(required = false) List<Client> oauth20Clients,
 			List<AuthorizationGenerator> authorizationGenerators,
 			AjaxRequestResolver ajaxRequestResolver,
 			CallbackUrlResolver callbackUrlResolver,
 			UrlResolver urlResolver) {
+		
+		clientList.addAll(oauth20Clients);
 		
 		Clients clients = new Clients(pac4jProperties.getCallbackUrl(), clientList);
 		
@@ -53,7 +61,18 @@ public class Pac4jClientsConfiguration {
 		clients.setCallbackUrl(pac4jProperties.getCallbackUrl());
 		clients.setCallbackUrlResolver(callbackUrlResolver);
 		clients.setClients(clientList);
-		clients.setDefaultSecurityClients(pac4jProperties.getClients());
+		if(StringUtils.hasText(pac4jProperties.getClients())) {
+			final List<String> names = Arrays
+					.asList(pac4jProperties.getClients().split(Pac4jConstants.ELEMENT_SEPARATOR));
+			final List<String> defaultClients = clientList.stream().filter(c -> names.contains(c.getName()))
+					.map(client -> client.getName()).collect(Collectors.toList());
+			clients.setDefaultSecurityClients(StringUtils.collectionToCommaDelimitedString(defaultClients));
+		} else {
+			
+			final List<String> defaultClients = clientList.stream().map(client -> client.getName()).collect(Collectors.toList());
+			clients.setDefaultSecurityClients(StringUtils.collectionToCommaDelimitedString(defaultClients));
+			
+		}
 		clients.setUrlResolver(urlResolver);
 		
 		return clients;

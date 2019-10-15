@@ -36,7 +36,7 @@ import org.springframework.context.annotation.Configuration;
 public class Pac4jLdapConfiguration {
 
     @Bean
- 	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "casClient", havingValue = "true")
+ 	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = Pac4jClientNames.FORM_CLIENT, havingValue = "true")
  	public FormClient formClient() {
  		
  		 // HTTP
@@ -46,7 +46,7 @@ public class Pac4jLdapConfiguration {
  	}
     
 	@Bean
-	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "casClient", havingValue = "true")
+	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = Pac4jClientNames.INDIRECT_BASIC_AUTH_CLIENT, havingValue = "true")
 	public IndirectBasicAuthClient indirectBasicAuthClient() {
 		
 		final IndirectBasicAuthClient indirectBasicAuthClient = new IndirectBasicAuthClient(new SimpleTestUsernamePasswordAuthenticator());
@@ -55,7 +55,7 @@ public class Pac4jLdapConfiguration {
 	}
 	
 	@Bean
-	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "casClient", havingValue = "true")
+	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = Pac4jClientNames.DIRECT_BASIC_AUTH_CLIENT, havingValue = "true")
 	public DirectBasicAuthClient directBasicAuthClient() {
 		
 		 // basic auth

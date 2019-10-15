@@ -1,6 +1,5 @@
 package org.pac4j.spring.boot;
 
-import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.util.CommonUtils;
 import org.pac4j.cas.client.CasClient;
 import org.pac4j.cas.client.CasProxyReceptor;
@@ -27,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @AutoConfigureBefore(Pac4jClientsConfiguration.class)
-@ConditionalOnClass({ SingleSignOutHttpSessionListener.class, CasConfiguration.class})
+@ConditionalOnClass({CasConfiguration.class})
 @ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jCasProperties.class, Pac4jProperties.class, ServerProperties.class })
 public class Pac4jCasConfiguration {
@@ -84,31 +83,31 @@ public class Pac4jCasConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = "cas-client", havingValue = "true")
+	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.CAS_CLIENT, havingValue = "true")
 	public CasClient casClient(CasConfiguration configuration) {
 		return CasClientUtils.casClient(configuration, pac4jProperties, pac4jCasProperties, serverProperties);
 	}
 	
 	@Bean
-	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = "direct-cas-client", havingValue = "true")
+	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.DIRECT_CAS_CLIENT, havingValue = "true")
 	public DirectCasClient directCasClient(CasConfiguration configuration) {
 		return CasClientUtils.directCasClient(configuration, pac4jCasProperties);
 	}
 	
-	@Bean
-	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = "direct-cas-proxy-client", havingValue = "true")
+	@Bean 
+	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.DIRECT_CAS_PROXY_CLIENT, havingValue = "true")
 	public DirectCasProxyClient directCasProxyClient(CasConfiguration configuration) {
 		return CasClientUtils.directCasProxyClient(configuration, pac4jCasProperties, pac4jCasProperties.getPrefixUrl());
 	}
 	
-	@Bean
-	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = "cas-rest-basic-auth-client", havingValue = "true")
+	@Bean 
+	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.CAS_REST_BASIC_AUTH_CLIENT, havingValue = "true")
 	public CasRestBasicAuthClient casRestBasicAuthClient(CasConfiguration configuration) {
 		return CasClientUtils.casRestBasicAuthClient(configuration, pac4jCasProperties);
 	}
 	
 	@Bean
-	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = "cas-rest-form-client", havingValue = "true")
+	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.CAS_REST_FORM_CLIENT, havingValue = "true")
 	public CasRestFormClient casRestFormClient(CasConfiguration configuration) {
 		return CasClientUtils.casRestFormClient(configuration, pac4jCasProperties);
 	}

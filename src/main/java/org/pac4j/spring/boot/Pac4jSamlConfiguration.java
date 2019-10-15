@@ -23,7 +23,6 @@ import org.pac4j.saml.config.SAML2Configuration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -32,10 +31,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 
 @Configuration
-@AutoConfigureBefore( name = {
-	"org.pac4j.spring.boot.Pac4jWebFilterConfiguration"
-})
-@ConditionalOnWebApplication
+@AutoConfigureBefore(Pac4jClientsConfiguration.class)
 @ConditionalOnClass({ SAML2Configuration.class, SAML2Client.class})
 @ConditionalOnProperty(prefix = Pac4jSamlProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jSamlProperties.class, Pac4jProperties.class, ServerProperties.class })

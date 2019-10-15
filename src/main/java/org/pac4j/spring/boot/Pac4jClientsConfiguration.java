@@ -28,10 +28,8 @@ import org.pac4j.core.http.url.UrlResolver;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -41,15 +39,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ObjectUtils;
 
 @Configuration
-@AutoConfigureBefore( name = {
-	"org.pac4j.spring.boot.Pac4jWebFilterConfiguration"
-})
-@ConditionalOnWebApplication
 @ConditionalOnClass({ Clients.class })
 @ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jProperties.class, ServerProperties.class })
 @SuppressWarnings("rawtypes")
-public class Pac4jClientsConfiguration  implements ApplicationContextAware {
+public class Pac4jClientsConfiguration implements ApplicationContextAware {
 	
 	private ApplicationContext applicationContext;
 

@@ -53,7 +53,6 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -64,10 +63,7 @@ import com.github.scribejava.apis.SinaWeiboApi20;
 import com.github.scribejava.core.builder.api.DefaultApi20;
 
 @Configuration
-@AutoConfigureBefore( name = {
-	"org.pac4j.spring.boot.Pac4jWebFilterConfiguration"
-})
-@ConditionalOnWebApplication
+@AutoConfigureBefore(Pac4jClientsConfiguration.class)
 @ConditionalOnClass({ OAuth20Client.class, DefaultApi20.class, SinaWeiboApi20.class })
 @ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jOAuthProperties.class, Pac4jProperties.class, ServerProperties.class })

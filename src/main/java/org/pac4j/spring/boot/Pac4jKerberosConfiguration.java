@@ -20,17 +20,13 @@ import org.pac4j.kerberos.client.indirect.IndirectKerberosClient;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@AutoConfigureBefore( name = {
-	"org.pac4j.spring.boot.Pac4jWebFilterConfiguration"
-})
-@ConditionalOnWebApplication
+@AutoConfigureBefore(Pac4jClientsConfiguration.class)
 @ConditionalOnClass({ DirectKerberosClient.class, IndirectKerberosClient.class })
 @ConditionalOnProperty(prefix = Pac4jKerberosProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jKerberosProperties.class, Pac4jProperties.class, ServerProperties.class })

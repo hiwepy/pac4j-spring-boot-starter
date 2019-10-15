@@ -15,6 +15,7 @@ import org.pac4j.core.logout.handler.LogoutHandler;
 import org.pac4j.spring.boot.utils.CasClientUtils;
 import org.pac4j.spring.boot.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -25,6 +26,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
+@AutoConfigureBefore(Pac4jClientsConfiguration.class)
 @ConditionalOnClass({ SingleSignOutHttpSessionListener.class, CasConfiguration.class})
 @ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jCasProperties.class, Pac4jProperties.class, ServerProperties.class })

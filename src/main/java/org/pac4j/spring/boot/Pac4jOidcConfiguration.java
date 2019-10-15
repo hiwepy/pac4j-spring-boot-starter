@@ -25,7 +25,6 @@ import org.pac4j.oidc.config.OidcConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -34,10 +33,7 @@ import org.springframework.context.annotation.Configuration;
 import com.nimbusds.jose.JWSAlgorithm;
 
 @Configuration
-@AutoConfigureBefore( name = {
-	"org.pac4j.spring.boot.Pac4jWebFilterConfiguration"
-})
-@ConditionalOnWebApplication
+@AutoConfigureBefore(Pac4jClientsConfiguration.class)
 @ConditionalOnClass({ OidcConfiguration.class, GoogleOidcClient.class })
 @ConditionalOnProperty(prefix = Pac4jOidcProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jOidcProperties.class, Pac4jProperties.class, ServerProperties.class })

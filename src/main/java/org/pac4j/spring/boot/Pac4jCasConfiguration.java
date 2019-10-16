@@ -82,6 +82,13 @@ public class Pac4jCasConfiguration {
 		return configuration;
 	}
 
+	/**
+	 * 
+	 * TODO
+	 * @author 		： <a href="https://github.com/vindell">wandl</a>
+	 * @param configuration
+	 * @return
+	 */
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.CAS_CLIENT, havingValue = "true")
 	public CasClient casClient(CasConfiguration configuration) {

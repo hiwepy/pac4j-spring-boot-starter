@@ -47,7 +47,11 @@ public class Pac4jCasConfiguration {
 		registration.setOrder(1);
 		return registration;
 	}	 */
-    
+
+	public CasProxyReceptor proxyReceptor() {
+		return new CasProxyReceptor();
+	}
+	
 	@Bean
 	public CasConfiguration casConfiguration(LogoutHandler<WebContext> logoutHandler, UrlResolver urlResolver,
 			@Autowired(required = false) CasProxyReceptor proxyReceptor) {

@@ -11,7 +11,6 @@ import org.pac4j.cas.config.CasConfiguration;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.core.logout.handler.LogoutHandler;
-import org.pac4j.spring.boot.utils.CasClientUtils;
 import org.pac4j.spring.boot.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -35,18 +34,6 @@ public class Pac4jCasConfiguration {
 	private Pac4jProperties pac4jProperties;
 	@Autowired
 	private Pac4jCasProperties pac4jCasProperties;
-	@Autowired
-	private ServerProperties serverProperties;
-	
-	/**
-	 * 单点登录Session监听器
-	@Bean(name = "singleSignOutHttpSessionListener")
-	public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> singleSignOutHttpSessionListener() {
-		ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> registration = new ServletListenerRegistrationBean<SingleSignOutHttpSessionListener>(
-				new SingleSignOutHttpSessionListener());
-		registration.setOrder(1);
-		return registration;
-	}	 */
 
 	@Bean
 	public CasProxyReceptor proxyReceptor() {
@@ -98,31 +85,77 @@ public class Pac4jCasConfiguration {
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.CAS_CLIENT, havingValue = "true")
 	public CasClient casClient(CasConfiguration configuration) {
-		return CasClientUtils.casClient(configuration, pac4jProperties, pac4jCasProperties, serverProperties);
+		
+		CasClient casClient = new CasClient(configuration);
+		casClient.setCallbackUrl( pac4jProperties.getCallbackUrl());
+		casClient.setName(StringUtils.hasText(pac4jCasProperties.getCasClientName()) ? pac4jCasProperties.getCasClientName() : Pac4jClientNames.CAS_CLIENT);
+		
+		return casClient;
 	}
 	
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.DIRECT_CAS_CLIENT, havingValue = "true")
 	public DirectCasClient directCasClient(CasConfiguration configuration) {
-		return CasClientUtils.directCasClient(configuration, pac4jCasProperties);
+		
+		DirectCasClient casClient = new DirectCasClient();
+		
+		casClient.setConfiguration(configuration);
+		casClient.setName(StringUtils.hasText(pac4jCasProperties.getDirectCasClientName()) ? pac4jCasProperties.getDirectCasClientName() : Pac4jClientNames.DIRECT_CAS_CLIENT);
+		
+		return casClient;
 	}
 	
 	@Bean 
 	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.DIRECT_CAS_PROXY_CLIENT, havingValue = "true")
 	public DirectCasProxyClient directCasProxyClient(CasConfiguration configuration) {
-		return CasClientUtils.directCasProxyClient(configuration, pac4jCasProperties, pac4jCasProperties.getPrefixUrl());
+		
+		DirectCasProxyClient casClient = new DirectCasProxyClient();
+		
+		casClient.setConfiguration(configuration);
+		casClient.setName(StringUtils.hasText(pac4jCasProperties.getDirectCasProxyClientName()) ? pac4jCasProperties.getDirectCasProxyClientName() : Pac4jClientNames.DIRECT_CAS_PROXY_CLIENT);
+		casClient.setServiceUrl(pac4jCasProperties.getPrefixUrl());
+		
+		return casClient;
 	}
 	
 	@Bean 
 	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.CAS_REST_BASIC_AUTH_CLIENT, havingValue = "true")
 	public CasRestBasicAuthClient casRestBasicAuthClient(CasConfiguration configuration) {
-		return CasClientUtils.casRestBasicAuthClient(configuration, pac4jCasProperties);
+		
+		CasRestBasicAuthClient casClient = new CasRestBasicAuthClient();
+		
+		casClient.setConfiguration(configuration);
+		casClient.setName(StringUtils.hasText(pac4jCasProperties.getCasRestBasicAuthClientName()) ? pac4jCasProperties.getCasRestBasicAuthClientName() : Pac4jClientNames.CAS_REST_BASIC_AUTH_CLIENT);
+		if(StringUtils.hasText(pac4jCasProperties.getHeaderName())) {	
+			casClient.setHeaderName(pac4jCasProperties.getHeaderName());
+		}
+		if(StringUtils.hasText(pac4jCasProperties.getPrefixHeader())) {	
+			casClient.setPrefixHeader(pac4jCasProperties.getPrefixHeader());
+		}
+		
+		return casClient;
+		
 	}
 	
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.CAS_REST_FORM_CLIENT, havingValue = "true")
 	public CasRestFormClient casRestFormClient(CasConfiguration configuration) {
-		return CasClientUtils.casRestFormClient(configuration, pac4jCasProperties);
+		
+		/*
+		 *  通过rest接口可以获取tgt，获取service ticket，甚至可以获取CasProfile
+		 */
+		CasRestFormClient casClient = new CasRestFormClient();
+		
+		casClient.setConfiguration(configuration);
+		casClient.setName(StringUtils.hasText(pac4jCasProperties.getCasRestFormClientName()) ? pac4jCasProperties.getCasRestFormClientName() : Pac4jClientNames.CAS_REST_FORM_CLIENT);
+		if(StringUtils.hasText(pac4jCasProperties.getUsernameParameterName())) {	
+			casClient.setUsernameParameter(pac4jCasProperties.getUsernameParameterName());
+		}
+		if(StringUtils.hasText(pac4jCasProperties.getPasswordParameterName())) {	
+			casClient.setPasswordParameter(pac4jCasProperties.getPasswordParameterName());
+		}
+
+		return casClient;
 	}
 	
 }

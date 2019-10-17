@@ -37,6 +37,8 @@ import org.pac4j.oauth.client.QQClient;
 import org.pac4j.oauth.client.StravaClient;
 import org.pac4j.oauth.client.TwitterClient;
 import org.pac4j.oauth.client.VkClient;
+import org.pac4j.oauth.client.WechatClient;
+import org.pac4j.oauth.client.WeiboClient;
 import org.pac4j.oauth.client.WindowsLiveClient;
 import org.pac4j.oauth.client.WordPressClient;
 import org.pac4j.oauth.client.YahooClient;
@@ -281,29 +283,29 @@ public class Pac4jOAuthConfiguration {
 		return client;
 	}
 	
-	/*@Bean
+	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "weibo")
-	public SinaWeiboClient sinaWeiboClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
+	public WeiboClient weiboClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
 		
 		final Pac4jOAuthClientProperties properties = oauthProperties.getWeibo();
-		final SinaWeiboClient client = new SinaWeiboClient(properties.getKey(), properties.getSecret());
+		final WeiboClient client = new WeiboClient(properties.getKey(), properties.getSecret());
 		this.initOAuth20Client(client, properties, ajaxRequestResolver, urlResolver);
 		
 		return client;
 		
-	}*/
+	}
 	
-	/*@Bean
-	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "weixin")
-	public WeiXinClient weiXinClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
+	@Bean
+	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "wechat")
+	public WechatClient wechatClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
 		
 		final Pac4jOAuthClientProperties properties = oauthProperties.getWeixin();
-		final WeiXinClient client = new WeiXinClient(properties.getKey(), properties.getSecret());
+		final WechatClient client = new WechatClient(properties.getKey(), properties.getSecret());
 		this.initOAuth20Client(client, properties, ajaxRequestResolver, urlResolver);
 		
 		return client;
 		
-	}*/
+	}
 	
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "windowslive")

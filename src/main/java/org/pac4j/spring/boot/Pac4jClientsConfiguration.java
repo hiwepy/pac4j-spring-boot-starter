@@ -26,7 +26,6 @@ import org.pac4j.core.context.Pac4jConstants;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -46,13 +45,10 @@ public class Pac4jClientsConfiguration {
 	public Clients clients (
 			Pac4jProperties pac4jProperties,
 			List<Client> clientList,
-			@Autowired(required = false) List<Client> oauth20Clients,
 			List<AuthorizationGenerator> authorizationGenerators,
 			AjaxRequestResolver ajaxRequestResolver,
 			CallbackUrlResolver callbackUrlResolver,
 			UrlResolver urlResolver) {
-		
-		clientList.addAll(oauth20Clients);
 		
 		Clients clients = new Clients(pac4jProperties.getCallbackUrl(), clientList);
 		

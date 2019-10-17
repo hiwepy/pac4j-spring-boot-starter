@@ -15,20 +15,16 @@
  */
 package org.pac4j.spring.boot;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.pac4j.core.client.Client;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.core.state.StateGenerator;
 import org.pac4j.core.state.StaticOrRandomStateGenerator;
+import org.pac4j.oauth.client.BaiduClient;
 import org.pac4j.oauth.client.BitbucketClient;
 import org.pac4j.oauth.client.CasOAuthWrapperClient;
 import org.pac4j.oauth.client.DropBoxClient;
 import org.pac4j.oauth.client.FacebookClient;
 import org.pac4j.oauth.client.FoursquareClient;
-import org.pac4j.oauth.client.GenericOAuth20Client;
 import org.pac4j.oauth.client.GitHubClient;
 import org.pac4j.oauth.client.Google2Client;
 import org.pac4j.oauth.client.LinkedIn2Client;
@@ -58,7 +54,6 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.CollectionUtils;
 
 import com.github.scribejava.apis.SinaWeiboApi20;
 import com.github.scribejava.core.builder.api.DefaultApi20;
@@ -77,61 +72,12 @@ public class Pac4jOAuthConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	protected StateGenerator stateGenerator(Pac4jOAuthGenericProperties properties) {
+	protected StateGenerator stateGenerator() {
 		StateGenerator stateGenerator = new StaticOrRandomStateGenerator();
 		return stateGenerator;
 	}
-	
-	/**
-	 * 所有的标准 OAuth 2.0 协议的对接
-	 */
-	@Bean("oauth20Clients")
-	@SuppressWarnings("rawtypes")
-	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "generics")
-	public List<Client> oauth20Clients(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver, StateGenerator stateGenerator) {
-		
-		List<Client> oauth20Clients = new ArrayList<Client>();
-		List<Pac4jOAuthGenericProperties> generics = oauthProperties.getGenerics();
-		if(!CollectionUtils.isEmpty(generics)) {
-			
-			for (Pac4jOAuthGenericProperties properties : generics) {
-				
-				final GenericOAuth20Client client = new GenericOAuth20Client();
-				
-				final OAuth20Configuration configuration = client.getConfiguration();
-				
-				//configuration.setConnectTimeout(properties.getConnectTimeout());
-				configuration.setCustomParams(properties.getCustomParams());
-				//configuration.setHasGrantType(properties.isHasGrantType());
-				//configuration.setReadTimeout(properties.getReadTimeout());
-				configuration.setResponseType(properties.getResponseType());
-				configuration.setScope(properties.getScope());
-				configuration.setStateGenerator(stateGenerator);
-				configuration.setTokenAsHeader(properties.isTokenAsHeader());
-				configuration.setWithState(properties.isWithState());
-				
-				client.setName(properties.getName());
-				client.setAjaxRequestResolver(ajaxRequestResolver);
-				client.setAuthUrl(properties.getAuthUrl());
-				client.setCallbackUrl(pac4jProperties.getCallbackUrl());
-				client.setConfiguration(configuration);
-				client.setCustomParams(properties.getCustomParams());
-				// client.setIncludeClientNameInCallbackUrl(pac4jProperties.isIncludeClientNameInCallbackUrl());
-				client.setProfileAttrs(properties.getProfileAttrs());
-				client.setSecret(properties.getSecret());
-				client.setTokenUrl(properties.getTokenUrl());
-				client.setUrlResolver(urlResolver);
-				
-				oauth20Clients.add(client);
-			}
-			
-		}
-		
-		return oauth20Clients;
-		
-	}
-	
-	/*@Bean
+	 
+	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "baidu")
 	public BaiduClient baiduClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
 		
@@ -140,7 +86,7 @@ public class Pac4jOAuthConfiguration {
 		this.initOAuth20Client(client, properties, ajaxRequestResolver, urlResolver);
 		
 		return client;
-	}*/
+	}
 	
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "bitbucket")

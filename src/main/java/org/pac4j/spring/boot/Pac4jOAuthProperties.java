@@ -15,9 +15,6 @@
  */
 package org.pac4j.spring.boot;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
@@ -48,8 +45,6 @@ public class Pac4jOAuthProperties {
 	private Pac4jOAuthFacebookClientProperties facebook = new Pac4jOAuthFacebookClientProperties();
 	@NestedConfigurationProperty
 	private Pac4jOAuthClientProperties foursquare = new Pac4jOAuthClientProperties();
-	@NestedConfigurationProperty
-	private List<Pac4jOAuthGenericProperties> generics = new ArrayList<Pac4jOAuthGenericProperties>();
 	@NestedConfigurationProperty
 	private Pac4jOAuthClientProperties github = new Pac4jOAuthClientProperties();
 	@NestedConfigurationProperty

@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@AutoConfigureBefore(Pac4jClientsConfiguration.class)
+@AutoConfigureBefore(Pac4jAutoConfiguration.class)
 @ConditionalOnClass({CasConfiguration.class})
 @ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jCasProperties.class, Pac4jProperties.class, ServerProperties.class })

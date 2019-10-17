@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@AutoConfigureBefore(Pac4jClientsConfiguration.class)
+@AutoConfigureBefore(Pac4jAutoConfiguration.class)
 @ConditionalOnClass({ YahooOpenIdClient.class })
 @ConditionalOnProperty(prefix = Pac4jOpenIDProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jOpenIDProperties.class, Pac4jProperties.class, ServerProperties.class })

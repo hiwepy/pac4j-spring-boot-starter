@@ -16,31 +16,42 @@
 package org.pac4j.spring.boot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.pac4j.config.client.PropertiesConfigFactory;
 import org.pac4j.core.authorization.authorizer.CheckHttpMethodAuthorizer;
+import org.pac4j.core.authorization.generator.AuthorizationGenerator;
+import org.pac4j.core.client.Client;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
-import org.pac4j.core.context.HttpConstants.HTTP_METHOD;
 import org.pac4j.core.context.JEEContext;
+import org.pac4j.core.context.Pac4jConstants;
+import org.pac4j.core.context.HttpConstants.HTTP_METHOD;
 import org.pac4j.core.context.session.JEESessionStore;
 import org.pac4j.core.context.session.SessionStore;
 import org.pac4j.core.http.adapter.HttpActionAdapter;
 import org.pac4j.core.http.adapter.JEEHttpActionAdapter;
+import org.pac4j.core.http.ajax.AjaxRequestResolver;
+import org.pac4j.core.http.callback.CallbackUrlResolver;
+import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.http.authorization.authorizer.IpRegexpAuthorizer;
-import org.pac4j.spring.boot.utils.StringUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
+
 
 @Configuration
+@ConditionalOnClass({ Clients.class })
 @ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jProperties.class, Pac4jCasProperties.class, ServerProperties.class })
+@SuppressWarnings("rawtypes")
 public class Pac4jAutoConfiguration {
 
 	@Bean
@@ -56,13 +67,45 @@ public class Pac4jAutoConfiguration {
 	}
 	
 	@Bean
+	public Clients clients (
+			Pac4jProperties pac4jProperties,
+			List<Client> clientList,
+			List<AuthorizationGenerator> authorizationGenerators,
+			AjaxRequestResolver ajaxRequestResolver,
+			CallbackUrlResolver callbackUrlResolver,
+			UrlResolver urlResolver) {
+		
+		Clients clients = new Clients(pac4jProperties.getCallbackUrl(), clientList);
+		
+		clients.setAjaxRequestResolver(ajaxRequestResolver);
+		clients.setAuthorizationGenerators(authorizationGenerators);
+		clients.setCallbackUrl(pac4jProperties.getCallbackUrl());
+		clients.setCallbackUrlResolver(callbackUrlResolver);
+		clients.setClients(clientList);
+		if(StringUtils.hasText(pac4jProperties.getClients())) {
+			final List<String> names = Arrays
+					.asList(pac4jProperties.getClients().split(Pac4jConstants.ELEMENT_SEPARATOR));
+			final List<String> defaultClients = clientList.stream().filter(c -> names.contains(c.getName()))
+					.map(client -> client.getName()).collect(Collectors.toList());
+			clients.setDefaultSecurityClients(StringUtils.collectionToCommaDelimitedString(defaultClients));
+		} else {
+			
+			final List<String> defaultClients = clientList.stream().map(client -> client.getName()).collect(Collectors.toList());
+			clients.setDefaultSecurityClients(StringUtils.collectionToCommaDelimitedString(defaultClients));
+			
+		}
+		clients.setUrlResolver(urlResolver);
+		
+		return clients;
+	}
+	
+	@Bean
 	public Config config(Pac4jProperties pac4jProperties, Clients clients, 
-			HttpActionAdapter<Object, JEEContext> httpActionAdapter,SessionStore<JEEContext> sessionStore) {
+			HttpActionAdapter<Object, JEEContext> httpActionAdapter,
+			SessionStore<JEEContext> sessionStore) {
 		
-
-		PropertiesConfigFactory configFactory = new PropertiesConfigFactory(pac4jProperties.getCallbackUrl(), pac4jProperties.getClientsProperties());
 		
-		final Config config = configFactory.build();
+		final Config config = new Config(clients);
 		
 		config.getClients().getClients().addAll(clients.getClients());
 		
@@ -98,5 +141,5 @@ public class Pac4jAutoConfiguration {
 		
 		return config;
 	}
-	
 }
+

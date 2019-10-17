@@ -31,7 +31,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 
 @Configuration
-@AutoConfigureBefore(Pac4jClientsConfiguration.class)
+@AutoConfigureBefore(Pac4jAutoConfiguration.class)
 @ConditionalOnClass({ SAML2Configuration.class, SAML2Client.class})
 @ConditionalOnProperty(prefix = Pac4jSamlProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jSamlProperties.class, Pac4jProperties.class, ServerProperties.class })

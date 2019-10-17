@@ -3,7 +3,6 @@ package org.pac4j.spring.boot;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.pac4j.cas.authorization.DefaultCasAuthorizationGenerator;
 import org.pac4j.core.context.DefaultAuthorizers;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -25,26 +24,33 @@ public class Pac4jProperties {
 	 * Enable Pac4j.
 	 */
 	private boolean enabled = false;
+    
+    /** 登录地址：会话不存在时访问的地址 */
+	private String loginUrl;
+	/** 登出地址：会话注销时访问的地址 */
+	private String logoutUrl;
+	/** 系统主页：登录成功后跳转路径 */
+    private String successUrl;
+    /** 异常页面：认证失败时的跳转路径 */
+    private String failureUrl;
+    /** Defines the location of the client callback URL, i.e. https://localhost:8080/myapp/callback */
+	private String callbackUrl;
 	
 	/** 认证IP正则表达式：可实现IP访问限制 */
     private String allowedIpRegexpPattern;
     
     private String[] allowedHttpMethods;
-    
-	/** The Name of Client. */
-	private String clientName;
-	/** Defines the location of the client callback URL, i.e. https://localhost:8080/myapp/callback */
-	private String callbackUrl;
-	/** Specifies the name of the request parameter on where to find the clientName (i.e. client_name). */
-	private String clientParameterName = "client_name";
-    private boolean includeClientNameInCallbackUrl = true;
-	/** default name of the CAS attribute for remember me authentication (CAS 3.4.10+) */
-    private String rememberMeAttributeName = DefaultCasAuthorizationGenerator.DEFAULT_REMEMBER_ME_ATTRIBUTE_NAME;
-    
+	
     /** SecurityFilter */
     
     /** List of clients for authentication. 启用认证的客户端类型 */
     private String clients;
+    
+    /** Specifies the name of the request parameter on where to find the clientName (i.e. client_name). */
+  	private String clientParameterName = "client_name";
+    
+  	private String defaultClientName;
+    
     /** 
      * List of authorizers. 可指定多个，通,分割 ; 每个名称对应一个实现类，除了默认的实现，也可自己定义实现 <br/>
      * @see org.pac4j.core.context.DefaultAuthorizers <br/>
@@ -306,23 +312,6 @@ public class Pac4jProperties {
 
     /* Map containing user defined parameters */
     private Map<String, String> customParams = new HashMap<>();
-
-    /** SecurityFilter */
-    
-    /** 登录地址：会话不存在时访问的地址 */
-	private String loginUrl;
-	/** 登出地址：会话注销时访问的地址 */
-	private String logoutUrl;
-	/** 系统主页：登录成功后跳转路径 */
-    private String successUrl;
-    /** 异常页面：认证失败时的跳转路径 */
-    private String failureUrl;
-    /**
-	 * 	通过属性配置形式初始化客户端
-     * 
-     * @see {@link org.pac4j.config.client.PropertiesConfigFactory}
-     */
-    private Map<String, String> clientsProperties = new HashMap<>();
     
 
 }

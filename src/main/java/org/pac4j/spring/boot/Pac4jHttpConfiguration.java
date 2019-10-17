@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@AutoConfigureBefore(Pac4jClientsConfiguration.class)
+@AutoConfigureBefore(Pac4jAutoConfiguration.class)
 @ConditionalOnClass({ FormClient.class, IndirectBasicAuthClient.class})
 @ConditionalOnProperty(prefix = Pac4jHttpProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jHttpProperties.class, Pac4jProperties.class, ServerProperties.class })

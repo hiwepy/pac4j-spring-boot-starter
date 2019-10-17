@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@AutoConfigureBefore(Pac4jClientsConfiguration.class)
+@AutoConfigureBefore(Pac4jAutoConfiguration.class)
 @ConditionalOnClass({ DirectKerberosClient.class, IndirectKerberosClient.class })
 @ConditionalOnProperty(prefix = Pac4jKerberosProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jKerberosProperties.class, Pac4jProperties.class, ServerProperties.class })

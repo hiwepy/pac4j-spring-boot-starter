@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Configuration;
 import com.nimbusds.jose.JWSAlgorithm;
 
 @Configuration
-@AutoConfigureBefore(Pac4jClientsConfiguration.class)
+@AutoConfigureBefore(Pac4jAutoConfiguration.class)
 @ConditionalOnClass({ OidcConfiguration.class, GoogleOidcClient.class })
 @ConditionalOnProperty(prefix = Pac4jOidcProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jOidcProperties.class, Pac4jProperties.class, ServerProperties.class })

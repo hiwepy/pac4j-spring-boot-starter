@@ -49,7 +49,7 @@ import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.JWSAlgorithm;
 
 @Configuration
-@AutoConfigureBefore(Pac4jClientsConfiguration.class)
+@AutoConfigureBefore(Pac4jAutoConfiguration.class)
 @ConditionalOnClass({ CookieClient.class, ParameterClient.class, HeaderClient.class, JwtAuthenticator.class })
 @ConditionalOnProperty(prefix = Pac4jJwtProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jJwtProperties.class, Pac4jProperties.class, ServerProperties.class })

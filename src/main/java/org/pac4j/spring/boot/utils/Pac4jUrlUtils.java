@@ -15,12 +15,10 @@
  */
 package org.pac4j.spring.boot.utils;
 
-import org.pac4j.spring.boot.Pac4jProperties;
-
 public class Pac4jUrlUtils {
 
 	/**
-	 * 构造回调URL, i.e. myapp/serverUrl
+	 *	构造回调URL, i.e. myapp/serverUrl
 	 * @param contextPath
 	 * @param serverUrl
 	 * @return
@@ -31,18 +29,6 @@ public class Pac4jUrlUtils {
 			contextPath = contextPath.substring(0, contextPath.length() - 1);
 		}
 		StringBuilder callbackUrlBuilder = new StringBuilder(contextPath).append(serverUrl);
-		return callbackUrlBuilder.toString();
-	}
-	
-	/**
-	 * 
-	 * 构造回调URL, i.e. /callback?client_name=cas
-	 * @param pac4jProperties
-	 * @return
-	 */
-	public static String constructCallbackUrl(Pac4jProperties pac4jProperties) {
-		String callbackUrl = pac4jProperties.getCallbackUrl();
-		StringBuilder callbackUrlBuilder = new StringBuilder(callbackUrl).append((callbackUrl.contains("?") ? "&" : "?")).append(pac4jProperties.getClientParameterName()).append("=").append(pac4jProperties.getClientName());
 		return callbackUrlBuilder.toString();
 	}
 	

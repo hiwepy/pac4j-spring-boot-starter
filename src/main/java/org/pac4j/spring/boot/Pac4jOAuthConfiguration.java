@@ -61,7 +61,7 @@ import com.github.scribejava.apis.SinaWeiboApi20;
 import com.github.scribejava.core.builder.api.DefaultApi20;
 
 @Configuration
-@AutoConfigureBefore(Pac4jClientsConfiguration.class)
+@AutoConfigureBefore(Pac4jAutoConfiguration.class)
 @ConditionalOnClass({ OAuth20Client.class, DefaultApi20.class, SinaWeiboApi20.class })
 @ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jOAuthProperties.class, Pac4jProperties.class, ServerProperties.class })

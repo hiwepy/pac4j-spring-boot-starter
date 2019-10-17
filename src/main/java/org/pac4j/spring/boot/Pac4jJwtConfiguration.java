@@ -97,11 +97,11 @@ public class Pac4jJwtConfiguration {
 		
 		UsernamePasswordCaptchaAuthenticator authenticator = new UsernamePasswordCaptchaAuthenticator();
 		
-		authenticator.setCaptchaRequired(jwtProperties.getCaptcha().isRequired());
+		authenticator.setCaptchaRequired(jwtProperties.isCaptchaRequired());
 		authenticator.setCaptchaResolver(captchaResolver);
 		authenticator.setFailureCounter(failureCounter);
-		authenticator.setRetryTimesKeyAttribute(jwtProperties.getAuthc().getRetryTimesKeyAttribute());
-		authenticator.setRetryTimesWhenAccessDenied(jwtProperties.getAuthc().getRetryTimesWhenAccessDenied());
+		authenticator.setRetryTimesKeyAttribute(jwtProperties.getRetryTimesKeyAttribute());
+		authenticator.setRetryTimesWhenAccessDenied(jwtProperties.getRetryTimesWhenAccessDenied());
 		
 		return authenticator;
 	}
@@ -110,10 +110,10 @@ public class Pac4jJwtConfiguration {
 	public UsernamePasswordCaptchaCredentialsExtractor jwtUpcCredentialsExtractor() {
 
 		UsernamePasswordCaptchaCredentialsExtractor credentialsExtractor = new UsernamePasswordCaptchaCredentialsExtractor(
-				jwtProperties.getAuthc().getUsernameParameterName(),
-				jwtProperties.getAuthc().getPasswordParameterName(), 
-				jwtProperties.getCaptcha().getParamName(),
-				jwtProperties.getAuthc().isPostOnly());
+				jwtProperties.getUsernameParameterName(),
+				jwtProperties.getPasswordParameterName(), 
+				jwtProperties.getCaptchaParamName(),
+				jwtProperties.isPostOnly());
 		
 		return credentialsExtractor;
 		
@@ -131,17 +131,17 @@ public class Pac4jJwtConfiguration {
 		client.setAuthenticator(authenticator);
 		//client.setAuthorizationGenerator(authorizationGenerator);
 		//client.setAuthorizationGenerators(authorizationGenerators);
-		client.setCallbackUrl(jwtProperties.getAuthc().getCallbackUrl());
+		client.setCallbackUrl(jwtProperties.getCallbackUrl());
 		client.setCallbackUrlResolver(callbackUrlResolver);
 		client.setCredentialsExtractor(credentialsExtractor);
 		if(jwtProperties.getCustomProperties() != null ) {
 			client.setCustomProperties(jwtProperties.getCustomProperties());
 		}
-		client.setLoginUrl(jwtProperties.getAuthc().getLoginUrl());
-		client.setName(jwtProperties.getAuthc().getClientName());
-		client.setPasswordParameter(jwtProperties.getAuthc().getPasswordParameterName());
+		client.setLoginUrl(jwtProperties.getLoginUrl());
+		client.setName(jwtProperties.getDefaultClientName());
+		client.setPasswordParameter(jwtProperties.getPasswordParameterName());
 		client.setUrlResolver(urlResolver);
-		client.setUsernameParameter(jwtProperties.getAuthc().getUsernameParameterName());
+		client.setUsernameParameter(jwtProperties.getUsernameParameterName());
 		
  		return client;
  	}

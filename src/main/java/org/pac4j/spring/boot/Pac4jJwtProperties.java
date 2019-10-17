@@ -18,10 +18,9 @@ package org.pac4j.spring.boot;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.pac4j.spring.boot.ext.property.Pac4jAuthcProperties;
-import org.pac4j.spring.boot.ext.property.Pac4jCaptchaProperties;
+import org.pac4j.core.context.Pac4jConstants;
+import org.pac4j.spring.boot.ext.Pac4jExtConstants;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +32,7 @@ import lombok.ToString;
 @ToString
 public class Pac4jJwtProperties {
 
+	public static final String DEFAULT_SESSION_CAPTCHA_KEY = "KAPTCHA_SESSION_KEY";
 	public static final String AUTHORIZATION_HEADER = "X-Authorization";
 	public static final String AUTHORIZATION_PARAM = "token";
 	public static final String PREFIX = "pac4j.jwt";
@@ -354,15 +354,41 @@ public class Pac4jJwtProperties {
 	
     private Map<String, Object> customProperties = new LinkedHashMap<>();
  
-	@NestedConfigurationProperty
-	private Pac4jAuthcProperties authc = new Pac4jAuthcProperties();
-	@NestedConfigurationProperty
-	private Pac4jCaptchaProperties captcha = new Pac4jCaptchaProperties();
+    /** Defines the location of the JWT server login URL, i.e. https://localhost:8080/myapp/login/jwt */
+	private String loginUrl;
+	/** Defines the location of the JWT server logout URL, i.e. https://localhost:8080/myapp/logout */
+	private String logoutUrl;
+  	/** Defines the location of the client callback URL, i.e. https://localhost:8080/myapp/callback */
+  	private String callbackUrl;
+
+    /** Specifies the name of the request parameter on where to find the clientName (i.e. client_name). */
+  	private String clientParameterName = "client_name";
+    
+  	private String defaultClientName;
+	
+	/** the captcha parameter name. Defaults to "captcha". */
+	private String captchaParamName = Pac4jExtConstants.CAPTCHA;
+	/** Whether to captcha required */
+	private boolean captchaRequired = false;
+	/** the username parameter name. Defaults to "username". */
+	private String usernameParameterName = Pac4jConstants.USERNAME;
+	/** the password parameter name. Defaults to "password". */
+	private String passwordParameterName = Pac4jConstants.PASSWORD;
+	
+	private boolean postOnly = true;
+
+    private String retryTimesKeyParameter = Pac4jExtConstants.RETRY_TIMES_KEY_PARAM_NAME;
+    
+    private String retryTimesKeyAttribute = Pac4jExtConstants.RETRY_TIMES_KEY_ATTRIBUTE_NAME;
+	/** Maximum number of retry to login . */
+	private int retryTimesWhenAccessDenied = 3;
+	
 	/**
 	 * HTTP Authorization header, equal to <code>X-Authorization</code>
 	 */
 	private String authorizationHeaderName = AUTHORIZATION_HEADER;
 	private String authorizationHeaderPrefix = "";
+	
 	/** The Name of Header Client. */
 	private String headerClientName = "jwt-header";
 
@@ -375,149 +401,5 @@ public class Pac4jJwtProperties {
 	private String authorizationCookieName = AUTHORIZATION_PARAM;
 	/** The Name of Cookie Client. */
 	private String cookieClientName = "jwt-cookie";
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-	
-	public Pac4jAuthcProperties getAuthc() {
-		return authc;
-	}
-
-	public void setAuthc(Pac4jAuthcProperties authc) {
-		this.authc = authc;
-	}
-
-	public Pac4jCaptchaProperties getCaptcha() {
-		return captcha;
-	}
-
-	public void setCaptcha(Pac4jCaptchaProperties captcha) {
-		this.captcha = captcha;
-	}
-
-	public String getEncryptSecret() {
-		return encryptSecret;
-	}
-
-	public void setEncryptSecret(String encryptSecret) {
-		this.encryptSecret = encryptSecret;
-	}
-
-	public String getSignSecret() {
-		return signSecret;
-	}
-
-	public void setSignSecret(String signSecret) {
-		this.signSecret = signSecret;
-	}
-
-	public JWEAlgorithm getJweAlgorithm() {
-		return jweAlgorithm;
-	}
-
-	public void setJweAlgorithm(JWEAlgorithm jweAlgorithm) {
-		this.jweAlgorithm = jweAlgorithm;
-	}
-
-	public JWSAlgorithm getJwsAlgorithm() {
-		return jwsAlgorithm;
-	}
-
-	public void setJwsAlgorithm(JWSAlgorithm jwsAlgorithm) {
-		this.jwsAlgorithm = jwsAlgorithm;
-	}
-
-	public EncryptionMethod getEncryption() {
-		return encryption;
-	}
-
-	public void setEncryption(EncryptionMethod encryption) {
-		this.encryption = encryption;
-	}
-	
-	public Map<String, Object> getCustomProperties() {
-		return customProperties;
-	}
-
-	public void setCustomProperties(Map<String, Object> customProperties) {
-		this.customProperties = customProperties;
-	}
-
-	public String getAuthorizationHeaderName() {
-		return authorizationHeaderName;
-	}
-
-	public void setAuthorizationHeaderName(String authorizationHeaderName) {
-		this.authorizationHeaderName = authorizationHeaderName;
-	}
-
-	public String getAuthorizationHeaderPrefix() {
-		return authorizationHeaderPrefix;
-	}
-
-	public void setAuthorizationHeaderPrefix(String authorizationHeaderPrefix) {
-		this.authorizationHeaderPrefix = authorizationHeaderPrefix;
-	}
-
-	public String getHeaderClientName() {
-		return headerClientName;
-	}
-
-	public void setHeaderClientName(String headerClientName) {
-		this.headerClientName = headerClientName;
-	}
-
-	public String getAuthorizationParamName() {
-		return authorizationParamName;
-	}
-
-	public void setAuthorizationParamName(String authorizationParamName) {
-		this.authorizationParamName = authorizationParamName;
-	}
-
-	public boolean isSupportGetRequest() {
-		return supportGetRequest;
-	}
-
-	public void setSupportGetRequest(boolean supportGetRequest) {
-		this.supportGetRequest = supportGetRequest;
-	}
-
-	public boolean isSupportPostRequest() {
-		return supportPostRequest;
-	}
-
-	public void setSupportPostRequest(boolean supportPostRequest) {
-		this.supportPostRequest = supportPostRequest;
-	}
-
-	public String getParamClientName() {
-		return paramClientName;
-	}
-
-	public void setParamClientName(String paramClientName) {
-		this.paramClientName = paramClientName;
-	}
-
-	public String getAuthorizationCookieName() {
-		return authorizationCookieName;
-	}
-
-	public void setAuthorizationCookieName(String authorizationCookieName) {
-		this.authorizationCookieName = authorizationCookieName;
-	}
-
-	public String getCookieClientName() {
-		return cookieClientName;
-	}
-
-	public void setCookieClientName(String cookieClientName) {
-		this.cookieClientName = cookieClientName;
-	}
 
 }

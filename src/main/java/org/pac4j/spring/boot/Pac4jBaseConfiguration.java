@@ -1,6 +1,11 @@
 package org.pac4j.spring.boot;
 
+import org.pac4j.core.context.JEEContext;
 import org.pac4j.core.context.WebContext;
+import org.pac4j.core.context.session.JEESessionStore;
+import org.pac4j.core.context.session.SessionStore;
+import org.pac4j.core.http.adapter.HttpActionAdapter;
+import org.pac4j.core.http.adapter.JEEHttpActionAdapter;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.ajax.DefaultAjaxRequestResolver;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
@@ -48,4 +53,15 @@ public class Pac4jBaseConfiguration {
 		return new DefaultUrlResolver(pac4jProperties.isCompleteRelativeUrl());
 	}
 	
+	@Bean
+	@ConditionalOnMissingBean
+	protected SessionStore<JEEContext> sessionStore() {
+		return new JEESessionStore();
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean
+	protected HttpActionAdapter<Object, JEEContext> httpActionAdapter() {
+		return JEEHttpActionAdapter.INSTANCE;
+	}
 }

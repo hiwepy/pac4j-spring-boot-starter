@@ -26,19 +26,16 @@ import org.pac4j.core.authorization.generator.AuthorizationGenerator;
 import org.pac4j.core.client.Client;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
+import org.pac4j.core.context.HttpConstants.HTTP_METHOD;
 import org.pac4j.core.context.JEEContext;
 import org.pac4j.core.context.Pac4jConstants;
-import org.pac4j.core.context.HttpConstants.HTTP_METHOD;
-import org.pac4j.core.context.session.JEESessionStore;
 import org.pac4j.core.context.session.SessionStore;
 import org.pac4j.core.http.adapter.HttpActionAdapter;
-import org.pac4j.core.http.adapter.JEEHttpActionAdapter;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.http.authorization.authorizer.IpRegexpAuthorizer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -54,17 +51,6 @@ import org.springframework.util.StringUtils;
 @SuppressWarnings("rawtypes")
 public class Pac4jAutoConfiguration {
 
-	@Bean
-	@ConditionalOnMissingBean
-	protected SessionStore<JEEContext> sessionStore() {
-		return new JEESessionStore();
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	protected HttpActionAdapter<Object, JEEContext> httpActionAdapter() {
-		return JEEHttpActionAdapter.INSTANCE;
-	}
 	
 	@Bean
 	public Clients clients (
@@ -75,7 +61,7 @@ public class Pac4jAutoConfiguration {
 			CallbackUrlResolver callbackUrlResolver,
 			UrlResolver urlResolver) {
 		
-		Clients clients = new Clients(pac4jProperties.getCallbackUrl(), clientList);
+		Clients clients = new Clients();
 		
 		clients.setAjaxRequestResolver(ajaxRequestResolver);
 		clients.setAuthorizationGenerators(authorizationGenerators);
@@ -104,12 +90,8 @@ public class Pac4jAutoConfiguration {
 			HttpActionAdapter<Object, JEEContext> httpActionAdapter,
 			SessionStore<JEEContext> sessionStore) {
 		
-		
 		final Config config = new Config(clients);
 		
-		config.getClients().getClients().addAll(clients.getClients());
-		
-		//final Config config = new Config(clients);
 		if(StringUtils.hasText(pac4jProperties.getAllowedIpRegexpPattern())) {	
 			config.addAuthorizer("isIPAuthenticated", new IpRegexpAuthorizer(pac4jProperties.getAllowedIpRegexpPattern()));
 		}

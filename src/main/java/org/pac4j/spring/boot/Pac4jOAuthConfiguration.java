@@ -44,6 +44,7 @@ import org.pac4j.oauth.client.VkClient;
 import org.pac4j.oauth.client.WindowsLiveClient;
 import org.pac4j.oauth.client.WordPressClient;
 import org.pac4j.oauth.client.YahooClient;
+import org.pac4j.oauth.client.YibanClient;
 import org.pac4j.oauth.config.OAuth10Configuration;
 import org.pac4j.oauth.config.OAuth20Configuration;
 import org.pac4j.oauth.profile.OAuth10Profile;
@@ -391,6 +392,18 @@ public class Pac4jOAuthConfiguration {
 		return client;
 	}
 	
+	@Bean
+	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "yiban")
+	public YibanClient yibanClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
+		
+		final Pac4jOAuthClientProperties properties = oauthProperties.getGithub();
+		final YibanClient client = new YibanClient(properties.getKey(), properties.getSecret());
+		this.initOAuth20Client(client, properties, ajaxRequestResolver, urlResolver);
+		
+		return client;
+	}
+	
+	
 	protected <U extends OAuth10Profile> void initOAuth10Client(OAuth10Client client,
 			Pac4jOAuthClientProperties properties, AjaxRequestResolver ajaxRequestResolver,
 			UrlResolver urlResolver) {
@@ -404,8 +417,6 @@ public class Pac4jOAuthConfiguration {
 		configuration.setTokenAsHeader(properties.isTokenAsHeader());
 		
 		client.setName(properties.getName());
-		client.setAjaxRequestResolver(ajaxRequestResolver);
-		client.setCallbackUrl(pac4jProperties.getCallbackUrl());
 		client.setKey(properties.getKey());
 		client.setConfiguration(configuration);
 		//client.setIncludeClientNameInCallbackUrl(pac4jProperties.isIncludeClientNameInCallbackUrl());
@@ -419,8 +430,7 @@ public class Pac4jOAuthConfiguration {
 			UrlResolver urlResolver) {
 
 		final OAuth20Configuration configuration = client.getConfiguration();
-
-		//configuration.setConnectTimeout(properties.getConnectTimeout());
+		
 		configuration.setCustomParams(properties.getCustomParams());
 		//configuration.setHasGrantType(properties.isHasGrantType());
 		//configuration.setReadTimeout(properties.getReadTimeout());
@@ -429,7 +439,7 @@ public class Pac4jOAuthConfiguration {
 		configuration.setWithState(properties.isWithState());
 		//configuration.setStateData(properties.getStateData());
 		configuration.setTokenAsHeader(properties.isTokenAsHeader());
-
+		
 		client.setName(properties.getName());
 		client.setAjaxRequestResolver(ajaxRequestResolver);
 		client.setCallbackUrl(pac4jProperties.getCallbackUrl());

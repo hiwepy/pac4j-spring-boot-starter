@@ -48,8 +48,10 @@ public class Pac4jCasConfiguration {
 		return registration;
 	}	 */
 
+	@Bean
 	public CasProxyReceptor proxyReceptor() {
-		return new CasProxyReceptor();
+		CasProxyReceptor proxyReceptor = new CasProxyReceptor();
+		return proxyReceptor;
 	}
 	
 	@Bean

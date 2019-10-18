@@ -57,7 +57,7 @@ public class Pac4jCasProperties {
 	 * i.e. https://localhost:8443 (you must include the protocol, but port is optional if it's a standard port).
 	 * 此处为应用服务器地址,http://ip:端口即可
 	 */
-	private String serverName;
+	private String service;
 	/** Specifies the name of the request parameter on where to find the service (i.e. service). */
 	private String serviceParameterName = CasConfiguration.SERVICE_PARAMETER;
 	

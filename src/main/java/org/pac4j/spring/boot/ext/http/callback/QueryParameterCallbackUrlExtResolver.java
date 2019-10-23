@@ -13,14 +13,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.ext.callback;
+package org.pac4j.spring.boot.ext.http.callback;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.pac4j.core.context.WebContext;
-import org.pac4j.core.http.callback.NoParameterCallbackUrlResolver;
+import org.pac4j.core.http.callback.QueryParameterCallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
+import org.pac4j.core.util.CommonHelper;
 
-public class NoParameterCallbackUrlExtResolver extends NoParameterCallbackUrlResolver {
-	
+/**
+ * TODO
+ * @author 		： <a href="https://github.com/vindell">wandl</a>
+ */
+
+public class QueryParameterCallbackUrlExtResolver extends QueryParameterCallbackUrlResolver {
+
 	/**
 	 * If <code>true</code>, will always redirect to the value of {@code callbackUrl}
 	 * (defaults to <code>false</code>).
@@ -31,17 +40,29 @@ public class NoParameterCallbackUrlExtResolver extends NoParameterCallbackUrlRes
 	 */
 	private String callbackUrl;
 	
-	public NoParameterCallbackUrlExtResolver() {
-    }
-	
-    public NoParameterCallbackUrlExtResolver(final boolean alwaysUseCallbackUrl, final  String callbackUrl) {
-    	this.alwaysUseCallbackUrl = alwaysUseCallbackUrl;
-    	this.callbackUrl = callbackUrl;
+    private Map<String, String> customParams = new HashMap<>();
+
+    public QueryParameterCallbackUrlExtResolver() {
     }
     
+    public QueryParameterCallbackUrlExtResolver(final boolean alwaysUseCallbackUrl, final  String callbackUrl, Map<String, String> customParams) {
+    	this.alwaysUseCallbackUrl = alwaysUseCallbackUrl;
+    	this.callbackUrl = callbackUrl;
+    	this.customParams = customParams;
+    }
+ 
     @Override
     public String compute(final UrlResolver urlResolver, final String url, final String clientName, final WebContext context) {
-    	return this.isAlwaysUseCallbackUrl() ? this.getCallbackUrl() : urlResolver.compute(url, context);
+    	
+        String newUrl = this.isAlwaysUseCallbackUrl() ? this.getCallbackUrl() : urlResolver.compute(url, context);
+        
+        if (newUrl != null && !newUrl.contains(this.getClientNameParameter() + '=')) {
+            newUrl = CommonHelper.addParameter(newUrl, this.getClientNameParameter(), clientName);
+        }
+        for (final Map.Entry<String, String> entry : this.customParams.entrySet()) {
+            newUrl = CommonHelper.addParameter(newUrl, entry.getKey(), entry.getValue());
+        }
+        return newUrl;
     }
     
 	public String getCallbackUrl() {
@@ -51,5 +72,5 @@ public class NoParameterCallbackUrlExtResolver extends NoParameterCallbackUrlRes
 	public boolean isAlwaysUseCallbackUrl() {
 		return alwaysUseCallbackUrl;
 	}
-    
+	
 }

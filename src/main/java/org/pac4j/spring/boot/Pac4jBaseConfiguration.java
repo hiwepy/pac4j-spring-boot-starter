@@ -13,7 +13,7 @@ import org.pac4j.core.http.url.DefaultUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.core.logout.handler.DefaultLogoutHandler;
 import org.pac4j.core.logout.handler.LogoutHandler;
-import org.pac4j.spring.boot.ext.callback.QueryParameterCallbackUrlExtResolver;
+import org.pac4j.spring.boot.ext.http.callback.QueryParameterCallbackUrlExtResolver;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

@@ -13,19 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot.ext.callback;
+package org.pac4j.spring.boot.ext.http.callback;
 
 import org.pac4j.core.context.WebContext;
-import org.pac4j.core.http.callback.PathParameterCallbackUrlResolver;
+import org.pac4j.core.http.callback.NoParameterCallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
 
-/**
- * TODO
- * @author 		： <a href="https://github.com/vindell">wandl</a>
- */
-
-public class PathParameterCallbackUrlExtResolver extends PathParameterCallbackUrlResolver {
-
+public class NoParameterCallbackUrlExtResolver extends NoParameterCallbackUrlResolver {
+	
 	/**
 	 * If <code>true</code>, will always redirect to the value of {@code callbackUrl}
 	 * (defaults to <code>false</code>).
@@ -35,20 +30,20 @@ public class PathParameterCallbackUrlExtResolver extends PathParameterCallbackUr
 	 * The location of the client callback URL, i.e. https://localhost:8080/myapp/callback 
 	 */
 	private String callbackUrl;
-
-    public PathParameterCallbackUrlExtResolver() {
+	
+	public NoParameterCallbackUrlExtResolver() {
     }
-    
-    public PathParameterCallbackUrlExtResolver(final boolean alwaysUseCallbackUrl, final  String callbackUrl) {
+	
+    public NoParameterCallbackUrlExtResolver(final boolean alwaysUseCallbackUrl, final  String callbackUrl) {
     	this.alwaysUseCallbackUrl = alwaysUseCallbackUrl;
     	this.callbackUrl = callbackUrl;
     }
     
     @Override
     public String compute(final UrlResolver urlResolver, final String url, final String clientName, final WebContext context) {
-    	return this.isAlwaysUseCallbackUrl() ? this.getCallbackUrl() : super.compute(urlResolver, url, clientName, context);
+    	return this.isAlwaysUseCallbackUrl() ? this.getCallbackUrl() : urlResolver.compute(url, context);
     }
-
+    
 	public String getCallbackUrl() {
 		return callbackUrl;
 	}

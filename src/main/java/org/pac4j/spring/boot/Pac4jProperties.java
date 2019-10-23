@@ -45,6 +45,12 @@ public class Pac4jProperties {
     
     private String[] allowedHttpMethods;
 	
+    /**
+	 * If <code>true</code>, will always redirect to the value of {@code callbackUrl}
+	 * (defaults to <code>false</code>).
+	 */
+	private boolean alwaysUseCallbackUrl = false;
+    
     /** SecurityFilter */
     
     /** List of clients for authentication. 启用认证的客户端类型 */
@@ -52,7 +58,7 @@ public class Pac4jProperties {
     
     /** Specifies the name of the request parameter on where to find the clientName (i.e. client_name). */
   	private String clientParameterName = "client_name";
-    
+	
   	private String defaultClientName;
     
     /** 
@@ -312,6 +318,9 @@ public class Pac4jProperties {
     /** Whether multiple profiles should be kept . 默认 false*/
     private boolean multiProfile = false;
     
+	/**
+	 * If <tt>true</tt>, causes any redirection URLs to be calculated minus the protocol and context path (defaults to <tt>false</tt>).
+	 */
     boolean completeRelativeUrl = false;
 
     /* Map containing user defined parameters */

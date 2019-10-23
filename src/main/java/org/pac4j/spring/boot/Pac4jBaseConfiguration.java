@@ -9,11 +9,11 @@ import org.pac4j.core.http.adapter.JEEHttpActionAdapter;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.ajax.DefaultAjaxRequestResolver;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
-import org.pac4j.core.http.callback.QueryParameterCallbackUrlResolver;
 import org.pac4j.core.http.url.DefaultUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.core.logout.handler.DefaultLogoutHandler;
 import org.pac4j.core.logout.handler.LogoutHandler;
+import org.pac4j.spring.boot.ext.callback.QueryParameterCallbackUrlExtResolver;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -44,7 +44,9 @@ public class Pac4jBaseConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	protected CallbackUrlResolver callbackUrlResolver(Pac4jProperties pac4jProperties) {
-		return new QueryParameterCallbackUrlResolver(pac4jProperties.getCustomParams());
+		return new QueryParameterCallbackUrlExtResolver(pac4jProperties.isAlwaysUseCallbackUrl(),
+				pac4jProperties.getCallbackUrl(),
+				pac4jProperties.getCustomParams());
 	}
 	
 	@Bean

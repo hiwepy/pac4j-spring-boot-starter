@@ -9,6 +9,7 @@ import org.pac4j.cas.client.rest.CasRestBasicAuthClient;
 import org.pac4j.cas.client.rest.CasRestFormClient;
 import org.pac4j.cas.config.CasConfiguration;
 import org.pac4j.core.context.WebContext;
+import org.pac4j.core.http.callback.CallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.core.logout.handler.LogoutHandler;
 import org.pac4j.spring.boot.utils.Pac4jUrlUtils;
@@ -39,6 +40,7 @@ public class Pac4jCasConfiguration {
 	@Bean
 	public CasProxyReceptor proxyReceptor() {
 		CasProxyReceptor proxyReceptor = new CasProxyReceptor();
+		proxyReceptor.setCallbackUrl(pac4jProperties.getCallbackUrl());
 		return proxyReceptor;
 	}
 	
@@ -85,7 +87,7 @@ public class Pac4jCasConfiguration {
 	 */
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.CAS_CLIENT, havingValue = "true")
-	public CasClient casClient(CasConfiguration configuration) {
+	public CasClient casClient(CasConfiguration configuration, CallbackUrlResolver callbackUrlResolver) {
 		
 		CasClient casClient = new CasClient(configuration);
 		
@@ -95,6 +97,7 @@ public class Pac4jCasConfiguration {
 				serviceUrl, pac4jCasProperties.isRenew(), pac4jCasProperties.isGateway());
 		
 		casClient.setCallbackUrl( callbackUrl);
+		casClient.setCallbackUrlResolver(callbackUrlResolver);
 		casClient.setName(clientName);
 		
 		return casClient;
@@ -102,11 +105,12 @@ public class Pac4jCasConfiguration {
 	
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.DIRECT_CAS_CLIENT, havingValue = "true")
-	public DirectCasClient directCasClient(CasConfiguration configuration) {
+	public DirectCasClient directCasClient(CasConfiguration configuration, CallbackUrlResolver callbackUrlResolver) {
 		
 		DirectCasClient casClient = new DirectCasClient();
 		
 		casClient.setConfiguration(configuration);
+		casClient.setCallbackUrlResolver(callbackUrlResolver);
 		casClient.setName(StringUtils.hasText(pac4jCasProperties.getDirectCasClientName()) ? pac4jCasProperties.getDirectCasClientName() : Pac4jClientNames.DIRECT_CAS_CLIENT);
 		
 		return casClient;
@@ -114,11 +118,12 @@ public class Pac4jCasConfiguration {
 	
 	@Bean 
 	@ConditionalOnProperty(prefix = Pac4jCasProperties.PREFIX, value = Pac4jClientNames.DIRECT_CAS_PROXY_CLIENT, havingValue = "true")
-	public DirectCasProxyClient directCasProxyClient(CasConfiguration configuration) {
+	public DirectCasProxyClient directCasProxyClient(CasConfiguration configuration, CallbackUrlResolver callbackUrlResolver) {
 		
 		DirectCasProxyClient casClient = new DirectCasProxyClient();
 		
 		casClient.setConfiguration(configuration);
+		casClient.setCallbackUrlResolver(callbackUrlResolver);
 		casClient.setName(StringUtils.hasText(pac4jCasProperties.getDirectCasProxyClientName()) ? pac4jCasProperties.getDirectCasProxyClientName() : Pac4jClientNames.DIRECT_CAS_PROXY_CLIENT);
 		casClient.setServiceUrl(pac4jCasProperties.getPrefixUrl());
 		

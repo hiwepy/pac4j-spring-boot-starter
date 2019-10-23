@@ -26,13 +26,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnClass({ DefaultAjaxRequestResolver.class})
 @ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
-@EnableConfigurationProperties({ ServerProperties.class, Pac4jProperties.class })
+@EnableConfigurationProperties({ ServerProperties.class, Pac4jProperties.class, Pac4jLogoutProperties.class })
 public class Pac4jBaseConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-    public LogoutHandler<WebContext> logoutHandler(){
-		return new DefaultLogoutHandler<WebContext>();
+    public LogoutHandler<WebContext> logoutHandler(Pac4jLogoutProperties logoutProperties){
+		DefaultLogoutHandler<WebContext> logoutHandler = new DefaultLogoutHandler<WebContext>();
+		logoutHandler.setDestroySession(logoutProperties.isDestroySession());
+		return logoutHandler;
 	}
 	
 	@Bean
@@ -44,7 +46,7 @@ public class Pac4jBaseConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	protected CallbackUrlResolver callbackUrlResolver(Pac4jProperties pac4jProperties) {
-		return new QueryParameterCallbackUrlExtResolver(pac4jProperties.isAlwaysUseCallbackUrl(),
+		return new QueryParameterCallbackUrlExtResolver(pac4jProperties.isCallbackUrlFixed(),
 				pac4jProperties.getCallbackUrl(),
 				pac4jProperties.getCustomParams());
 	}

@@ -49,7 +49,7 @@ public class Pac4jProperties {
 	 * If <code>true</code>, will always redirect to the value of {@code callbackUrl}
 	 * (defaults to <code>false</code>).
 	 */
-	private boolean alwaysUseCallbackUrl = false;
+	private boolean callbackUrlFixed = false;
     
     /** SecurityFilter */
     

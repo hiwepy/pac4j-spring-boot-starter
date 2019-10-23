@@ -25,15 +25,15 @@ public class Pac4jProperties {
 	 */
 	private boolean enabled = false;
     
-    /** 登录地址：会话不存在时访问的地址 */
-	private String loginUrl;
-	/** 登出地址：会话注销时访问的地址 */
-	private String logoutUrl;
-	/** 系统主页：登录成功后跳转路径 */
-    private String successUrl;
-    /** 异常页面：认证失败时的跳转路径 */
-    private String failureUrl;
-    /** Defines the location of the client callback URL, i.e. https://localhost:8080/myapp/callback */
+	/**
+	 * The name of the server this application is hosted on. 
+	 * Service URL will be dynamically constructed using this,
+	 * i.e. https://localhost:8443 (you must include the protocol, but port is optional if it's a standard port).
+	 */
+	private String serviceUrl;
+	/** 
+	 * Defines the location of the client callback URL, i.e. https://localhost:8080/myapp/callback 
+	 */
 	private String callbackUrl;
 	
 	/** 认证IP正则表达式：可实现IP访问限制 */

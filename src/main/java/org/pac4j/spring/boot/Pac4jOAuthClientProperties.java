@@ -33,6 +33,9 @@ public class Pac4jOAuthClientProperties {
 
 	public static final String RESPONSE_TYPE_CODE = "code";
 
+    /** Defines the location of the client callback URL, i.e. https://localhost:8080/myapp/callback */
+	private String callbackUrl;
+	
 	private String name;
 	private String desc;
 	private String logoUrl;

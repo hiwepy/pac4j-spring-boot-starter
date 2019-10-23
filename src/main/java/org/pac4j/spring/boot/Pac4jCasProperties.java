@@ -50,19 +50,15 @@ public class Pac4jCasProperties {
 	private String restUrl;
 	/** The prefix url of the CAS server. i.e.https://localhost:8443/cas */
 	private String prefixUrl;
-	
-	/**
-	 * The name of the server this application is hosted on. 
-	 * Service URL will be dynamically constructed using this, 
-	 * i.e. https://localhost:8443 (you must include the protocol, but port is optional if it's a standard port).
-	 * 此处为应用服务器地址,http://ip:端口即可
+	   
+	/** 
+	 * Specifies the name of the request parameter on where to find the service (i.e. service). 
 	 */
-	private String service;
-	/** Specifies the name of the request parameter on where to find the service (i.e. service). */
 	private String serviceParameterName = CasConfiguration.SERVICE_PARAMETER;
 	
     /** Specifies whether any proxy is OK. Defaults to false. */
 	private boolean acceptAnyProxy = false;
+	
 	/**
 	 * Specifies the proxy chain. 
 	 * Each acceptable proxy chain should include a space-separated list of URLs (for exact match) or 
@@ -70,12 +66,17 @@ public class Pac4jCasProperties {
 	 * Each acceptable proxy chain should appear on its own line.
 	 */
 	private String allowedProxyChains;
-	/** Specifies the encoding charset the client should use */
-    private String encoding = StandardCharsets.UTF_8.name();
+	
 	/** 
+	 * Specifies the encoding charset the client should use 
+	 */
+    private String encoding = StandardCharsets.UTF_8.name();
+	
+    /** 
 	 * Specifies whether gateway=true should be sent to the CAS server. Valid values are either true/false (or no value at all) 
 	 */
 	private boolean gateway = false;
+	
 	/**
 	 * Specifies whether renew=true should be sent to the CAS server. 
 	 * Valid values are either true/false (or no value at all). 

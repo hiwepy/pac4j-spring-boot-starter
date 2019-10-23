@@ -11,6 +11,7 @@ import org.pac4j.cas.config.CasConfiguration;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.core.logout.handler.LogoutHandler;
+import org.pac4j.spring.boot.utils.Pac4jUrlUtils;
 import org.pac4j.spring.boot.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -87,8 +88,14 @@ public class Pac4jCasConfiguration {
 	public CasClient casClient(CasConfiguration configuration) {
 		
 		CasClient casClient = new CasClient(configuration);
-		casClient.setCallbackUrl( pac4jProperties.getCallbackUrl());
-		casClient.setName(StringUtils.hasText(pac4jCasProperties.getCasClientName()) ? pac4jCasProperties.getCasClientName() : Pac4jClientNames.CAS_CLIENT);
+		
+		String clientName = StringUtils.hasText(pac4jCasProperties.getCasClientName()) ? pac4jCasProperties.getCasClientName() : Pac4jClientNames.CAS_CLIENT;
+		String serviceUrl = Pac4jUrlUtils.constructRedirectUrl(pac4jProperties.getServiceUrl(), pac4jProperties.getClientParameterName(), clientName);
+		String callbackUrl =  CommonUtils.constructRedirectUrl(pac4jCasProperties.getLoginUrl(), pac4jCasProperties.getServiceParameterName(),
+				serviceUrl, pac4jCasProperties.isRenew(), pac4jCasProperties.isGateway());
+		
+		casClient.setCallbackUrl( callbackUrl);
+		casClient.setName(clientName);
 		
 		return casClient;
 	}

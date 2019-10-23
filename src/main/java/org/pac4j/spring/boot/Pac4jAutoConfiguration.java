@@ -65,7 +65,6 @@ public class Pac4jAutoConfiguration {
 		
 		clients.setAjaxRequestResolver(ajaxRequestResolver);
 		clients.setAuthorizationGenerators(authorizationGenerators);
-		clients.setCallbackUrl(pac4jProperties.getCallbackUrl());
 		clients.setCallbackUrlResolver(callbackUrlResolver);
 		clients.setClients(clientList);
 		if(StringUtils.hasText(pac4jProperties.getClients())) {

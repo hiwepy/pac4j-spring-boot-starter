@@ -32,9 +32,13 @@ public class Pac4jProperties {
 	 */
 	private String serviceUrl;
 	/** 
-	 * Defines the location of the client callback URL, i.e. https://localhost:8080/myapp/callback 
+	 * The location of the client callback URL, i.e. https://localhost:8080/myapp/callback 
 	 */
 	private String callbackUrl;
+	/** 
+	 * The location of the default access URL, i.e. https://localhost:8080/myapp/index.html 
+	 */
+	private String defaultUrl;
 	
 	/** 认证IP正则表达式：可实现IP访问限制 */
     private String allowedIpRegexpPattern;

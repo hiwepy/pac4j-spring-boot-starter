@@ -29,10 +29,8 @@ public class Pac4jLogoutProperties {
 
 	public static final String PREFIX = "pac4j.logout";
 	
-	/** 注销后跳转的地址 */
-	private String defaultUrl;
 	/** Pattern that logout urls must match（注销登录路径规则，用于匹配登录请求操作） */
-	private String logoutUrlPattern;
+	private String pathPattern = "/**/logout/pac4j";
 	/** Whether the application logout must be performed（是否注销本地应用身份认证）. 默认 true */
 	private boolean localLogout = true;
 	/** Whether the centralLogout must be performed（是否注销统一身份认证）. 默认 true */

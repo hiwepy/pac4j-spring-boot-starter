@@ -19,7 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.pac4j.core.context.Pac4jConstants;
-import org.pac4j.spring.boot.ext.Pac4jExtConstants;
+import org.pac4j.core.ext.Pac4jExtConstants;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import lombok.Getter;

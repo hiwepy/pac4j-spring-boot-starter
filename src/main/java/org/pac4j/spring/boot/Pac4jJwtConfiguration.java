@@ -17,6 +17,11 @@ package org.pac4j.spring.boot;
 
 import java.util.List;
 
+import org.pac4j.core.ext.authentication.AuthenticatingFailureCounter;
+import org.pac4j.core.ext.authentication.UsernamePasswordCaptchaAuthenticator;
+import org.pac4j.core.ext.authentication.UsernamePasswordCaptchaFormClient;
+import org.pac4j.core.ext.authentication.captcha.CaptchaResolver;
+import org.pac4j.core.ext.credentials.extractor.UsernamePasswordCaptchaCredentialsExtractor;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
@@ -28,11 +33,6 @@ import org.pac4j.jwt.config.encryption.SecretEncryptionConfiguration;
 import org.pac4j.jwt.config.signature.SecretSignatureConfiguration;
 import org.pac4j.jwt.config.signature.SignatureConfiguration;
 import org.pac4j.jwt.credentials.authenticator.JwtAuthenticator;
-import org.pac4j.spring.boot.ext.authentication.AuthenticatingFailureCounter;
-import org.pac4j.spring.boot.ext.authentication.UsernamePasswordCaptchaAuthenticator;
-import org.pac4j.spring.boot.ext.authentication.UsernamePasswordCaptchaFormClient;
-import org.pac4j.spring.boot.ext.authentication.captcha.CaptchaResolver;
-import org.pac4j.spring.boot.ext.credentials.extractor.UsernamePasswordCaptchaCredentialsExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;

@@ -24,7 +24,6 @@ import org.pac4j.jwt.credentials.authenticator.JwtAuthenticator;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,11 +32,11 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureBefore(Pac4jAutoConfiguration.class)
 @ConditionalOnClass({ CookieClient.class, ParameterClient.class, HeaderClient.class, JwtAuthenticator.class })
 @ConditionalOnProperty(prefix = Pac4UniauthProperties.PREFIX, value = "enabled", havingValue = "true")
-@EnableConfigurationProperties({ Pac4UniauthProperties.class, Pac4jProperties.class, ServerProperties.class })
+@EnableConfigurationProperties({ Pac4UniauthProperties.class, Pac4jProperties.class })
 public class Pac4jUniauthConfiguration {
 
 	@Bean
-	public AccessTokenClient uniauthClient(Pac4jProperties pac4jProperties,Pac4UniauthProperties uniauthProperties) {
+	public AccessTokenClient uniauthClient(Pac4jProperties pac4jProperties, Pac4UniauthProperties uniauthProperties) {
 		
 		AccessTokenAuthenticator authenticator = new AccessTokenAuthenticator(uniauthProperties.getLoginUrl());
 		

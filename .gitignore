@@ -17,6 +17,7 @@
 .recommenders
 .settings
 .springBeans
+.sts4-cache
 /build
 /code
 MANIFEST.MF

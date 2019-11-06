@@ -13,18 +13,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.pac4j.spring.boot;
+package org.pac4j.spring.boot.uniauth;
 
-import org.pac4j.core.ext.client.TokenClient;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.pac4j.core.ext.profile.Token;
 
-@Configuration
-@AutoConfigureBefore(Pac4jAutoConfiguration.class)
-@ConditionalOnClass({ TokenClient.class})
-@EnableConfigurationProperties({ Pac4jProperties.class })
-public class Pac4jTokenConfiguration {
+@SuppressWarnings("serial")
+public class UniauthToken extends Token {
+
+	protected UniauthToken(String rawResponse) {
+		super(rawResponse);
+	}
 	
 }

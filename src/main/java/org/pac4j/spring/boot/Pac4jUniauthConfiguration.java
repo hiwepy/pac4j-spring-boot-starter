@@ -17,6 +17,8 @@ package org.pac4j.spring.boot;
 
 import org.pac4j.core.ext.client.AccessTokenClient;
 import org.pac4j.core.ext.credentials.authenticator.AccessTokenAuthenticator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -31,6 +33,8 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties({ Pac4UniauthProperties.class, Pac4jProperties.class })
 public class Pac4jUniauthConfiguration {
 	
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	
 	@Bean
 	public AccessTokenClient uniauthClient(Pac4jProperties pac4jProperties, Pac4UniauthProperties uniauthProperties) {
 		
@@ -44,6 +48,8 @@ public class Pac4jUniauthConfiguration {
 		client.setParameterName(uniauthProperties.getAuthorizationParamName());
 		client.setSupportGetRequest(uniauthProperties.isSupportGetRequest());
 		client.setSupportPostRequest(uniauthProperties.isSupportPostRequest());
+		
+		logger.debug("Client Inited : {}", client.toString());
 		
 		return client;
 	}

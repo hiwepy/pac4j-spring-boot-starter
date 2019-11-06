@@ -44,7 +44,7 @@ public class Pac4jUniauthConfiguration {
 		AccessTokenClient client = new AccessTokenClient();
 		
 		client.setAuthenticator(authenticator);
-		client.setCredentialsExtractor(new TokenParameterExtractor(uniauthProperties.getClientName(), 
+		client.setCredentialsExtractor(new TokenParameterExtractor(uniauthProperties.getAuthorizationParamName(), 
 				uniauthProperties.isSupportGetRequest(), uniauthProperties.isSupportPostRequest()));
 		// pac4jProperties.getCustomParams()
 		client.setName(uniauthProperties.getClientName());

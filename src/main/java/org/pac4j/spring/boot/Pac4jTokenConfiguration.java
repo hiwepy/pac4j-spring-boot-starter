@@ -18,14 +18,12 @@ package org.pac4j.spring.boot;
 import org.pac4j.core.ext.client.TokenClient;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @AutoConfigureBefore(Pac4jAutoConfiguration.class)
 @ConditionalOnClass({ TokenClient.class})
-@ConditionalOnProperty(prefix = Pac4TokenProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4TokenProperties.class, Pac4jProperties.class })
 public class Pac4jTokenConfiguration {
 	

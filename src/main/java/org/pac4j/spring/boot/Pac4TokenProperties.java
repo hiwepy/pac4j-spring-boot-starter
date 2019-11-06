@@ -19,20 +19,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@ConfigurationProperties(Pac4TokenProperties.PREFIX)
 @Getter
 @Setter
 @ToString
 public class Pac4TokenProperties {
 
 	public static final String AUTHORIZATION_PARAM = "token";
-	public static final String PREFIX = "pac4j.token";
 
 	/** Whether Enable Pac4j Uniauth（浙江音乐学院单点认证）. */
 	private boolean enabled = false;

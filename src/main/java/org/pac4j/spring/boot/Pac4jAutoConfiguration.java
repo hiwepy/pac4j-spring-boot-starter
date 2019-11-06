@@ -16,7 +16,6 @@
 package org.pac4j.spring.boot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +27,6 @@ import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.context.HttpConstants.HTTP_METHOD;
 import org.pac4j.core.context.JEEContext;
-import org.pac4j.core.context.Pac4jConstants;
 import org.pac4j.core.context.session.SessionStore;
 import org.pac4j.core.http.adapter.HttpActionAdapter;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
@@ -72,16 +70,10 @@ public class Pac4jAutoConfiguration {
 		clients.setCallbackUrlResolver(callbackUrlResolver);
 		clients.setClients(clientList);
 		if(StringUtils.hasText(pac4jProperties.getClients())) {
-			final List<String> names = Arrays
-					.asList(pac4jProperties.getClients().split(Pac4jConstants.ELEMENT_SEPARATOR));
-			final List<String> defaultClients = clientList.stream().filter(c -> names.contains(c.getName()))
-					.map(client -> client.getName()).collect(Collectors.toList());
-			clients.setDefaultSecurityClients(StringUtils.collectionToCommaDelimitedString(defaultClients));
+			clients.setDefaultSecurityClients(pac4jProperties.getClients());
 		} else {
-			
 			final List<String> defaultClients = clientList.stream().map(client -> client.getName()).collect(Collectors.toList());
 			clients.setDefaultSecurityClients(StringUtils.collectionToCommaDelimitedString(defaultClients));
-			
 		}
 		clients.setUrlResolver(urlResolver);
 		

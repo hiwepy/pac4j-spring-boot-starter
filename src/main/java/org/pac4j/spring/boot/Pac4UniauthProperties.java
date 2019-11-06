@@ -15,6 +15,10 @@
  */
 package org.pac4j.spring.boot;
 
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import lombok.Getter;
@@ -48,10 +52,15 @@ public class Pac4UniauthProperties {
 	private String authorizationParamName = AUTHORIZATION_PARAM;
 	private boolean supportGetRequest = true;
 	private boolean supportPostRequest = true;
-	
-	/**
-	 * 系统注册获得的 syskey 类似于: qwUxgVWltWRX3Wjg1vzwrNSiEPBmm3AzVNJvNtwRnRLnww1pO/FdR1dR43K2xD8UqYwYZZNA025JfIzzQ80EGg==
-	 */
-	private String syskey;
+	/* Map containing user defined headers */
+	private Map<String, String> customHeaders = new HashMap<>();
+    /* Map containing user defined parameters */
+    private Map<String, String> customParams = new HashMap<>();
+		
+    private String charset = Charset.defaultCharset().name();
+	// 连接超时 单位毫秒
+	private int connectTimeout = 10000;
+	// 读取超时 单位毫秒
+	private int readTimeout = 3000;
 
 }

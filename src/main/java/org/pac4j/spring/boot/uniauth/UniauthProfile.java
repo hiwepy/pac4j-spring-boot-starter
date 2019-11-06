@@ -56,4 +56,9 @@ public class UniauthProfile extends TokenProfile {
 	 */
 	private String flag;
 	
+	@Override
+	public String getId() {
+		return pid;
+	}
+	
 }

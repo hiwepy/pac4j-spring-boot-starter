@@ -85,7 +85,11 @@ public class Pac4jAutoConfiguration {
 		}
 		clients.setUrlResolver(urlResolver);
 		
-		logger.debug("clients inited : {}", clients.toString());
+		for (Client client : clients.getClients()) {
+			logger.debug("Client Inited : {}", client.toString());
+		}
+		logger.debug("Default Security Clients : {}", clients.getDefaultSecurityClients());
+		
 		
 		return clients;
 	}

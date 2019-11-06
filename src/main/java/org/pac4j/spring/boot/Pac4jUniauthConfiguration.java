@@ -17,10 +17,6 @@ package org.pac4j.spring.boot;
 
 import org.pac4j.core.ext.client.AccessTokenClient;
 import org.pac4j.core.ext.credentials.authenticator.AccessTokenAuthenticator;
-import org.pac4j.http.client.direct.CookieClient;
-import org.pac4j.http.client.direct.HeaderClient;
-import org.pac4j.http.client.direct.ParameterClient;
-import org.pac4j.jwt.credentials.authenticator.JwtAuthenticator;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -30,12 +26,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @AutoConfigureBefore(Pac4jAutoConfiguration.class)
-@ConditionalOnClass({ CookieClient.class, ParameterClient.class, HeaderClient.class, JwtAuthenticator.class })
+@ConditionalOnClass({ AccessTokenClient.class})
 @ConditionalOnProperty(prefix = Pac4UniauthProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4UniauthProperties.class, Pac4jProperties.class })
 public class Pac4jUniauthConfiguration {
-	
-	
 	
 	@Bean
 	public AccessTokenClient uniauthClient(Pac4jProperties pac4jProperties, Pac4UniauthProperties uniauthProperties) {

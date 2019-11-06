@@ -1,14 +1,39 @@
+################################################################################################################  
+###Pac4j 第三方登录（QQ、微信、易班、康赛）配置：  
+################################################################################################################
 pac4j:
-  failure-url: 
+  enabled: true
+  default-client-name: cas
+  callback-url: http://172.16.88.245:8088/smartedu-authz/authz/login/pac4j?client_name=uniauth&proxy=false
+  callback-url-fixed: false
+  client-parameter-name: client_name
+  clients: cas
+  service-url: http://172.16.88.245:8088/smartedu-authz
   logout:
-    central-logout: true
-    default-url: ddd
-    logout-url-pattern: sadsa 
-    local-logout: true
-    destroy-session: true
+    path-pattern: /**/logout/pac4j
   cas:
-    allowed-proxy-chains: 
-  oauth:
     enabled: true
-  jwt:    algorithm: hs256        
-    
+    accept-any-proxy: true
+    gateway: false
+    login-url: http://10.30.186.104/sso/login
+    logout-url: http://10.30.186.104/sso/logout
+    prefix-url: http://10.30.186.104/sso/
+    protocol: cas20-proxy
+    renew: false
+    # Cas客户端配置
+    #cas-client: true
+    #cas-client-name: cas
+    # Cas代理客户端配置
+    direct-cas-client: true
+    direct-cas-client-name: cas
+    #direct-cas-proxy-client: true
+    #direct-cas-proxy-client-name: cas-proxy
+  uniauth:
+    enabled: true
+    login-url: http://172.16.70.31:8080/yyxy_uniauth/ser/vaildTocken.action
+    syskey: V+yUhswUbJ2FaDOH6gumdTbNUyOOfD7+/AXBuiQo8JyzxTaHlFJJRxb+436eay0oMvA16WoUDIdi72RoaKRDJSFUkn9eaxkYQBXwkC0xC2HC4r8AQlYmg4SYPMjoTOWdiKZum+5ToE8PfEX+8V8E4lBAxYg1uva3JHBi0/J85ak=
+    support-post-request: true
+    support-get-request: true
+  oauth:
+    yiban:
+      name: yiban

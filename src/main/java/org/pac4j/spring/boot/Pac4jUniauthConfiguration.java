@@ -17,6 +17,7 @@ package org.pac4j.spring.boot;
 
 import org.pac4j.core.ext.client.AccessTokenClient;
 import org.pac4j.core.ext.credentials.authenticator.AccessTokenAuthenticator;
+import org.pac4j.core.ext.credentials.extractor.TokenParameterExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -43,6 +44,8 @@ public class Pac4jUniauthConfiguration {
 		AccessTokenClient client = new AccessTokenClient();
 		
 		client.setAuthenticator(authenticator);
+		client.setCredentialsExtractor(new TokenParameterExtractor(uniauthProperties.getClientName(), 
+				uniauthProperties.isSupportGetRequest(), uniauthProperties.isSupportPostRequest()));
 		// pac4jProperties.getCustomParams()
 		client.setName(uniauthProperties.getClientName());
 		client.setParameterName(uniauthProperties.getAuthorizationParamName());

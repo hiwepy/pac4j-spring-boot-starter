@@ -34,7 +34,9 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(prefix = Pac4UniauthProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4UniauthProperties.class, Pac4jProperties.class })
 public class Pac4jUniauthConfiguration {
-
+	
+	
+	
 	@Bean
 	public AccessTokenClient uniauthClient(Pac4jProperties pac4jProperties, Pac4UniauthProperties uniauthProperties) {
 		

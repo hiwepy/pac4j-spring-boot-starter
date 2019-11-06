@@ -35,6 +35,8 @@ import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.http.authorization.authorizer.IpRegexpAuthorizer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -51,6 +53,7 @@ import org.springframework.util.StringUtils;
 @SuppressWarnings("rawtypes")
 public class Pac4jAutoConfiguration {
 
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Bean
 	public Clients clients (
@@ -60,6 +63,7 @@ public class Pac4jAutoConfiguration {
 			AjaxRequestResolver ajaxRequestResolver,
 			CallbackUrlResolver callbackUrlResolver,
 			UrlResolver urlResolver) {
+		
 		
 		Clients clients = new Clients();
 		
@@ -80,6 +84,8 @@ public class Pac4jAutoConfiguration {
 			
 		}
 		clients.setUrlResolver(urlResolver);
+		
+		logger.debug("clients inited : {}", clients.toString());
 		
 		return clients;
 	}

@@ -15,7 +15,7 @@
  */
 package org.pac4j.spring.boot;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,20 +25,20 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@ConfigurationProperties(Pac4UniauthProperties.PREFIX)
+@ConfigurationProperties(Pac4TokenProperties.PREFIX)
 @Getter
 @Setter
 @ToString
-public class Pac4UniauthProperties {
+public class Pac4TokenProperties {
 
 	public static final String AUTHORIZATION_PARAM = "token";
-	public static final String PREFIX = "pac4j.uniauth";
+	public static final String PREFIX = "pac4j.token";
 
 	/** Whether Enable Pac4j Uniauth（浙江音乐学院单点认证）. */
 	private boolean enabled = false;
 
 	/** The Name of Client. */
-	private String clientName = "uniauth";
+	private String clientName = "token";
 
     /** Defines the location of the uniauth server login URL, i.e. http://localhost:8080/uniauth/ser/createtocken.action */
 	private String loginUrl;
@@ -57,7 +57,8 @@ public class Pac4UniauthProperties {
     /* Map containing user defined parameters */
     private Map<String, String> customParams = new HashMap<>();
 		
-    private String charset = Charset.defaultCharset().name();
+    private String charset = StandardCharsets.UTF_8.name();
+    
 	// 连接超时 单位毫秒
 	private int connectTimeout = 10000;
 	// 读取超时 单位毫秒

@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @AutoConfigureBefore(Pac4jAutoConfiguration.class)
 @ConditionalOnClass({ TokenClient.class})
-@EnableConfigurationProperties({ Pac4TokenProperties.class, Pac4jProperties.class })
+@EnableConfigurationProperties({ Pac4jProperties.class })
 public class Pac4jTokenConfiguration {
 	
 }

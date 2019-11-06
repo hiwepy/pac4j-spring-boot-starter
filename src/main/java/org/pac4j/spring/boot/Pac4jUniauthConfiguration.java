@@ -48,8 +48,6 @@ public class Pac4jUniauthConfiguration {
 		authenticator.setCustomParams(uniauthProperties.getCustomParams());
 		authenticator.setProfileDefinition(new UniauthProfileDefinition(uniauthProperties.getLoginUrl(), x -> new UniauthProfile()));
 		authenticator.setParameterName(uniauthProperties.getAuthorizationParamName());
-		authenticator.setSupportGetRequest(uniauthProperties.isSupportGetRequest());
-		authenticator.setSupportPostRequest(uniauthProperties.isSupportPostRequest());
 		return authenticator;
 	}
 	

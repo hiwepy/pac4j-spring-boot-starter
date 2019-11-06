@@ -53,6 +53,8 @@ public class Pac4TokenProperties {
     /* Map containing user defined parameters */
     private Map<String, String> customParams = new HashMap<>();
 		
+	private boolean passParams;
+	
     private String charset = StandardCharsets.UTF_8.name();
     
 	// 连接超时 单位毫秒

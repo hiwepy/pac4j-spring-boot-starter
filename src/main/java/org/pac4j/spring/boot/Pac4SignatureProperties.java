@@ -15,27 +15,24 @@
  */
 package org.pac4j.spring.boot;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import java.nio.charset.StandardCharsets;
+
+import org.pac4j.core.ext.Pac4jExtConstants;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-@ConfigurationProperties(Pac4jUniauthProperties.PREFIX)
+
 @Getter
 @Setter
 @ToString
-public class Pac4jUniauthProperties {
-
-	public static final String PREFIX = "pac4j.uniauth";
-
-	/** Whether Enable Pac4j Uniauth（浙江音乐学院单点认证）. */
-	private boolean enabled = false;
+public class Pac4SignatureProperties {
 	
-	@NestedConfigurationProperty
-	private Pac4TokenProperties token = new Pac4TokenProperties();
-	@NestedConfigurationProperty
-	private Pac4SignatureProperties signature = new Pac4SignatureProperties();
-    
-    
+    private String clientName = "signature";
+	private String payloadParamName = Pac4jExtConstants.PAYLOAD_PARAM;
+	private String signatureParamName = Pac4jExtConstants.SIGNATURE_PARAM;
+	private boolean supportGetRequest = true;
+	private boolean supportPostRequest = true;
+	private String charset = StandardCharsets.UTF_8.name();
+
 }

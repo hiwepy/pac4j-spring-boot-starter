@@ -16,11 +16,16 @@
 package org.pac4j.spring.boot;
 
 import org.pac4j.core.ext.client.TokenClient;
+import org.pac4j.core.ext.credentials.extractor.SignatureParameterExtractor;
 import org.pac4j.core.ext.credentials.extractor.TokenParameterExtractor;
-import org.pac4j.ext.uniauth.UniauthProfile;
-import org.pac4j.ext.uniauth.UniauthProfileDefinition;
+import org.pac4j.ext.uniauth.UniauthSignatureAuthenticator;
+import org.pac4j.ext.uniauth.UniauthSignatureClient;
+import org.pac4j.ext.uniauth.UniauthSignatureProfile;
+import org.pac4j.ext.uniauth.UniauthSignatureProfileDefinition;
 import org.pac4j.ext.uniauth.UniauthTokenAuthenticator;
 import org.pac4j.ext.uniauth.UniauthTokenClient;
+import org.pac4j.ext.uniauth.UniauthTokenProfile;
+import org.pac4j.ext.uniauth.UniauthTokenProfileDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -39,33 +44,64 @@ public class Pac4jUniauthConfiguration {
 	
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	
+	protected UniauthTokenAuthenticator uniauthTokenAuthenticator(Pac4TokenProperties tokenProperties) {
+		
+		UniauthTokenAuthenticator authenticator = new UniauthTokenAuthenticator(tokenProperties.getProfileUrl());
+		
+		authenticator.setCharset(tokenProperties.getCharset());
+		authenticator.setCustomHeaders(tokenProperties.getCustomHeaders());
+		authenticator.setCustomParams(tokenProperties.getCustomParams());
+		authenticator.setEncodeParams(tokenProperties.isEncodeParams());
+		authenticator.setProfileDefinition(new UniauthTokenProfileDefinition(tokenProperties.getProfileUrl(), x -> new UniauthTokenProfile()));
+		authenticator.setParameterName(tokenProperties.getTokenParamName());
+		authenticator.setPassOriginParams(tokenProperties.isPassOriginParams());
+		return authenticator;
+	}
+	
 	@Bean
-	public UniauthTokenAuthenticator uniauthAuthenticator(Pac4jUniauthProperties uniauthProperties) {
+	@ConditionalOnProperty(prefix = Pac4jUniauthProperties.PREFIX, value = Pac4jClientNames.CAS_CLIENT, havingValue = "true")
+	public UniauthTokenClient uniauthClient(Pac4jUniauthProperties uniauthProperties) {
 		
-		UniauthTokenAuthenticator authenticator = new UniauthTokenAuthenticator(uniauthProperties.getLoginUrl());
+		Pac4TokenProperties token = uniauthProperties.getToken();
 		
-		authenticator.setCustomHeaders(uniauthProperties.getCustomHeaders());
-		authenticator.setCustomParams(uniauthProperties.getCustomParams());
-		authenticator.setProfileDefinition(new UniauthProfileDefinition(uniauthProperties.getLoginUrl(), x -> new UniauthProfile()));
-		authenticator.setParameterName(uniauthProperties.getAuthorizationParamName());
-		authenticator.setParameterPass(uniauthProperties.isPassParams());
+		UniauthTokenClient client = new UniauthTokenClient();
+		
+		client.setAuthenticator(this.uniauthTokenAuthenticator(token));
+		client.setCredentialsExtractor(new TokenParameterExtractor(token.getTokenParamName(), 
+				token.isSupportGetRequest(), token.isSupportPostRequest(), token.getCharset()));
+		// pac4jProperties.getCustomParams()
+		client.setName(token.getClientName());
+		client.setParameterName(token.getTokenParamName());
+		client.setSupportGetRequest(token.isSupportGetRequest());
+		client.setSupportPostRequest(token.isSupportPostRequest());
+		
+		logger.debug("Client Inited : {}", client.toString());
+		
+		return client;
+	}
+	
+	protected UniauthSignatureAuthenticator uniauthSignatureAuthenticator(Pac4SignatureProperties signatureProperties) {
+		
+		UniauthSignatureAuthenticator authenticator = new UniauthSignatureAuthenticator();
+		authenticator.setCharset(signatureProperties.getCharset());
+		authenticator.setProfileDefinition(new UniauthSignatureProfileDefinition( x -> new UniauthSignatureProfile()));
 		
 		return authenticator;
 	}
 	
 	@Bean
-	public UniauthTokenClient uniauthClient(Pac4jUniauthProperties uniauthProperties, UniauthTokenAuthenticator uniauthAuthenticator) {
+	public UniauthSignatureClient uniauthSignatureClient(Pac4jUniauthProperties uniauthProperties, 
+			UniauthSignatureAuthenticator uniauthSignatureAuthenticator) {
 		
-		UniauthTokenClient client = new UniauthTokenClient();
+		Pac4SignatureProperties signature = uniauthProperties.getSignature();
+		UniauthSignatureClient client = new UniauthSignatureClient();
 		
-		client.setAuthenticator(uniauthAuthenticator);
-		client.setCredentialsExtractor(new TokenParameterExtractor(uniauthProperties.getAuthorizationParamName(), 
-				uniauthProperties.isSupportGetRequest(), uniauthProperties.isSupportPostRequest(), uniauthProperties.getCharset()));
-		// pac4jProperties.getCustomParams()
-		client.setName(uniauthProperties.getClientName());
-		client.setParameterName(uniauthProperties.getAuthorizationParamName());
-		client.setSupportGetRequest(uniauthProperties.isSupportGetRequest());
-		client.setSupportPostRequest(uniauthProperties.isSupportPostRequest());
+		client.setAuthenticator(uniauthSignatureAuthenticator);
+		client.setCredentialsExtractor(new SignatureParameterExtractor(signature.getPayloadParamName(),  signature.getSignatureParamName(),
+				signature.isSupportGetRequest(), signature.isSupportPostRequest(), signature.getCharset()));
+		client.setName(signature.getClientName());
+		client.setSupportGetRequest(signature.isSupportGetRequest());
+		client.setSupportPostRequest(signature.isSupportPostRequest());
 		
 		logger.debug("Client Inited : {}", client.toString());
 		

@@ -19,6 +19,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.pac4j.core.ext.Pac4jExtConstants;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,39 +29,24 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Pac4TokenProperties {
-
-	public static final String AUTHORIZATION_PARAM = "token";
-
-	/** Whether Enable Pac4j Uniauth（浙江音乐学院单点认证）. */
-	private boolean enabled = false;
-
-	/** The Name of Client. */
-	private String clientName = "token";
-
-    /** Defines the location of the uniauth server login URL, i.e. http://localhost:8080/uniauth/ser/createtocken.action */
-	private String loginUrl;
-	/** Defines the location of the uniauth server logout URL, i.e. http://localhost:8080/uniauth/ser/logout.action */
-	private String logoutUrl;
-	/** Defines the location of the uniauth server token validate URL. i.e. https://localhost:8080/uniauth/ser/vaildTocken.action */
-	private String vaildateUrl;
-  	/** Defines the location of the client callback URL, i.e. https://localhost:8080/myapp/callback */
-  	private String callbackUrl; 
-	 
-	private String authorizationParamName = AUTHORIZATION_PARAM;
+	
+    private String clientName = "token";
+	/**
+	 * Defines the location of the uniauth server token validate URL. i.e. https://localhost:8080/uniauth/ser/vaildTocken.action
+	 */
+	private String profileUrl;
+	private String tokenParamName = Pac4jExtConstants.TOKEN;
 	private boolean supportGetRequest = true;
 	private boolean supportPostRequest = true;
 	/* Map containing user defined headers */
 	private Map<String, String> customHeaders = new HashMap<>();
-    /* Map containing user defined parameters */
-    private Map<String, String> customParams = new HashMap<>();
-		
-	private boolean passParams;
-	
-    private String charset = StandardCharsets.UTF_8.name();
-    
-	// 连接超时 单位毫秒
-	private int connectTimeout = 10000;
-	// 读取超时 单位毫秒
-	private int readTimeout = 3000;
+	/* Map containing user defined parameters */
+	private Map<String, String> customParams = new HashMap<>();
+
+	private boolean encodeParams = true;
+
+	private boolean passOriginParams = true;
+
+	private String charset = StandardCharsets.UTF_8.name();
 
 }

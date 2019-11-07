@@ -17,10 +17,10 @@ package org.pac4j.spring.boot;
 
 import org.pac4j.core.ext.client.TokenClient;
 import org.pac4j.core.ext.credentials.extractor.TokenParameterExtractor;
-import org.pac4j.spring.boot.uniauth.UniauthProfile;
-import org.pac4j.spring.boot.uniauth.UniauthProfileDefinition;
-import org.pac4j.spring.boot.uniauth.UniauthTokenAuthenticator;
-import org.pac4j.spring.boot.uniauth.UniauthTokenClient;
+import org.pac4j.ext.uniauth.UniauthProfile;
+import org.pac4j.ext.uniauth.UniauthProfileDefinition;
+import org.pac4j.ext.uniauth.UniauthTokenAuthenticator;
+import org.pac4j.ext.uniauth.UniauthTokenClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;

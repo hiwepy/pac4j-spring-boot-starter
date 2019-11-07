@@ -30,13 +30,17 @@ pac4j:
     #direct-cas-proxy-client-name: cas-proxy
   uniauth:
     enabled: true
-    token:      client-name: uniauth-token
+    token:
+      client-name: uniauth-token
       custom-params:
-        syskey: V+yUhswUbJ2FaDOH6gumdTbNUyOOfD7+/AXBuiQo8JyzxTaHlFJJRxb+436eay0oMvA16WoUDIdi72RoaKRDJSFUkn9eaxkYQBXwkC0xC2HC4r8AQlYmg4SYPMjoTOWdiKZum+5ToE8PfEX+8V8E4lBAxYg1uva3JHBi0/J85ak=        support-post-request: true
-        support-get-request: true
+        syskey: V+yUhswUbJ2FaDOH6gumdTbNUyOOfD7+/AXBuiQo8JyzxTaHlFJJRxb+436eay0oMvA16WoUDIdi72RoaKRDJSFUkn9eaxkYQBXwkC0xC2HC4r8AQlYmg4SYPMjoTOWdiKZum+5ToE8PfEX+8V8E4lBAxYg1uva3JHBi0/J85ak=
       pass-origin-params: true
       profile-url: http://172.16.70.31:8080/yyxy_uniauth/ser/vaildTocken.action
-    signature:      client-name: uniauth  
+      support-post-request: true
+      support-get-request: true
+      token-param-name: tocken
+    signature:
+      client-name: uniauth  
   oauth:
     yiban:
       name: yiban

@@ -29,7 +29,6 @@ import lombok.ToString;
 public class Pac4SignatureProperties {
 	
     private String clientName = "signature";
-	private String payloadParamName = Pac4jExtConstants.PAYLOAD_PARAM;
 	private String signatureParamName = Pac4jExtConstants.SIGNATURE_PARAM;
 	private boolean supportGetRequest = true;
 	private boolean supportPostRequest = true;

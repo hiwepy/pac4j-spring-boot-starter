@@ -97,7 +97,7 @@ public class Pac4jUniauthConfiguration {
 		UniauthSignatureClient client = new UniauthSignatureClient();
 		
 		client.setAuthenticator(uniauthSignatureAuthenticator);
-		client.setCredentialsExtractor(new SignatureParameterExtractor(signature.getPayloadParamName(),  signature.getSignatureParamName(),
+		client.setCredentialsExtractor(new SignatureParameterExtractor(signature.getSignatureParamName(),
 				signature.isSupportGetRequest(), signature.isSupportPostRequest(), signature.getCharset()));
 		client.setName(signature.getClientName());
 		client.setSupportGetRequest(signature.isSupportGetRequest());

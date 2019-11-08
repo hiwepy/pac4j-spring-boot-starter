@@ -54,7 +54,6 @@ public class Pac4jUniauthConfiguration {
 		authenticator.setEncodeParams(tokenProperties.isEncodeParams());
 		authenticator.setProfileDefinition(new UniauthTokenProfileDefinition(tokenProperties.getProfileUrl(), x -> new UniauthTokenProfile()));
 		authenticator.setParameterName(tokenProperties.getTokenParamName());
-		authenticator.setPassOriginParams(tokenProperties.isPassOriginParams());
 		return authenticator;
 	}
 	

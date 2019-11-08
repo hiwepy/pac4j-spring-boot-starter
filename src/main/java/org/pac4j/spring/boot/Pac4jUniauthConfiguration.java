@@ -59,7 +59,6 @@ public class Pac4jUniauthConfiguration {
 	}
 	
 	@Bean
-	@ConditionalOnProperty(prefix = Pac4jUniauthProperties.PREFIX, value = Pac4jClientNames.CAS_CLIENT, havingValue = "true")
 	public UniauthTokenClient uniauthClient(Pac4jUniauthProperties uniauthProperties) {
 		
 		Pac4TokenProperties token = uniauthProperties.getToken();

@@ -90,13 +90,12 @@ public class Pac4jUniauthConfiguration {
 	}
 	
 	@Bean
-	public UniauthSignatureClient uniauthSignatureClient(Pac4jUniauthProperties uniauthProperties, 
-			UniauthSignatureAuthenticator uniauthSignatureAuthenticator) {
+	public UniauthSignatureClient uniauthSignatureClient(Pac4jUniauthProperties uniauthProperties) {
 		
 		Pac4SignatureProperties signature = uniauthProperties.getSignature();
 		UniauthSignatureClient client = new UniauthSignatureClient();
 		
-		client.setAuthenticator(uniauthSignatureAuthenticator);
+		client.setAuthenticator(this.uniauthSignatureAuthenticator(signature));
 		client.setCredentialsExtractor(new SignatureParameterExtractor(signature.getSignatureParamName(),
 				signature.isSupportGetRequest(), signature.isSupportPostRequest(), signature.getCharset()));
 		client.setName(signature.getClientName());

@@ -18,6 +18,7 @@ package org.pac4j.spring.boot;
 import org.pac4j.core.ext.client.TokenClient;
 import org.pac4j.core.ext.credentials.extractor.SignatureParameterExtractor;
 import org.pac4j.core.ext.credentials.extractor.TokenParameterExtractor;
+import org.pac4j.core.http.callback.CallbackUrlResolver;
 import org.pac4j.ext.uniauth.UniauthSignatureAuthenticator;
 import org.pac4j.ext.uniauth.UniauthSignatureClient;
 import org.pac4j.ext.uniauth.UniauthSignatureProfile;
@@ -58,13 +59,15 @@ public class Pac4jUniauthConfiguration {
 	}
 	
 	@Bean
-	public UniauthTokenClient uniauthClient(Pac4jUniauthProperties uniauthProperties) {
+	public UniauthTokenClient uniauthClient(Pac4jUniauthProperties uniauthProperties, CallbackUrlResolver callbackUrlResolver) {
 		
 		Pac4TokenProperties token = uniauthProperties.getToken();
 		
 		UniauthTokenClient client = new UniauthTokenClient();
 		
 		client.setAuthenticator(this.uniauthTokenAuthenticator(token));
+		client.setCallbackUrl(token.getCallbackUrl());
+		client.setCallbackUrlResolver(callbackUrlResolver);
 		client.setCredentialsExtractor(new TokenParameterExtractor(token.getTokenParamName(), 
 				token.isSupportGetRequest(), token.isSupportPostRequest(), token.getCharset()));
 		// pac4jProperties.getCustomParams()
@@ -88,12 +91,14 @@ public class Pac4jUniauthConfiguration {
 	}
 	
 	@Bean
-	public UniauthSignatureClient uniauthSignatureClient(Pac4jUniauthProperties uniauthProperties) {
+	public UniauthSignatureClient uniauthSignatureClient(Pac4jUniauthProperties uniauthProperties, CallbackUrlResolver callbackUrlResolver) {
 		
 		Pac4SignatureProperties signature = uniauthProperties.getSignature();
 		UniauthSignatureClient client = new UniauthSignatureClient();
 		
 		client.setAuthenticator(this.uniauthSignatureAuthenticator(signature));
+		client.setCallbackUrl(signature.getCallbackUrl());
+		client.setCallbackUrlResolver(callbackUrlResolver);
 		client.setCredentialsExtractor(new SignatureParameterExtractor(signature.getSignatureParamName(),
 				signature.isSupportGetRequest(), signature.isSupportPostRequest(), signature.getCharset()));
 		client.setName(signature.getClientName());

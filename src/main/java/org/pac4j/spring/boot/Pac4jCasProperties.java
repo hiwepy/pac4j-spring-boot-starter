@@ -83,6 +83,14 @@ public class Pac4jCasProperties {
 	 * Note that renew cannot be specified as local init-param setting..
 	 */
 	private boolean renew = false;
+
+	/**
+	 * The name of the server this application is hosted on. 
+	 * Service URL will be dynamically constructed using this,
+	 * i.e. https://localhost:8443 (you must include the protocol, but port is optional if it's a standard port).
+	 */
+	private String serviceUrl;
+	
 	/**
 	 * The tolerance for drifting clocks when validating SAML tickets. 
 	 * Note that 10 seconds should be more than enough for most environments that have NTP time synchronization. 

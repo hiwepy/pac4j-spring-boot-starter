@@ -37,5 +37,8 @@ public class Pac4jLogoutProperties {
 	private boolean centralLogout = true;
 	/** Whether the Session must be destroyed（是否销毁Session）. 默认 true */
 	private boolean destroySession = true;
-
+	/** 
+	 * The location of the default access URL, i.e. https://localhost:8080/myapp/index.html 
+	 */
+	private String defaultUrl;
 }

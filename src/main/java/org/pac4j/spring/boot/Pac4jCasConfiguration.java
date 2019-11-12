@@ -92,7 +92,7 @@ public class Pac4jCasConfiguration {
 		CasClient casClient = new CasClient(configuration);
 		
 		String clientName = StringUtils.hasText(pac4jCasProperties.getCasClientName()) ? pac4jCasProperties.getCasClientName() : Pac4jClientNames.CAS_CLIENT;
-		String serviceUrl = Pac4jUrlUtils.constructRedirectUrl(pac4jProperties.getServiceUrl(), pac4jProperties.getClientParameterName(), clientName);
+		String serviceUrl = Pac4jUrlUtils.constructRedirectUrl(pac4jCasProperties.getServiceUrl(), pac4jProperties.getClientParameterName(), clientName);
 		String callbackUrl =  CommonUtils.constructRedirectUrl(pac4jCasProperties.getLoginUrl(), pac4jCasProperties.getServiceParameterName(),
 				serviceUrl, pac4jCasProperties.isRenew(), pac4jCasProperties.isGateway());
 		

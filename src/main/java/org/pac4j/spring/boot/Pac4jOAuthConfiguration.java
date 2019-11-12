@@ -390,7 +390,7 @@ public class Pac4jOAuthConfiguration {
 		
 		client.setName(properties.getName());
 		client.setAjaxRequestResolver(ajaxRequestResolver);
-		client.setCallbackUrl(pac4jProperties.getCallbackUrl());
+		client.setCallbackUrl(properties.getCallbackUrl());
 		client.setKey(properties.getKey());
 		client.setConfiguration(configuration);
 		//client.setIncludeClientNameInCallbackUrl(pac4jProperties.isIncludeClientNameInCallbackUrl());

@@ -46,7 +46,6 @@ public class Pac4TokenProperties {
 	private boolean encodeParams = true;
 
 	private String charset = StandardCharsets.UTF_8.name();
-	
 
     protected String callbackUrl;
 

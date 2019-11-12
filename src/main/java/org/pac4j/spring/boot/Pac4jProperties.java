@@ -24,21 +24,11 @@ public class Pac4jProperties {
 	 * Enable Pac4j.
 	 */
 	private boolean enabled = false;
-    
-	/**
-	 * The name of the server this application is hosted on. 
-	 * Service URL will be dynamically constructed using this,
-	 * i.e. https://localhost:8443 (you must include the protocol, but port is optional if it's a standard port).
-	 */
-	private String serviceUrl;
+     
 	/** 
 	 * The location of the client callback URL, i.e. https://localhost:8080/myapp/callback 
 	 */
 	private String callbackUrl;
-	/** 
-	 * The location of the default access URL, i.e. https://localhost:8080/myapp/index.html 
-	 */
-	private String defaultUrl;
 	
 	/** 认证IP正则表达式：可实现IP访问限制 */
     private String allowedIpRegexpPattern;

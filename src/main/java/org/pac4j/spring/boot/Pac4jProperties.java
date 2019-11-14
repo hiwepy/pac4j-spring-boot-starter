@@ -26,6 +26,10 @@ public class Pac4jProperties {
 	private boolean enabled = false;
      
 	/** 
+	 * The location of the client login URL, i.e. https://localhost:8080/myapp/login 
+	 */
+	private String loginUrl;
+	/** 
 	 * The location of the client callback URL, i.e. https://localhost:8080/myapp/callback 
 	 */
 	private String callbackUrl;

@@ -66,7 +66,7 @@ public class Pac4jUniauthConfiguration {
 		UniauthTokenClient client = new UniauthTokenClient();
 		
 		client.setAuthenticator(this.uniauthTokenAuthenticator(token));
-		client.setLoginUrl(token.getLoginUrl());
+		client.setLoginUrl(token.getDefaultUrl());
 		client.setCredentialsExtractor(new TokenParameterExtractor(token.getTokenParamName(), 
 				token.isSupportGetRequest(), token.isSupportPostRequest(), token.getCharset()));
 		// pac4jProperties.getCustomParams()
@@ -96,7 +96,7 @@ public class Pac4jUniauthConfiguration {
 		UniauthSignatureClient client = new UniauthSignatureClient();
 		
 		client.setAuthenticator(this.uniauthSignatureAuthenticator(signature));
-		client.setLoginUrl(signature.getLoginUrl());
+		client.setLoginUrl(signature.getDefaultUrl());
 		client.setCredentialsExtractor(new SignatureParameterExtractor(signature.getSignatureParamName(),
 				signature.isSupportGetRequest(), signature.isSupportPostRequest(), signature.getCharset()));
 		client.setName(signature.getClientName());

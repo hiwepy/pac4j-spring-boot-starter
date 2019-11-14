@@ -34,5 +34,5 @@ public class Pac4SignatureProperties {
 	private boolean supportPostRequest = true;
 	private String charset = StandardCharsets.UTF_8.name();
 
-    protected String callbackUrl;
+    protected String loginUrl;
 }

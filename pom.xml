@@ -10,12 +10,12 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	
-	<groupId>com.github.vindell</groupId>
+	<groupId>com.github.hiwepy</groupId>
 	<artifactId>pac4j-spring-boot-starter</artifactId>
 	<description>Spring Boot Starter For Pac4j</description>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>${project.groupId}:${project.artifactId}</name>
-	<url>https://github.com/vindell/${project.artifactId}</url>
+	<url>https://github.com/hiwepy/${project.artifactId}</url>
 	<packaging>jar</packaging>
 
 	<licenses>
@@ -26,15 +26,15 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:https:github.com/vindell/${project.artifactId}.git</connection>
-		<developerConnection>scm:git:https:github.com/vindell/${project.artifactId}.git</developerConnection>
-		<url>https:github.com/vindell/${project.artifactId}</url>
+		<connection>scm:git:https:github.com/hiwepy/${project.artifactId}.git</connection>
+		<developerConnection>scm:git:https:github.com/hiwepy/${project.artifactId}.git</developerConnection>
+		<url>https:github.com/hiwepy/${project.artifactId}</url>
 		<tag>${project.artifactId}</tag>
 	</scm>
 
 	<developers>
 		<developer>
-			<name>vindell</name>
+			<name>wandl</name>
 			<email>hnxyhcwdl1003@163.com</email>
 			<roles>
 				<role>developer</role>
@@ -429,12 +429,12 @@
 			    <version>${pac4j.version}</version>
 			</dependency>
 			<dependency>
-		        <groupId>com.github.vindell</groupId>
+		        <groupId>com.github.hiwepy</groupId>
 				<artifactId>pac4j-biz</artifactId>
 				<version>${pac4j-biz.version}</version>
 			</dependency>
 			<dependency>
-		        <groupId>com.github.vindell</groupId>
+		        <groupId>com.github.hiwepy</groupId>
 				<artifactId>pac4j-uniauth</artifactId>
 				<version>${pac4j-uniauth.version}</version>
 			</dependency>
@@ -458,7 +458,7 @@
 	            <version>${pac4j.version}</version>
 	        </dependency>
 	        <dependency>
-		        <groupId>com.github.vindell</groupId>
+		        <groupId>com.github.hiwepy</groupId>
 				<artifactId>pac4j-oauth-ext</artifactId>
 				<version>${pac4j-oauth-ext.version}</version>
 			</dependency>
@@ -603,11 +603,11 @@
 		    <artifactId>pac4j-config</artifactId>
 		</dependency>
 		<dependency>
-	        <groupId>com.github.vindell</groupId>
+	        <groupId>com.github.hiwepy</groupId>
 			<artifactId>pac4j-biz</artifactId>
 		</dependency>
 		<dependency>
-	        <groupId>com.github.vindell</groupId>
+	        <groupId>com.github.hiwepy</groupId>
 			<artifactId>pac4j-uniauth</artifactId>
 		</dependency>
 		
@@ -634,7 +634,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-        	<groupId>com.github.vindell</groupId>
+        	<groupId>com.github.hiwepy</groupId>
 			<artifactId>pac4j-oauth-ext</artifactId>
 			<scope>provided</scope>
         </dependency>

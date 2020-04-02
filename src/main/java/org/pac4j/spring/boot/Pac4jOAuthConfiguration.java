@@ -17,8 +17,6 @@ package org.pac4j.spring.boot;
 
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.url.UrlResolver;
-import org.pac4j.core.state.StateGenerator;
-import org.pac4j.core.state.StaticOrRandomStateGenerator;
 import org.pac4j.oauth.client.BaiduClient;
 import org.pac4j.oauth.client.BitbucketClient;
 import org.pac4j.oauth.client.CasOAuthWrapperClient;
@@ -50,7 +48,6 @@ import org.pac4j.oauth.profile.OAuth20Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -72,12 +69,12 @@ public class Pac4jOAuthConfiguration {
 	@Autowired
 	private Pac4jProperties pac4jProperties;
 
-	@Bean
+	/*@Bean
 	@ConditionalOnMissingBean
 	protected StateGenerator stateGenerator() {
 		StateGenerator stateGenerator = new StaticOrRandomStateGenerator();
 		return stateGenerator;
-	}
+	}*/
 	 
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "baidu")

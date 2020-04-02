@@ -3,7 +3,7 @@ package org.pac4j.spring.boot;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.pac4j.core.context.DefaultAuthorizers;
+import org.pac4j.core.authorization.authorizer.DefaultAuthorizers;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import lombok.Getter;
@@ -306,7 +306,7 @@ public class Pac4jProperties {
 	 *	  </tbody>
 	 * </table>
      */
-    private String authorizers = DefaultAuthorizers.CSRF;
+    private String authorizers = DefaultAuthorizers.CSRF_CHECK;
     private String matchers;
     
     /** Whether multiple profiles should be kept . 默认 false*/

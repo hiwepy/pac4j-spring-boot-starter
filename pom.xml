@@ -377,6 +377,7 @@
         <pac4j-biz.version>1.0.0-SNAPSHOT</pac4j-biz.version>
         <pac4j-uniauth.version>1.0.0-SNAPSHOT</pac4j-uniauth.version>
         <pac4j-oauth-ext.version>1.0.2-SNAPSHOT</pac4j-oauth-ext.version>
+        <pac4j-sudytech.version>1.0.0-SNAPSHOT</pac4j-sudytech.version>
 		<scribejava.version>6.9.0</scribejava.version>
 		<woodstox-asl.version>4.4.1</woodstox-asl.version>
 	</properties>
@@ -437,6 +438,11 @@
 		        <groupId>com.github.hiwepy</groupId>
 				<artifactId>pac4j-uniauth</artifactId>
 				<version>${pac4j-uniauth.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.hiwepy</groupId>
+				<artifactId>pac4j-sudytech</artifactId>
+				<version>${pac4j-sudytech.version}</version>
 			</dependency>
 			
 			<!-- PAC4J For CAS Protocol  -->
@@ -611,6 +617,11 @@
 			<artifactId>pac4j-uniauth</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>com.github.hiwepy</groupId>
+			<artifactId>pac4j-sudytech</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<!-- PAC4J For CAS Protocol  -->
         <dependency>
             <groupId>org.pac4j</groupId>

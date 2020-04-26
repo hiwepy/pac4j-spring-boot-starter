@@ -672,7 +672,7 @@
             <artifactId>pac4j-oidc</artifactId>
              <scope>provided</scope>
         </dependency>
-        <!-- PAC4J For SAML Protocol  -->
+        <!-- PAC4J For SAML Protocol 
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-saml</artifactId>
@@ -687,7 +687,7 @@
             		<artifactId>*</artifactId>
             	</exclusion>
             </exclusions>
-        </dependency>
+        </dependency> -->
         <!-- PAC4J For CouchDB -->
         <dependency>
             <groupId>org.pac4j</groupId>

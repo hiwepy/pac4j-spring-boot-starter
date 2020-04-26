@@ -15,29 +15,20 @@
  */
 package org.pac4j.spring.boot;
 
-import java.io.File;
-
-import org.pac4j.core.http.url.UrlResolver;
-import org.pac4j.saml.client.SAML2Client;
-import org.pac4j.saml.config.SAML2Configuration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
 
 @Configuration
 @AutoConfigureBefore(Pac4jAutoConfiguration.class)
-@ConditionalOnClass({ SAML2Configuration.class, SAML2Client.class})
+//@ConditionalOnClass({ SAML2Configuration.class, SAML2Client.class})
 @ConditionalOnProperty(prefix = Pac4jSamlProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ Pac4jSamlProperties.class, Pac4jProperties.class, ServerProperties.class })
 public class Pac4jSamlConfiguration {
 
-	@Bean
+	/*@Bean
     public SAML2Configuration samlConfiguration() {
 		
 		final SAML2Configuration configuration = new SAML2Configuration(new ClassPathResource("samlKeystore.jks"),
@@ -47,8 +38,8 @@ public class Pac4jSamlConfiguration {
         configuration.setMaximumAuthenticationLifetime(3600);
         configuration.setServiceProviderEntityId("http://localhost:8080/callback?client_name=SAML2Client");
         configuration.setServiceProviderMetadataResource(new FileSystemResource(new File("sp-metadata.xml").getAbsoluteFile()));
-	    
-	    /*configuration.setCallbackUrl(callbackUrl);
+	   
+	    configuration.setCallbackUrl(callbackUrl);
 	    configuration.setClientAuthenticationMethod(clientAuthenticationMethod);
 	    configuration.setClientAuthenticationMethodAsString(auth);
 	    configuration.setClientId(clientId);
@@ -65,18 +56,19 @@ public class Pac4jSamlConfiguration {
 	    configuration.setResponseType(responseType);
 	    configuration.setScope(scope);
 	    configuration.setSecret(secret);
-	    configuration.setUseNonce(useNonce);*/
+	    configuration.setUseNonce(useNonce);
 		
 		return configuration;
-	}
+	} */
 	
+	/*
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "saml2-client", havingValue = "true")
 	public SAML2Client saml2Client(SAML2Configuration samlConfiguration, UrlResolver urlResolver) {
 		
 	    final SAML2Client saml2Client = new SAML2Client(samlConfiguration);
 	    
-	    /*saml2Client.setAjaxRequestResolver(ajaxRequestResolver);
+	    saml2Client.setAjaxRequestResolver(ajaxRequestResolver);
 	    saml2Client.setAuthenticator(authenticator);
 	    saml2Client.setAuthorizationGenerator(authorizationGenerator);
 	    saml2Client.setAuthorizationGenerators(authorizationGenerators);
@@ -87,13 +79,11 @@ public class Pac4jSamlConfiguration {
 	    saml2Client.setIncludeClientNameInCallbackUrl(includeClientNameInCallbackUrl);
 	    saml2Client.setLogoutActionBuilder(logoutActionBuilder);
 	    saml2Client.setProfileCreator(profileCreator);
-	    saml2Client.setRedirectActionBuilder(redirectActionBuilder);*/
+	    saml2Client.setRedirectActionBuilder(redirectActionBuilder);
 	    saml2Client.setUrlResolver(urlResolver);
 	    
 		return saml2Client;
 	}
-	
-    
-    
+	*/
     
 }

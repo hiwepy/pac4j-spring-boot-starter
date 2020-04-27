@@ -44,6 +44,10 @@ public class Pac4jSudytechConfiguration {
 		
 		client.setLoginUrl(sudytechProperties.getLoginUrl());
 		// pac4jProperties.getCustomParams()
+		client.setDlmSessionKey(sudytechProperties.getDlmSessionKey());
+		client.setLoginUrl(sudytechProperties.getLoginUrl());
+		client.setPublicPaths(sudytechProperties.getPublicPaths());
+		client.setSecretKey(sudytechProperties.getSecretKey());
 		client.setName(sudytechProperties.getClientName());
 		client.setSupportGetRequest(sudytechProperties.isSupportGetRequest());
 		client.setSupportPostRequest(sudytechProperties.isSupportPostRequest());

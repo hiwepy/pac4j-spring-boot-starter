@@ -41,7 +41,7 @@ public class Pac4jSudytechProperties {
 	 */
 	private String loginUrl;
 	private String secretKey;
-	private String dlmSessionKey;
+	private String dlmSessionKey = "com.sudytech.sso.client.api.user";
 	private String publicPaths;
 	
 	

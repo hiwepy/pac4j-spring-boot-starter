@@ -13,7 +13,7 @@
 	<groupId>com.github.hiwepy</groupId>
 	<artifactId>pac4j-spring-boot-starter</artifactId>
 	<description>Spring Boot Starter For Pac4j</description>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1.RELEASE</version>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<url>https://github.com/hiwepy/${project.artifactId}</url>
 	<packaging>jar</packaging>
@@ -364,7 +364,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<cas-client.version>3.6.1</cas-client.version>
+		<cas-client.version>3.6.2</cas-client.version>
         <maven.version>3.0</maven.version>
        	<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
@@ -373,10 +373,10 @@
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
 		<maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
         <fastjson.version>1.2.75</fastjson.version>
-        <pac4j.version>4.1.0</pac4j.version>
-        <pac4j-biz.version>1.0.0.RELEASE</pac4j-biz.version>
-        <pac4j-oauth-ext.version>1.0.2-SNAPSHOT</pac4j-oauth-ext.version>
-		<scribejava.version>6.9.0</scribejava.version>
+        <pac4j.version>4.4.0</pac4j.version>
+        <pac4j-biz.version>1.0.1.RELEASE</pac4j-biz.version>
+        <pac4j-oauth-ext.version>1.0.3.RELEASE</pac4j-oauth-ext.version>
+		<scribejava.version>7.1.1</scribejava.version>
 		<woodstox-asl.version>4.4.1</woodstox-asl.version>
 	</properties>
 	

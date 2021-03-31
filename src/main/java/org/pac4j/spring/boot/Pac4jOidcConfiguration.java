@@ -17,7 +17,6 @@ package org.pac4j.spring.boot;
 
 import java.util.Optional;
 
-import org.pac4j.core.context.WebContext;
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.core.logout.handler.LogoutHandler;
 import org.pac4j.oidc.client.GoogleOidcClient;
@@ -40,7 +39,7 @@ import com.nimbusds.jose.JWSAlgorithm;
 public class Pac4jOidcConfiguration {
 
 	@Bean
-    public OidcConfiguration oidcConfiguration(LogoutHandler<WebContext> logoutHandler, UrlResolver urlResolver) {
+    public OidcConfiguration oidcConfiguration(LogoutHandler logoutHandler, UrlResolver urlResolver) {
 		
 		/*final OidcConfiguration oidcConfiguration = new OidcConfiguration();
 	    oidcConfiguration.setClientId("test");
@@ -87,7 +86,7 @@ public class Pac4jOidcConfiguration {
 	public GoogleOidcClient oidcClient(OidcConfiguration oidcConfiguration) {
 		
 		final GoogleOidcClient oidcClient = new GoogleOidcClient(oidcConfiguration);
-	    oidcClient.setAuthorizationGenerator((ctx, profile) -> { 
+	    oidcClient.setAuthorizationGenerator((ctx, sessionStore, profile) -> { 
 	    	profile.addRole("ROLE_ADMIN"); 
 	    	return Optional.ofNullable(profile); 
 	    });

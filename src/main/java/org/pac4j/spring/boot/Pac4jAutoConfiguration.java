@@ -87,9 +87,7 @@ public class Pac4jAutoConfiguration {
 	}
 	
 	@Bean
-	public Config config(Pac4jProperties pac4jProperties, Clients clients, 
-			HttpActionAdapter<Object, JEEContext> httpActionAdapter,
-			SessionStore<JEEContext> sessionStore) {
+	public Config config(Pac4jProperties pac4jProperties, Clients clients, HttpActionAdapter httpActionAdapter) {
 		
 		final Config config = new Config(clients);
 		
@@ -120,7 +118,7 @@ public class Pac4jAutoConfiguration {
 		
 		config.setClients(clients);
 		config.setHttpActionAdapter(httpActionAdapter);
-		config.setSessionStore(sessionStore);
+		//config.setSessionStore(sessionStore);
 		
 		return config;
 	}

@@ -8,6 +8,5 @@ org.pac4j.spring.boot.Pac4jKerberosConfiguration,\
 org.pac4j.spring.boot.Pac4jLdapConfiguration,\
 org.pac4j.spring.boot.Pac4jOAuthConfiguration,\
 org.pac4j.spring.boot.Pac4jOidcConfiguration,\
-org.pac4j.spring.boot.Pac4jOpenIDConfiguration,\
 org.pac4j.spring.boot.Pac4jSamlConfiguration,\
 org.pac4j.spring.boot.Pac4jAutoConfiguration

@@ -8,7 +8,6 @@ import org.pac4j.cas.client.direct.DirectCasProxyClient;
 import org.pac4j.cas.client.rest.CasRestBasicAuthClient;
 import org.pac4j.cas.client.rest.CasRestFormClient;
 import org.pac4j.cas.config.CasConfiguration;
-import org.pac4j.core.context.WebContext;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
 import org.pac4j.core.http.url.UrlResolver;
 import org.pac4j.core.logout.handler.LogoutHandler;
@@ -45,7 +44,7 @@ public class Pac4jCasConfiguration {
 	}
 	
 	@Bean
-	public CasConfiguration casConfiguration(LogoutHandler<WebContext> logoutHandler, UrlResolver urlResolver,
+	public CasConfiguration casConfiguration(LogoutHandler logoutHandler, UrlResolver urlResolver,
 			@Autowired(required = false) CasProxyReceptor proxyReceptor) {
 
 		CasConfiguration configuration = new CasConfiguration(pac4jCasProperties.getLoginUrl(), pac4jCasProperties.getProtocol() );

@@ -26,8 +26,6 @@ import org.pac4j.core.client.Client;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.context.HttpConstants.HTTP_METHOD;
-import org.pac4j.core.context.JEEContext;
-import org.pac4j.core.context.session.SessionStore;
 import org.pac4j.core.http.adapter.HttpActionAdapter;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
@@ -37,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +44,7 @@ import org.springframework.util.StringUtils;
 @Configuration
 @ConditionalOnClass({ Clients.class })
 @ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
-@EnableConfigurationProperties({ Pac4jProperties.class, Pac4jCasProperties.class, ServerProperties.class })
+@EnableConfigurationProperties({ Pac4jProperties.class })
 @SuppressWarnings("rawtypes")
 public class Pac4jAutoConfiguration {
 

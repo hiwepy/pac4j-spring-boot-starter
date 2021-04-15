@@ -1,5 +1,6 @@
 package org.pac4j.spring.boot;
 
+import org.pac4j.core.context.JEEContext;
 import org.pac4j.core.ext.http.callback.QueryParameterCallbackUrlExtResolver;
 import org.pac4j.core.http.adapter.HttpActionAdapter;
 import org.pac4j.core.http.adapter.JEEHttpActionAdapter;
@@ -27,8 +28,8 @@ public class Pac4jBaseConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-    public LogoutHandler logoutHandler(Pac4jLogoutProperties logoutProperties){
-		DefaultLogoutHandler logoutHandler = new DefaultLogoutHandler();
+    public LogoutHandler<JEEContext> logoutHandler(Pac4jLogoutProperties logoutProperties){
+		DefaultLogoutHandler<JEEContext> logoutHandler = new DefaultLogoutHandler<JEEContext>();
 		logoutHandler.setDestroySession(logoutProperties.isDestroySession());
 		return logoutHandler;
 	}
@@ -55,7 +56,7 @@ public class Pac4jBaseConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	protected HttpActionAdapter httpActionAdapter() {
+	protected HttpActionAdapter<Object, JEEContext> httpActionAdapter() {
 		return JEEHttpActionAdapter.INSTANCE;
 	}
 }

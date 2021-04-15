@@ -363,11 +363,11 @@
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
 		<maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
-        <fastjson.version>1.2.75</fastjson.version>
-        <pac4j.version>5.0.0</pac4j.version>
-        <pac4j-biz.version>1.0.2-SNAPSHOT</pac4j-biz.version>
-        <pac4j-oauth-ext.version>1.0.4-SNAPSHOT</pac4j-oauth-ext.version>
-		<scribejava.version>8.1.0</scribejava.version>
+        <fastjson.version>1.2.76</fastjson.version>
+        <pac4j.version>4.4.0</pac4j.version>
+        <pac4j-biz.version>1.0.1.RELEASE</pac4j-biz.version>
+        <pac4j-oauth-ext.version>1.0.3.RELEASE</pac4j-oauth-ext.version>
+		<scribejava.version>7.1.1</scribejava.version>
 		<woodstox-asl.version>4.4.1</woodstox-asl.version>
 	</properties>
 	
@@ -422,11 +422,6 @@
 		        <groupId>com.github.hiwepy</groupId>
 				<artifactId>pac4j-biz</artifactId>
 				<version>${pac4j-biz.version}</version>
-			</dependency>
-			<dependency>
-		        <groupId>com.github.hiwepy</groupId>
-				<artifactId>pac4j-uniauth</artifactId>
-				<version>${pac4j-uniauth.version}</version>
 			</dependency>
 			
 			<!-- PAC4J For CAS Protocol  -->
@@ -641,62 +636,10 @@
             <artifactId>pac4j-oidc</artifactId>
              <scope>provided</scope>
         </dependency>
-        <!-- PAC4J For SAML Protocol 
-        <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-saml</artifactId>
-             <scope>provided</scope>
-            <exclusions>
-            	<exclusion>
-            		<groupId>org.opensaml</groupId>
-            		<artifactId>*</artifactId>
-            	</exclusion>
-            	<exclusion>
-            		<groupId>net.shibboleth.tool</groupId>
-            		<artifactId>*</artifactId>
-            	</exclusion>
-            </exclusions>
-        </dependency> -->
-        <!-- PAC4J For CouchDB -->
-        <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-couch</artifactId>
-             <scope>provided</scope>
-        </dependency>
-        <!-- PAC4J For GAE UserService Mechanism -->
-        <!-- <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-gae</artifactId>
-             <scope>provided</scope>
-        </dependency> -->
         <!-- PAC4J For JWT -->
         <dependency>
             <groupId>org.pac4j</groupId>
             <artifactId>pac4j-jwt</artifactId>
-             <scope>provided</scope>
-        </dependency>
-        <!-- PAC4J For Kerberos -->
-        <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-kerberos</artifactId>
-             <scope>provided</scope>
-        </dependency>
-        <!-- PAC4J For LDAP  -->
-        <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-ldap</artifactId>
-             <scope>provided</scope>
-        </dependency>
-        <!-- PAC4J For MongoDB  -->
-        <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-mongo</artifactId>
-             <scope>provided</scope>
-        </dependency>
-        <!-- PAC4J For Relational DB  -->
-        <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-sql</artifactId>
              <scope>provided</scope>
         </dependency>
         

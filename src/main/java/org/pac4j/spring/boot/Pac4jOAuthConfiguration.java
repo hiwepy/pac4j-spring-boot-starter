@@ -66,16 +66,7 @@ public class Pac4jOAuthConfiguration {
 
 	@Autowired
 	private Pac4jOAuthProperties oauthProperties; 
-	@Autowired
-	private Pac4jProperties pac4jProperties;
 
-	/*@Bean
-	@ConditionalOnMissingBean
-	protected StateGenerator stateGenerator() {
-		StateGenerator stateGenerator = new StaticOrRandomStateGenerator();
-		return stateGenerator;
-	}*/
-	 
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "baidu")
 	public BaiduClient baiduClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
@@ -127,9 +118,7 @@ public class Pac4jOAuthConfiguration {
 		final Pac4jOAuthFacebookClientProperties properties = oauthProperties.getFacebook();
 		final FacebookClient client = new FacebookClient(properties.getKey(), properties.getSecret());
 		this.initOAuth20Client(client, properties, ajaxRequestResolver, urlResolver);
-		
 		client.setFields(properties.getFields());
-		//client.setRequiresExtendedToken(properties.isRequiresExtendedToken());
 		client.setLimit(properties.getLimit());
 		
 		return client;

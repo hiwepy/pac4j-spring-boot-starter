@@ -1,5 +1,5 @@
-################################################################################################################  
-###Pac4j 第三方登录（QQ、微信、易班、康赛）配置：  
+################################################################################################################
+###Pac4j 第三方登录（QQ、微信、易班、康赛）配置：
 ################################################################################################################
 pac4j:
   enabled: true
@@ -15,9 +15,9 @@ pac4j:
     enabled: true
     accept-any-proxy: true
     gateway: false
-    login-url: http://10.30.186.104/sso/login
-    logout-url: http://10.30.186.104/sso/logout
-    prefix-url: http://10.30.186.104/sso/
+    login-url: https://127.0.0.1/sso/login
+    logout-url: https://127.0.0.1/sso/logout
+    prefix-url: https://127.0.0.1/sso/
     protocol: cas20-proxy
     renew: false
     # Cas客户端配置
@@ -33,14 +33,14 @@ pac4j:
     token:
       client-name: uniauth-token
       custom-params:
-        syskey: V+yUhswUbJ2FaDOH6gumdTbNUyOOfD7+/AXBuiQo8JyzxTaHlFJJRxb+436eay0oMvA16WoUDIdi72RoaKRDJSFUkn9eaxkYQBXwkC0xC2HC4r8AQlYmg4SYPMjoTOWdiKZum+5ToE8PfEX+8V8E4lBAxYg1uva3JHBi0/J85ak=
+        syskey: xxxxxxxxxxxxxxxx
       encode-params: true
-      profile-url: http://172.16.70.31:8080/yyxy_uniauth/ser/vaildTocken.action
+      profile-url: https://127.0.0.1:8080/yyxy_uniauth/ser/vaildTocken.action
       support-post-request: true
       support-get-request: true
       token-param-name: tocken
     signature:
-      client-name: uniauth  
+      client-name: uniauth
   oauth:
     yiban:
       name: yiban

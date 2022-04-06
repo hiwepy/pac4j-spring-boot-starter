@@ -1,9 +1,6 @@
 package org.pac4j.spring.boot;
 
-import org.pac4j.core.context.JEEContext;
 import org.pac4j.core.ext.http.callback.QueryParameterCallbackUrlExtResolver;
-import org.pac4j.core.http.adapter.HttpActionAdapter;
-import org.pac4j.core.http.adapter.JEEHttpActionAdapter;
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.ajax.DefaultAjaxRequestResolver;
 import org.pac4j.core.http.callback.CallbackUrlResolver;
@@ -22,24 +19,23 @@ import org.springframework.context.annotation.Configuration;
 // https://blog.csdn.net/u010004082/article/details/79744481?utm_source=blogxgwz9
 @Configuration
 @ConditionalOnClass({ DefaultAjaxRequestResolver.class})
-@ConditionalOnProperty(prefix = Pac4jProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ ServerProperties.class, Pac4jProperties.class, Pac4jLogoutProperties.class })
 public class Pac4jBaseConfiguration {
-	
+
 	@Bean
 	@ConditionalOnMissingBean
-    public LogoutHandler<JEEContext> logoutHandler(Pac4jLogoutProperties logoutProperties){
-		DefaultLogoutHandler<JEEContext> logoutHandler = new DefaultLogoutHandler<JEEContext>();
+    public LogoutHandler logoutHandler(Pac4jLogoutProperties logoutProperties){
+		DefaultLogoutHandler logoutHandler = new DefaultLogoutHandler();
 		logoutHandler.setDestroySession(logoutProperties.isDestroySession());
 		return logoutHandler;
 	}
-	
+
 	@Bean
 	@ConditionalOnMissingBean
 	protected AjaxRequestResolver ajaxRequestResolver() {
 		return new DefaultAjaxRequestResolver();
 	}
-	
+
 	@Bean
 	@ConditionalOnMissingBean
 	protected CallbackUrlResolver callbackUrlResolver(Pac4jProperties pac4jProperties) {
@@ -47,16 +43,11 @@ public class Pac4jBaseConfiguration {
 				pac4jProperties.getCallbackUrl(),
 				pac4jProperties.getCustomParams());
 	}
-	
+
 	@Bean
 	@ConditionalOnMissingBean
 	protected UrlResolver urlResolver(Pac4jProperties pac4jProperties) {
 		return new DefaultUrlResolver(pac4jProperties.isCompleteRelativeUrl());
 	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	protected HttpActionAdapter<Object, JEEContext> httpActionAdapter() {
-		return JEEHttpActionAdapter.INSTANCE;
-	}
+
 }

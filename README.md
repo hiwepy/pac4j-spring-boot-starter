@@ -18,7 +18,7 @@ Pac4j 是一个支持多种协议多种框架的Java 权限引擎。
 <dependency>
 	<groupId>com.github.hiwepy</groupId>
 	<artifactId>pac4j-spring-boot-starter</artifactId>
-	<version>${project.version}</version>
+	<version>1.0.3.RELEASE</version>
 </dependency>
 ```
 

@@ -17,29 +17,7 @@ package org.pac4j.spring.boot;
 
 import org.pac4j.core.http.ajax.AjaxRequestResolver;
 import org.pac4j.core.http.url.UrlResolver;
-import org.pac4j.oauth.client.BaiduClient;
-import org.pac4j.oauth.client.BitbucketClient;
-import org.pac4j.oauth.client.CasOAuthWrapperClient;
-import org.pac4j.oauth.client.DropBoxClient;
-import org.pac4j.oauth.client.FacebookClient;
-import org.pac4j.oauth.client.FoursquareClient;
-import org.pac4j.oauth.client.GitHubClient;
-import org.pac4j.oauth.client.Google2Client;
-import org.pac4j.oauth.client.LinkedIn2Client;
-import org.pac4j.oauth.client.OAuth10Client;
-import org.pac4j.oauth.client.OAuth20Client;
-import org.pac4j.oauth.client.OkClient;
-import org.pac4j.oauth.client.PayPalClient;
-import org.pac4j.oauth.client.QQClient;
-import org.pac4j.oauth.client.StravaClient;
-import org.pac4j.oauth.client.TwitterClient;
-import org.pac4j.oauth.client.VkClient;
-import org.pac4j.oauth.client.WechatClient;
-import org.pac4j.oauth.client.WeiboClient;
-import org.pac4j.oauth.client.WindowsLiveClient;
-import org.pac4j.oauth.client.WordPressClient;
-import org.pac4j.oauth.client.YahooClient;
-import org.pac4j.oauth.client.YibanClient;
+import org.pac4j.oauth.client.*;
 import org.pac4j.oauth.config.OAuth10Configuration;
 import org.pac4j.oauth.config.OAuth20Configuration;
 import org.pac4j.oauth.profile.OAuth10Profile;
@@ -178,7 +156,7 @@ public class Pac4jOAuthConfiguration {
 		return client;
 	}
 
-	/*@Bean
+	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "oschina")
 	public OschinaClient oschinaClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
 
@@ -187,7 +165,7 @@ public class Pac4jOAuthConfiguration {
 		this.initOAuth20Client(client, properties, ajaxRequestResolver, urlResolver);
 
 		return client;
-	}*/
+	}
 
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "paypal")
@@ -210,17 +188,6 @@ public class Pac4jOAuthConfiguration {
 
 		return client;
 	}
-
-	/*@Bean
-	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "renren")
-	public BaiduClient renrenClient(AjaxRequestResolver ajaxRequestResolver, UrlResolver urlResolver) {
-
-		final Pac4jOAuthClientProperties properties = oauthProperties.getRenren();
-		final BaiduClient client = new BaiduClient(properties.getKey(), properties.getSecret());
-		this.initOAuth20Client(client, properties, ajaxRequestResolver, urlResolver);
-
-		return client;
-	}*/
 
 	@Bean
 	@ConditionalOnProperty(prefix = Pac4jOAuthProperties.PREFIX, value = "strava")

@@ -13,7 +13,7 @@
 	<groupId>com.github.hiwepy</groupId>
 	<artifactId>pac4j-spring-boot-starter</artifactId>
 	<description>Spring Boot Starter For Pac4j</description>
-	<version>1.0.3.RELEASE</version>
+	<version>2.3.x.20240823.RELEASE</version>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<url>https://github.com/hiwepy/${project.artifactId}</url>
 	<packaging>jar</packaging>
@@ -21,7 +21,7 @@
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
 
@@ -35,7 +35,7 @@
 	<developers>
 		<developer>
 			<name>wandl</name>
-			<email>hnxyhcwdl1003@163.com</email>
+			<email>hiwepy@gmail.com</email>
 			<roles>
 				<role>developer</role>
 			</roles>
@@ -355,7 +355,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<cas-client.version>3.6.2</cas-client.version>
+		<cas-client.version>3.6.4</cas-client.version>
         <maven.version>3.0</maven.version>
        	<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
@@ -363,8 +363,8 @@
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
 		<maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
-        <fastjson.version>1.2.79</fastjson.version>
-        <pac4j.version>4.5.5</pac4j.version>
+		<fastjson2.version>2.0.52</fastjson2.version>
+        <pac4j.version>4.5.8</pac4j.version>
         <pac4j-biz.version>1.0.2.RELEASE</pac4j-biz.version>
         <pac4j-oauth-ext.version>1.0.4.RELEASE</pac4j-oauth-ext.version>
 		<scribejava.version>7.1.1</scribejava.version>
@@ -399,11 +399,11 @@
 			    <version>${woodstox-asl.version}</version>
 			</dependency>
 
-			<!-- http://mvnrepository.com/artifact/com.alibaba/fastjson -->
+			<!-- https://mvnrepository.com/artifact/com.alibaba.fastjson2/fastjson2 -->
 			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>fastjson</artifactId>
-				<version>${fastjson.version}</version>
+				<groupId>com.alibaba.fastjson2</groupId>
+				<artifactId>fastjson2</artifactId>
+				<version>${fastjson2.version}</version>
 			</dependency>
 
 			<!-- https://mvnrepository.com/artifact/org.pac4j -->
@@ -574,8 +574,8 @@
 
 		<!-- http://mvnrepository.com/artifact/com.alibaba/fastjson -->
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
+			<groupId>com.alibaba.fastjson2</groupId>
+			<artifactId>fastjson2</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.pac4j -->

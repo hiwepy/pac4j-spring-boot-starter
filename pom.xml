@@ -13,7 +13,7 @@
 	<groupId>com.github.hiwepy</groupId>
 	<artifactId>pac4j-spring-boot-starter</artifactId>
 	<description>Spring Boot Starter For Pac4j</description>
-	<version>2.7.x.20241003.RELEASE</version>
+	<version>3.3.x.20241003.RELEASE</version>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<url>https://github.com/hiwepy/${project.artifactId}</url>
 	<packaging>jar</packaging>
@@ -543,9 +543,9 @@
 
 		<!-- Java Servlet API -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			 <scope>provided</scope>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<optional>true</optional>
 		</dependency>
 
 		<dependency>

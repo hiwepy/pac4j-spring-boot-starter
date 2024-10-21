@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.0.RELEASE</version>
+		<version>3.3.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -382,6 +382,7 @@
 		<maven-war-plugin.version>3.4.0</maven-war-plugin.version>
 		<!-- Dependency versions -->
 		<cas-client.version>3.6.4</cas-client.version>
+		<lombok.version>1.18.34</lombok.version>
 		<fastjson2.version>2.0.52</fastjson2.version>
         <pac4j.version>4.5.8</pac4j.version>
         <pac4j-biz.version>6.0.x.20241003.RELEASE</pac4j-biz.version>

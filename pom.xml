@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.github.hiwepy</groupId>
+	<groupId>io.github.hiwepy</groupId>
 	<artifactId>pac4j-spring-boot-starter</artifactId>
 	<description>Spring Boot Starter For Pac4j</description>
 	<version>2.0.0.RELEASE</version>
@@ -411,7 +411,7 @@
 			    <version>${pac4j.version}</version>
 			</dependency>
 			<dependency>
-		        <groupId>com.github.hiwepy</groupId>
+		        <groupId>io.github.hiwepy</groupId>
 				<artifactId>pac4j-biz</artifactId>
 				<version>${pac4j-biz.version}</version>
 			</dependency>
@@ -435,7 +435,7 @@
 	            <version>${pac4j.version}</version>
 	        </dependency>
 	        <dependency>
-		        <groupId>com.github.hiwepy</groupId>
+		        <groupId>io.github.hiwepy</groupId>
 				<artifactId>pac4j-oauth-ext</artifactId>
 				<version>${pac4j-oauth-ext.version}</version>
 			</dependency>
@@ -574,7 +574,7 @@
 		    <artifactId>pac4j-config</artifactId>
 		</dependency>
 		<dependency>
-	        <groupId>com.github.hiwepy</groupId>
+	        <groupId>io.github.hiwepy</groupId>
 			<artifactId>pac4j-biz</artifactId>
 		</dependency>
 
@@ -601,7 +601,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-        	<groupId>com.github.hiwepy</groupId>
+        	<groupId>io.github.hiwepy</groupId>
 			<artifactId>pac4j-oauth-ext</artifactId>
 			<scope>provided</scope>
         </dependency>
